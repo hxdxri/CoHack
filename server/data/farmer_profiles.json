@@ -1,0 +1,14 @@
+[
+  {
+    "id": "0c6c3ed8-e131-41b6-a4dd-5183dfca342b",
+    "userId": "664c120a-91aa-4fea-be8c-156b7c1a5305",
+    "farmName": "Green Valley Organic Farm",
+    "description": "Family-owned organic farm specializing in fresh vegetables and sustainable farming practices. We have been serving the local community for over 20 years with the highest quality produce.",
+    "location": "Sonoma County, California",
+    "farmHistory": "Founded in 2003 by the Johnson family, Green Valley Organic Farm started as a small 5-acre plot and has grown to a 50-acre certified organic operation. We focus on sustainable farming methods, crop rotation, and natural pest management to provide the freshest, healthiest produce to our community.",
+    "averageRating": 5,
+    "totalReviews": 1,
+    "createdAt": "2025-09-27T22:33:08.132Z",
+    "updatedAt": "2025-09-27T22:33:08.223Z"
+  }
+]

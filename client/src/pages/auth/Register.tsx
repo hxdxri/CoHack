@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Leaf, User, Mail, Lock, MapPin, Building } from 'lucide-react';
+import { Leaf, Building } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { Button } from '@/components/ui/Button';
 import { Input, Textarea, Select } from '@/components/ui/Input';

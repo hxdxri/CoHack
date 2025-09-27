@@ -17,7 +17,7 @@ interface AuthState {
   setUser: (user: User) => void;
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: localStorage.getItem('harvestlink_token'),
   isLoading: false,
@@ -88,7 +88,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   checkAuth: async () => {
     const token = localStorage.getItem('harvestlink_token');
-    const storedUser = localStorage.getItem('harvestlink_user');
 
     if (!token) {
       set({ isAuthenticated: false, user: null, token: null });
