@@ -37,7 +37,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
  *   helperText="This will be displayed on your public profile"
  * />
  */
-export const Input: React.FC<InputProps> = ({
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(({
   label,
   error,
   helperText,
@@ -45,7 +45,7 @@ export const Input: React.FC<InputProps> = ({
   className = '',
   id,
   ...props
-}) => {
+}, ref) => {
   const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
   const hasError = !!error;
 
@@ -66,6 +66,7 @@ export const Input: React.FC<InputProps> = ({
       )}
       
       <input
+        ref={ref}
         id={inputId}
         className={inputClasses}
         aria-invalid={hasError}
@@ -95,7 +96,9 @@ export const Input: React.FC<InputProps> = ({
       )}
     </div>
   );
-};
+});
+
+Input.displayName = 'Input';
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -117,7 +120,7 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
  *   required
  * />
  */
-export const Textarea: React.FC<TextareaProps> = ({
+export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(({
   label,
   error,
   helperText,
@@ -125,7 +128,7 @@ export const Textarea: React.FC<TextareaProps> = ({
   className = '',
   id,
   ...props
-}) => {
+}, ref) => {
   const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`;
   const hasError = !!error;
 
@@ -146,6 +149,7 @@ export const Textarea: React.FC<TextareaProps> = ({
       )}
       
       <textarea
+        ref={ref}
         id={textareaId}
         className={textareaClasses}
         aria-invalid={hasError}
@@ -175,7 +179,9 @@ export const Textarea: React.FC<TextareaProps> = ({
       )}
     </div>
   );
-};
+});
+
+Textarea.displayName = 'Textarea';
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
@@ -200,7 +206,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
  *   required
  * />
  */
-export const Select: React.FC<SelectProps> = ({
+export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(({
   label,
   error,
   helperText,
@@ -209,7 +215,7 @@ export const Select: React.FC<SelectProps> = ({
   className = '',
   id,
   ...props
-}) => {
+}, ref) => {
   const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
   const hasError = !!error;
 
@@ -230,6 +236,7 @@ export const Select: React.FC<SelectProps> = ({
       )}
       
       <select
+        ref={ref}
         id={selectId}
         className={selectClasses}
         aria-invalid={hasError}
@@ -265,4 +272,6 @@ export const Select: React.FC<SelectProps> = ({
       )}
     </div>
   );
-};
+});
+
+Select.displayName = 'Select';
