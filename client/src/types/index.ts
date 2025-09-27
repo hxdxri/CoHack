@@ -127,6 +127,7 @@ export interface ProductFormData {
   unit: string;
   description: string;
   imageUrl?: string;
+  isActive?: boolean;
 }
 
 export interface FarmerProfileFormData {

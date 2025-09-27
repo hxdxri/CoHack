@@ -10,6 +10,14 @@ import { Landing } from '@/pages/Landing';
 import { Login } from '@/pages/auth/Login';
 import { Register } from '@/pages/auth/Register';
 
+// Farmer Pages
+import { FarmerDashboard } from '@/pages/farmer/Dashboard';
+import { FarmerProducts } from '@/pages/farmer/Products';
+
+// Customer Pages
+import { CustomerDashboard } from '@/pages/customer/Dashboard';
+import { CustomerFarmers } from '@/pages/customer/Farmers';
+
 // Protected Route Component
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -44,12 +52,8 @@ const DashboardRedirect: React.FC = () => {
   return <Navigate to={redirectPath} replace />;
 };
 
-// Placeholder components for routes (to be implemented)
-const FarmerDashboard = () => <div className="p-8"><h1>Farmer Dashboard (Coming Soon)</h1></div>;
-const CustomerDashboard = () => <div className="p-8"><h1>Customer Dashboard (Coming Soon)</h1></div>;
-const FarmerProducts = () => <div className="p-8"><h1>Farmer Products (Coming Soon)</h1></div>;
+// Placeholder components for routes still to be implemented
 const FarmerProfile = () => <div className="p-8"><h1>Farmer Profile (Coming Soon)</h1></div>;
-const CustomerFarmers = () => <div className="p-8"><h1>Browse Farmers (Coming Soon)</h1></div>;
 const CustomerReviews = () => <div className="p-8"><h1>My Reviews (Coming Soon)</h1></div>;
 const Messages = () => <div className="p-8"><h1>Messages (Coming Soon)</h1></div>;
 
