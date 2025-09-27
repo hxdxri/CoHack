@@ -139,7 +139,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                 )}
                 
                 <Link
-                  to="/messages"
+                  to={user?.role === 'farmer' ? '/farmer/messages' : '/customer/messages'}
                   onClick={handleLinkClick}
                   className="flex items-center space-x-2 px-3 py-2 text-ink hover:bg-primary-50 hover:text-primary-500 rounded-md transition-colors duration-200"
                 >

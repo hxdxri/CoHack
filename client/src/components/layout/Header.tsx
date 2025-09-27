@@ -83,7 +83,10 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                   </Link>
                 </>
               )}
-              <Link to="/messages" className="nav-link flex items-center space-x-1">
+              <Link 
+                to={user?.role === 'farmer' ? '/farmer/messages' : '/customer/messages'} 
+                className="nav-link flex items-center space-x-1"
+              >
                 <MessageCircle className="w-4 h-4" />
                 <span>Messages</span>
               </Link>
