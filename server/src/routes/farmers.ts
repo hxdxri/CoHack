@@ -12,13 +12,15 @@ router.get('/', (req, res) => {
   try {
     const farmerProfiles = UserModel.getAllFarmerProfiles();
     
-    // Add user info to each profile
+    // Add user info and product count to each profile
     const profilesWithUserInfo = farmerProfiles.map(profile => {
       const user = UserModel.findById(profile.userId);
+      const products = ProductModel.findByFarmerId(profile.userId).filter(p => p.isActive);
       return {
         ...profile,
         name: user?.name || 'Unknown',
         email: user?.email || '',
+        productCount: products.length,
       };
     });
 
