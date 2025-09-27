@@ -7,8 +7,7 @@ import { LoadingPage } from '@/components/ui/LoadingSpinner';
 
 // Pages
 import { Landing } from '@/pages/Landing';
-import { Login } from '@/pages/auth/Login';
-import { Register } from '@/pages/auth/Register';
+import { Auth } from '@/pages/auth/Auth';
 
 // Farmer Pages
 import { FarmerDashboard } from '@/pages/farmer/Dashboard';
@@ -30,7 +29,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole 
   const { isAuthenticated, user } = useAuthStore();
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/auth" replace />;
   }
 
   if (requiredRole && user?.role !== requiredRole) {
@@ -47,7 +46,7 @@ const DashboardRedirect: React.FC = () => {
   const { user, isAuthenticated } = useAuthStore();
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/auth" replace />;
   }
 
   const redirectPath = user?.role === 'farmer' ? '/farmer/dashboard' : '/customer/dashboard';
@@ -109,15 +108,9 @@ function App() {
           {/* Public Routes */}
           <Route path="/" element={<Landing />} />
           <Route 
-            path="/login" 
+            path="/auth" 
             element={
-              isAuthenticated ? <DashboardRedirect /> : <Login />
-            } 
-          />
-          <Route 
-            path="/register" 
-            element={
-              isAuthenticated ? <DashboardRedirect /> : <Register />
+              isAuthenticated ? <DashboardRedirect /> : <Auth />
             } 
           />
 

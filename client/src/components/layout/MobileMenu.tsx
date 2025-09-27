@@ -173,14 +173,14 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
               <p className="text-graphite mb-4">Please log in to access your account.</p>
               <div className="space-y-2">
                 <Link
-                  to="/login"
+                  to="/auth"
                   onClick={handleLinkClick}
                   className="block w-full px-4 py-2 text-center bg-primary-500 text-white rounded-md hover:bg-primary-600 transition-colors duration-200"
                 >
                   Login
                 </Link>
                 <Link
-                  to="/register"
+                  to="/auth"
                   onClick={handleLinkClick}
                   className="block w-full px-4 py-2 text-center border border-primary-500 text-primary-500 rounded-md hover:bg-primary-50 transition-colors duration-200"
                 >
