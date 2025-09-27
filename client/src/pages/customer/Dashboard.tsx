@@ -272,9 +272,12 @@ export const CustomerDashboard: React.FC = () => {
                   {product.farmer && (
                     <div className="mb-3 p-3 bg-mist rounded-lg">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-medium text-ink text-sm">
+                        <Link 
+                          to={`/farmer-profile/${product.farmerId}`}
+                          className="font-medium text-ink text-sm hover:text-primary-600 transition-colors"
+                        >
                           {product.farmer.farmName}
-                        </span>
+                        </Link>
                         {product.farmer.averageRating > 0 && (
                           <div className="flex items-center">
                             <Star className="w-3 h-3 text-yellow-400 fill-current mr-1" />

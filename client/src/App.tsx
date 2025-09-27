@@ -13,10 +13,12 @@ import { Register } from '@/pages/auth/Register';
 // Farmer Pages
 import { FarmerDashboard } from '@/pages/farmer/Dashboard';
 import { FarmerProducts } from '@/pages/farmer/Products';
+import { FarmerProfile } from '@/pages/farmer/Profile';
 
 // Customer Pages
 import { CustomerDashboard } from '@/pages/customer/Dashboard';
 import { CustomerFarmers } from '@/pages/customer/Farmers';
+import { CustomerProfile } from '@/pages/customer/Profile';
 
 // Protected Route Component
 interface ProtectedRouteProps {
@@ -53,7 +55,6 @@ const DashboardRedirect: React.FC = () => {
 };
 
 // Placeholder components for routes still to be implemented
-const FarmerProfile = () => <div className="p-8"><h1>Farmer Profile (Coming Soon)</h1></div>;
 const CustomerReviews = () => <div className="p-8"><h1>My Reviews (Coming Soon)</h1></div>;
 const Messages = () => <div className="p-8"><h1>Messages (Coming Soon)</h1></div>;
 
@@ -152,6 +153,7 @@ function App() {
                   <Routes>
                     <Route path="dashboard" element={<CustomerDashboard />} />
                     <Route path="farmers" element={<CustomerFarmers />} />
+                    <Route path="profile" element={<CustomerProfile />} />
                     <Route path="reviews" element={<CustomerReviews />} />
                   </Routes>
                 </Layout>
@@ -166,6 +168,18 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <Messages />
+                </Layout>
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Public Farmer Profile Route */}
+          <Route 
+            path="/farmer-profile/:id" 
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <FarmerProfile />
                 </Layout>
               </ProtectedRoute>
             } 

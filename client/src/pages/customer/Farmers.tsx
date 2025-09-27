@@ -228,23 +228,32 @@ export const CustomerFarmers: React.FC = () => {
                 </div>
               </CardContent>
 
-              <CardFooter className="flex gap-3">
+              <CardFooter className="flex gap-2">
                 <Button
                   onClick={() => handleContactFarmer(farmer.name || 'Farmer')}
                   variant="outline"
                   size="sm"
                   className="flex-1"
                 >
-                  <MessageCircle className="w-4 h-4 mr-2" />
+                  <MessageCircle className="w-4 h-4 mr-1" />
                   Contact
                 </Button>
+                <Link 
+                  to={`/farmer-profile/${farmer.userId}`}
+                  className="flex-1"
+                >
+                  <Button variant="outline" size="sm" className="w-full">
+                    <Users className="w-4 h-4 mr-1" />
+                    Profile
+                  </Button>
+                </Link>
                 <Link 
                   to={`/customer/dashboard?farmer=${farmer.userId}`}
                   className="flex-1"
                 >
                   <Button variant="primary" size="sm" className="w-full">
-                    <Package className="w-4 h-4 mr-2" />
-                    View Products
+                    <Package className="w-4 h-4 mr-1" />
+                    Products
                   </Button>
                 </Link>
               </CardFooter>

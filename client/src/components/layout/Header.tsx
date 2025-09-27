@@ -75,6 +75,9 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                   <Link to="/customer/farmers" className="nav-link">
                     Farmers
                   </Link>
+                  <Link to="/customer/profile" className="nav-link">
+                    Profile
+                  </Link>
                   <Link to="/customer/reviews" className="nav-link">
                     My Reviews
                   </Link>
