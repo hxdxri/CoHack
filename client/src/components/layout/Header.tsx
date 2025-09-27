@@ -122,12 +122,12 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
               </div>
             ) : (
               <div className="flex items-center space-x-3">
-                <Link to="/login">
+                <Link to="/auth">
                   <Button variant="outline" size="sm">
                     Login
                   </Button>
                 </Link>
-                <Link to="/register">
+                <Link to="/auth">
                   <Button variant="primary" size="sm">
                     Sign Up
                   </Button>
