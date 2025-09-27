@@ -9,6 +9,7 @@ import { LoadingPage } from '@/components/ui/LoadingSpinner';
 import { Landing } from '@/pages/Landing';
 import { Login } from '@/pages/auth/Login';
 import { Register } from '@/pages/auth/Register';
+import { Listing } from '@/pages/Listing';
 
 // Farmer Pages
 import { FarmerDashboard } from '@/pages/farmer/Dashboard';
@@ -106,6 +107,14 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Landing />} />
+          <Route 
+            path="/listing/:id" 
+            element={
+              <Layout>
+                <Listing />
+              </Layout>
+            } 
+          />
           <Route 
             path="/login" 
             element={

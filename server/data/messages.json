@@ -1,34 +1,34 @@
 [
   {
-    "id": "6996892f-247b-49dc-9da1-f97fab3c08e3",
-    "fromUserId": "f4771795-d367-49b5-a82f-b7d6acc63171",
-    "toUserId": "664c120a-91aa-4fea-be8c-156b7c1a5305",
+    "id": "10ac759c-21b3-4ba7-a4e2-05bba71b28d1",
+    "fromUserId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "toUserId": "39333f70-4760-45d1-bc00-d72263be6d59",
     "content": "Hi Sarah! I'm interested in your heirloom tomatoes. Do you have any available for pickup this weekend?",
     "isRead": false,
-    "createdAt": "2025-09-27T22:33:08.223Z"
+    "createdAt": "2025-09-27T22:52:54.782Z"
   },
   {
-    "id": "ed7969fe-c1ed-4e32-9066-d3644bf6abd8",
-    "fromUserId": "664c120a-91aa-4fea-be8c-156b7c1a5305",
-    "toUserId": "f4771795-d367-49b5-a82f-b7d6acc63171",
+    "id": "076b2f05-e7bf-40ad-b943-b4fdddef7b44",
+    "fromUserId": "39333f70-4760-45d1-bc00-d72263be6d59",
+    "toUserId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
     "content": "Hi Mike! Yes, I have plenty of heirloom tomatoes available. You can come by Saturday morning between 9-11 AM. The farm is located at 123 Green Valley Road.",
     "isRead": false,
-    "createdAt": "2025-09-27T22:33:08.223Z"
+    "createdAt": "2025-09-27T22:52:54.783Z"
   },
   {
-    "id": "0ca8b00a-d61f-4321-85b9-48634ad34e3b",
-    "fromUserId": "f4771795-d367-49b5-a82f-b7d6acc63171",
-    "toUserId": "664c120a-91aa-4fea-be8c-156b7c1a5305",
+    "id": "1cb903eb-b000-461b-a177-047e857894bf",
+    "fromUserId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "toUserId": "39333f70-4760-45d1-bc00-d72263be6d59",
     "content": "Perfect! I'll be there around 10 AM. Should I bring cash or do you accept cards?",
     "isRead": false,
-    "createdAt": "2025-09-27T22:33:08.223Z"
+    "createdAt": "2025-09-27T22:52:54.784Z"
   },
   {
-    "id": "96138227-c63b-4c10-9a77-7cbc31d7fcee",
-    "fromUserId": "664c120a-91aa-4fea-be8c-156b7c1a5305",
-    "toUserId": "f4771795-d367-49b5-a82f-b7d6acc63171",
+    "id": "7543b4ce-47b7-480c-9dc6-a5e22bc59f2b",
+    "fromUserId": "39333f70-4760-45d1-bc00-d72263be6d59",
+    "toUserId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
     "content": "Both cash and cards work fine! Looking forward to seeing you. Feel free to walk around the farm and see our other produce too.",
     "isRead": false,
-    "createdAt": "2025-09-27T22:33:08.223Z"
+    "createdAt": "2025-09-27T22:52:54.785Z"
   }
 ]

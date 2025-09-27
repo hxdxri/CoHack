@@ -253,7 +253,9 @@ export const CustomerDashboard: React.FC = () => {
                   {/* Product Info */}
                   <div className="mb-3">
                     <h3 className="font-semibold text-ink mb-1 group-hover:text-primary-500 transition-colors">
-                      {product.name}
+                      <Link to={`/listing/${product.id}`}>
+                        {product.name}
+                      </Link>
                     </h3>
                     <div className="flex items-center justify-between mb-2">
                       <Badge variant="primary" size="sm">
