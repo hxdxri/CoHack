@@ -267,4 +267,36 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  /* Farm pattern background */
+  .bg-farm-pattern {
+    background-image: url('/farm-pattern.svg');
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+
+  .bg-farm-pattern-subtle {
+    background-image: url('/farm-pattern.svg');
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    background-attachment: fixed;
+    background-position: 0 0;
+  }
+
+  .bg-farm-pattern-light {
+    background-image: url('/farm-pattern.svg');
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    background-attachment: fixed;
+    background-position: 0 0;
+  }
+
+  /* Full screen pattern for body */
+  .bg-farm-pattern-fullscreen {
+    background-image: url('/farm-pattern.svg');
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    background-attachment: fixed;
+    background-position: 0 0;
+  }
 }

@@ -29,7 +29,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-mist">
+    <div className="min-h-screen bg-mist bg-farm-pattern-subtle">
       <Header onMenuToggle={handleMenuToggle} />
       <MobileMenu isOpen={isMobileMenuOpen} onClose={handleMenuClose} />
       
