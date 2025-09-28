@@ -40,6 +40,8 @@ export const Slideshow: React.FC<SlideshowProps> = ({
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
+  const [imageLoaded, setImageLoaded] = useState<boolean[]>([]);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     if (!isPlaying || slides.length <= 1) return;
@@ -51,16 +53,43 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     return () => clearInterval(interval);
   }, [isPlaying, slides.length, autoPlayInterval]);
 
+  // Preload images
+  useEffect(() => {
+    const preloadImages = () => {
+      slides.forEach((slide, index) => {
+        const img = new Image();
+        img.onload = () => {
+          setImageLoaded(prev => {
+            const newLoaded = [...prev];
+            newLoaded[index] = true;
+            return newLoaded;
+          });
+        };
+        img.src = slide.image;
+      });
+    };
+    preloadImages();
+  }, [slides]);
+
   const goToSlide = (index: number) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrentSlide(index);
+    setTimeout(() => setIsTransitioning(false), 1000);
   };
 
   const goToPrevious = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setTimeout(() => setIsTransitioning(false), 1000);
   };
 
   const goToNext = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setTimeout(() => setIsTransitioning(false), 1000);
   };
 
   const togglePlayPause = () => {
@@ -73,11 +102,35 @@ export const Slideshow: React.FC<SlideshowProps> = ({
 
   return (
     <div className={`relative w-full h-screen overflow-hidden ${className}`}>
-      {/* Slide Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out"
-        style={{ backgroundImage: `url(${currentSlideData.image})` }}
-      >
+      {/* Slide Images with Crossfade */}
+      <div className="absolute inset-0 overflow-hidden">
+        {slides.map((slide, index) => (
+          <img
+            key={slide.id}
+            src={slide.image}
+            alt={slide.title}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+              index === currentSlide && imageLoaded[index] 
+                ? 'opacity-100' 
+                : 'opacity-0'
+            }`}
+            onLoad={() => {
+              setImageLoaded(prev => {
+                const newLoaded = [...prev];
+                newLoaded[index] = true;
+                return newLoaded;
+              });
+            }}
+          />
+        ))}
+        
+        {/* Loading placeholder */}
+        {!imageLoaded[currentSlide] && (
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+          </div>
+        )}
+        
         {/* Overlay */}
         <div className="absolute inset-0 bg-black bg-opacity-40" />
       </div>

@@ -35,7 +35,7 @@ export const Landing: React.FC = () => {
     },
     {
       id: 2,
-      image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      image: '/farmer.jpg',
       title: 'Sell Your Harvest',
       subtitle: 'Direct to Customers',
       description: 'Join our platform and sell your fresh produce directly to customers. Set your own prices and build lasting relationships with your community.',
