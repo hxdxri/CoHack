@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Leaf, Users, Heart, Target, Eye, Lightbulb, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
+import { ScrollNavbar } from '@/components/layout/ScrollNavbar';
 import { Footer } from '@/components/layout/Footer';
 
 /**
@@ -49,6 +50,9 @@ export const About: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Scroll-triggered Navigation */}
+      <ScrollNavbar />
+
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary-50 to-green-50">
         <div className="container-custom">

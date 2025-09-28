@@ -35,15 +35,36 @@ export const ScrollNavbar: React.FC<ScrollNavbarProps> = ({ className = '' }) =>
 
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Check if we're on the homepage
+    if (window.location.pathname === '/') {
+      // If on homepage, scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // If on other pages, navigate to homepage
+      navigate('/');
+    }
     closeMobileMenu();
   };
 
   const handleFindFarmsClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    const farmMapSection = document.querySelector('[data-section="farm-map"]');
-    if (farmMapSection) {
-      farmMapSection.scrollIntoView({ behavior: 'smooth' });
+    // Check if we're on the homepage
+    if (window.location.pathname === '/') {
+      // If on homepage, scroll to map section
+      const farmMapSection = document.querySelector('[data-section="farm-map"]');
+      if (farmMapSection) {
+        farmMapSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // If on other pages, navigate to homepage and then scroll to map
+      navigate('/');
+      // Use setTimeout to ensure navigation completes before scrolling
+      setTimeout(() => {
+        const farmMapSection = document.querySelector('[data-section="farm-map"]');
+        if (farmMapSection) {
+          farmMapSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
     closeMobileMenu();
   };
