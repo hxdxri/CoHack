@@ -51,7 +51,7 @@ export const Landing: React.FC = () => {
   const slideshowData = [
     {
       id: 1,
-      image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      image: '/hero1.jpeg',
       title: 'Fresh from Farm to Table',
       subtitle: 'Connect with Local Farmers',
       description: 'Discover the freshest produce from trusted farmers in your community. Support local agriculture while enjoying the best quality food.',
@@ -85,7 +85,7 @@ export const Landing: React.FC = () => {
     },
     {
       id: 3,
-      image: 'https://images.unsplash.com/photo-1464207687429-7505649dae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      image: '/hero2.jpeg',
       title: 'Sustainable Future',
       subtitle: 'Building Better Food Systems',
       description: 'Together, we\'re creating a more sustainable and equitable food system that benefits farmers, customers, and the environment.',

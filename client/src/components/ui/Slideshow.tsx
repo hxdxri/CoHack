@@ -137,19 +137,19 @@ export const Slideshow: React.FC<SlideshowProps> = ({
       </div>
 
       {/* Slide Content */}
-      <div className="relative z-10 flex items-center justify-center h-full">
-        <div className="text-center text-white px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 animate-fade-in">
+      <div className="relative z-10 flex items-center justify-start h-full">
+        <div className="text-left text-white px-16 py-16 max-w-2xl ml-8">
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 animate-fade-in text-white">
             {currentSlideData.title}
           </h1>
-          <h2 className="text-2xl md:text-3xl mb-6 text-green-100 animate-fade-in-delay">
+          <h2 className="text-2xl md:text-3xl mb-6 text-white animate-fade-in-delay">
             {currentSlideData.subtitle}
           </h2>
-          <p className="text-lg md:text-xl mb-8 text-gray-200 max-w-2xl mx-auto animate-fade-in-delay-2">
+          <p className="text-lg md:text-xl mb-8 text-white max-w-2xl animate-fade-in-delay-2">
             {currentSlideData.description}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-delay-3">
+          <div className="flex flex-col sm:flex-row gap-4 justify-start items-start animate-fade-in-delay-3">
             <Link to={currentSlideData.primaryButton.link}>
               <Button 
                 variant={currentSlideData.primaryButton.variant} 
