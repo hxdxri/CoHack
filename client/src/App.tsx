@@ -7,8 +7,6 @@ import { LoadingPage } from '@/components/ui/LoadingSpinner';
 
 // Pages
 import { Landing } from '@/pages/Landing';
-
-import { Listing } from '@/pages/Listing';
 import { Auth } from '@/pages/auth/Auth';
 
 
@@ -19,8 +17,8 @@ import { FarmerProfile } from '@/pages/farmer/Profile';
 
 // Customer Pages
 import { CustomerDashboard } from '@/pages/customer/Dashboard';
-import { CustomerFarmers } from '@/pages/customer/Farmers';
 import { CustomerProfile } from '@/pages/customer/Profile';
+import { Farm } from '@/pages/customer/Farm';
 
 // Protected Route Component
 interface ProtectedRouteProps {
@@ -151,7 +149,7 @@ function App() {
                 <Layout>
                   <Routes>
                     <Route path="dashboard" element={<CustomerDashboard />} />
-                    <Route path="farmers" element={<CustomerFarmers />} />
+                    <Route path="farm/:farmerId" element={<Farm />} />
                     <Route path="messages" element={<Messages />} />
                     <Route path="profile" element={<CustomerProfile />} />
                     <Route path="reviews" element={<CustomerReviews />} />
