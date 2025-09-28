@@ -9,6 +9,51 @@
     "updatedAt": "2025-09-27T22:52:54.671Z"
   },
   {
+    "id": "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
+    "email": "michael@sunrisemeadows.com",
+    "password": "$2a$10$uUTm8df7KMdztLEN96757OF/bZOHzIPAuRTnibvfpyn/tsqUx8tZa",
+    "name": "Michael Thompson",
+    "role": "farmer",
+    "createdAt": "2025-09-27T23:15:30.000Z",
+    "updatedAt": "2025-09-27T23:15:30.000Z"
+  },
+  {
+    "id": "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
+    "email": "david@mountainvieworchard.com",
+    "password": "$2a$10$uUTm8df7KMdztLEN96757OF/bZOHzIPAuRTnibvfpyn/tsqUx8tZa",
+    "name": "David Rodriguez",
+    "role": "farmer",
+    "createdAt": "2025-09-27T23:20:45.000Z",
+    "updatedAt": "2025-09-27T23:20:45.000Z"
+  },
+  {
+    "id": "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
+    "email": "linda@heritageberry.com",
+    "password": "$2a$10$uUTm8df7KMdztLEN96757OF/bZOHzIPAuRTnibvfpyn/tsqUx8tZa",
+    "name": "Linda Chen",
+    "role": "farmer",
+    "createdAt": "2025-09-27T23:25:15.000Z",
+    "updatedAt": "2025-09-27T23:25:15.000Z"
+  },
+  {
+    "id": "0c1d2e3f-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
+    "email": "robert@goldenfields.com",
+    "password": "$2a$10$uUTm8df7KMdztLEN96757OF/bZOHzIPAuRTnibvfpyn/tsqUx8tZa",
+    "name": "Robert Wilson",
+    "role": "farmer",
+    "createdAt": "2025-09-27T23:30:30.000Z",
+    "updatedAt": "2025-09-27T23:30:30.000Z"
+  },
+  {
+    "id": "1d2e3f4a-7b8c-9d0e-1f2a-3b4c5d6e7f8a",
+    "email": "maria@coastalgreenhouse.com",
+    "password": "$2a$10$uUTm8df7KMdztLEN96757OF/bZOHzIPAuRTnibvfpyn/tsqUx8tZa",
+    "name": "Maria Garcia",
+    "role": "farmer",
+    "createdAt": "2025-09-27T23:35:45.000Z",
+    "updatedAt": "2025-09-27T23:35:45.000Z"
+  },
+  {
     "id": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
     "email": "customer@harvestlink.com",
     "password": "$2a$10$fPoM3vT7ZXxWQRekCHOWZ.RSb5OSYMA5zfDSgXyAklU/bvoffHi5.",
@@ -16,5 +61,68 @@
     "role": "customer",
     "createdAt": "2025-09-27T22:52:54.775Z",
     "updatedAt": "2025-09-27T22:52:54.775Z"
+  },
+  {
+    "id": "2e3f4a5b-8c9d-0e1f-2a3b-4c5d6e7f8a9b",
+    "email": "jennifer@email.com",
+    "password": "$2a$10$fPoM3vT7ZXxWQRekCHOWZ.RSb5OSYMA5zfDSgXyAklU/bvoffHi5.",
+    "name": "Jennifer Martinez",
+    "role": "customer",
+    "createdAt": "2025-09-27T23:40:00.000Z",
+    "updatedAt": "2025-09-27T23:40:00.000Z"
+  },
+  {
+    "id": "3f4a5b6c-9d0e-1f2a-3b4c-5d6e7f8a9b0c",
+    "email": "alex@email.com",
+    "password": "$2a$10$fPoM3vT7ZXxWQRekCHOWZ.RSb5OSYMA5zfDSgXyAklU/bvoffHi5.",
+    "name": "Alex Thompson",
+    "role": "customer",
+    "createdAt": "2025-09-27T23:42:15.000Z",
+    "updatedAt": "2025-09-27T23:42:15.000Z"
+  },
+  {
+    "id": "4a5b6c7d-0e1f-2a3b-4c5d-6e7f8a9b0c1d",
+    "email": "sophia@email.com",
+    "password": "$2a$10$fPoM3vT7ZXxWQRekCHOWZ.RSb5OSYMA5zfDSgXyAklU/bvoffHi5.",
+    "name": "Sophia Williams",
+    "role": "customer",
+    "createdAt": "2025-09-27T23:44:30.000Z",
+    "updatedAt": "2025-09-27T23:44:30.000Z"
+  },
+  {
+    "id": "5b6c7d8e-1f2a-3b4c-5d6e-7f8a9b0c1d2e",
+    "email": "james@email.com",
+    "password": "$2a$10$fPoM3vT7ZXxWQRekCHOWZ.RSb5OSYMA5zfDSgXyAklU/bvoffHi5.",
+    "name": "James Brown",
+    "role": "customer",
+    "createdAt": "2025-09-27T23:46:45.000Z",
+    "updatedAt": "2025-09-27T23:46:45.000Z"
+  },
+  {
+    "id": "6c7d8e9f-2a3b-4c5d-6e7f-8a9b0c1d2e3f",
+    "email": "emma@email.com",
+    "password": "$2a$10$fPoM3vT7ZXxWQRekCHOWZ.RSb5OSYMA5zfDSgXyAklU/bvoffHi5.",
+    "name": "Emma Davis",
+    "role": "customer",
+    "createdAt": "2025-09-27T23:48:00.000Z",
+    "updatedAt": "2025-09-27T23:48:00.000Z"
+  },
+  {
+    "id": "7d8e9f0a-3b4c-5d6e-7f8a-9b0c1d2e3f4a",
+    "email": "william@email.com",
+    "password": "$2a$10$fPoM3vT7ZXxWQRekCHOWZ.RSb5OSYMA5zfDSgXyAklU/bvoffHi5.",
+    "name": "William Johnson",
+    "role": "customer",
+    "createdAt": "2025-09-27T23:50:15.000Z",
+    "updatedAt": "2025-09-27T23:50:15.000Z"
+  },
+  {
+    "id": "8e9f0a1b-4c5d-6e7f-8a9b-0c1d2e3f4a5b",
+    "email": "olivia@email.com",
+    "password": "$2a$10$fPoM3vT7ZXxWQRekCHOWZ.RSb5OSYMA5zfDSgXyAklU/bvoffHi5.",
+    "name": "Olivia Miller",
+    "role": "customer",
+    "createdAt": "2025-09-27T23:52:30.000Z",
+    "updatedAt": "2025-09-27T23:52:30.000Z"
   }
 ]

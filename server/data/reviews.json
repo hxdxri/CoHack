@@ -6,5 +6,149 @@
     "rating": 5,
     "comment": "Amazing tomatoes! The flavor is incredible and you can really taste the difference from store-bought. Sarah's farm is doing great work in sustainable agriculture.",
     "createdAt": "2025-09-27T22:52:54.779Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "customerId": "2e3f4a5b-8c9d-0e1f-2a3b-4c5d6e7f8a9b",
+    "farmerId": "39333f70-4760-45d1-bc00-d72263be6d59",
+    "rating": 5,
+    "comment": "The spinach is so fresh and tender! I've been buying from Green Valley for months and the quality is consistently excellent. Highly recommend!",
+    "createdAt": "2025-09-27T23:00:00.000Z"
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
+    "customerId": "3f4a5b6c-9d0e-1f2a-3b4c-5d6e7f8a9b0c",
+    "farmerId": "39333f70-4760-45d1-bc00-d72263be6d59",
+    "rating": 4,
+    "comment": "Great goat cheese! The flavor is perfect and it's clear they care about their animals. Will definitely order again.",
+    "createdAt": "2025-09-27T23:05:00.000Z"
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-cdef-345678901234",
+    "customerId": "4a5b6c7d-0e1f-2a3b-4c5d-6e7f8a9b0c1d",
+    "farmerId": "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
+    "rating": 5,
+    "comment": "The milk from Sunrise Meadows is absolutely incredible! You can taste the difference from grass-fed cows. The glass bottles are a nice touch too.",
+    "createdAt": "2025-09-27T23:10:00.000Z"
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-defa-456789012345",
+    "customerId": "5b6c7d8e-1f2a-3b4c-5d6e-7f8a9b0c1d2e",
+    "farmerId": "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
+    "rating": 5,
+    "comment": "Best cheddar cheese I've ever had! The aging process really shows in the complex flavors. Perfect for my cheese board.",
+    "createdAt": "2025-09-27T23:12:00.000Z"
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-efab-567890123456",
+    "customerId": "6c7d8e9f-2a3b-4c5d-6e7f-8a9b0c1d2e3f",
+    "farmerId": "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
+    "rating": 4,
+    "comment": "The Greek yogurt is thick and creamy, just like I remember from Greece! Great protein content and the probiotics are a bonus.",
+    "createdAt": "2025-09-27T23:14:00.000Z"
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-fabc-678901234567",
+    "customerId": "7d8e9f0a-3b4c-5d6e-7f8a-9b0c1d2e3f4a",
+    "farmerId": "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
+    "rating": 5,
+    "comment": "Honeycrisp apples are perfectly crisp and sweet! The orchard is beautiful and the pick-your-own experience was wonderful for the family.",
+    "createdAt": "2025-09-27T23:20:00.000Z"
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-gbcd-789012345678",
+    "customerId": "8e9f0a1b-4c5d-6e7f-8a9b-0c1d2e3f4a5b",
+    "farmerId": "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
+    "rating": 4,
+    "comment": "Northern Spy apples made the best apple pie I've ever baked! The tartness balances perfectly with the sugar. Will definitely buy more for baking season.",
+    "createdAt": "2025-09-27T23:22:00.000Z"
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-hcde-890123456789",
+    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "farmerId": "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
+    "rating": 5,
+    "comment": "The apple cider is absolutely delicious! Fresh-pressed and unfiltered - you can taste the difference. Perfect for fall gatherings.",
+    "createdAt": "2025-09-27T23:24:00.000Z"
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-idef-901234567890",
+    "customerId": "2e3f4a5b-8c9d-0e1f-2a3b-4c5d6e7f8a9b",
+    "farmerId": "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
+    "rating": 5,
+    "comment": "Strawberries are incredibly sweet and juicy! The u-pick experience was fun and the berries were perfect. My kids loved it!",
+    "createdAt": "2025-09-27T23:30:00.000Z"
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-jefa-012345678901",
+    "customerId": "3f4a5b6c-9d0e-1f2a-3b4c-5d6e7f8a9b0c",
+    "farmerId": "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
+    "rating": 4,
+    "comment": "Blueberries are plump and flavorful! Great for smoothies and the kids love them as snacks. The farm is well-maintained and the staff is friendly.",
+    "createdAt": "2025-09-27T23:32:00.000Z"
+  },
+  {
+    "id": "e1f2a3b4-c5d6-7890-kfab-123456789012",
+    "customerId": "4a5b6c7d-0e1f-2a3b-4c5d-6e7f8a9b0c1d",
+    "farmerId": "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
+    "rating": 5,
+    "comment": "Raspberries are perfect for making jam! Sweet and tart, exactly what I was looking for. The farm's organic methods really show in the quality.",
+    "createdAt": "2025-09-27T23:34:00.000Z"
+  },
+  {
+    "id": "f2a3b4c5-d6e7-8901-labc-234567890123",
+    "customerId": "5b6c7d8e-1f2a-3b4c-5d6e-7f8a9b0c1d2e",
+    "farmerId": "0c1d2e3f-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
+    "rating": 4,
+    "comment": "The whole wheat flour makes amazing bread! You can taste the freshness and the stone-ground texture is perfect. Great for serious bakers.",
+    "createdAt": "2025-09-27T23:40:00.000Z"
+  },
+  {
+    "id": "a3b4c5d6-e7f8-9012-mbcd-345678901234",
+    "customerId": "6c7d8e9f-2a3b-4c5d-6e7f-8a9b0c1d2e3f",
+    "farmerId": "0c1d2e3f-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
+    "rating": 5,
+    "comment": "Rolled oats are perfect for my morning oatmeal! The quality is excellent and knowing they're grown locally makes it even better.",
+    "createdAt": "2025-09-27T23:42:00.000Z"
+  },
+  {
+    "id": "b4c5d6e7-f8a9-0123-ncde-456789012345",
+    "customerId": "7d8e9f0a-3b4c-5d6e-7f8a-9b0c1d2e3f4a",
+    "farmerId": "0c1d2e3f-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
+    "rating": 4,
+    "comment": "Barley is great for soups! The nutty flavor adds depth to my recipes. Good value for the quality you get.",
+    "createdAt": "2025-09-27T23:44:00.000Z"
+  },
+  {
+    "id": "c5d6e7f8-a9b0-1234-odef-567890123456",
+    "customerId": "8e9f0a1b-4c5d-6e7f-8a9b-0c1d2e3f4a5b",
+    "farmerId": "1d2e3f4a-7b8c-9d0e-1f2a-3b4c5d6e7f8a",
+    "rating": 5,
+    "comment": "Cherry tomatoes are perfect year-round! The greenhouse setup is impressive and the tomatoes are always fresh and sweet.",
+    "createdAt": "2025-09-27T23:50:00.000Z"
+  },
+  {
+    "id": "d6e7f8a9-b0c1-2345-pfga-678901234567",
+    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "farmerId": "1d2e3f4a-7b8c-9d0e-1f2a-3b4c5d6e7f8a",
+    "rating": 4,
+    "comment": "Bell peppers are crisp and colorful! The hydroponic growing method produces consistent quality. Great for stir-fries and salads.",
+    "createdAt": "2025-09-27T23:52:00.000Z"
+  },
+  {
+    "id": "e7f8a9b0-c1d2-3456-qgab-789012345678",
+    "customerId": "2e3f4a5b-8c9d-0e1f-2a3b-4c5d6e7f8a9b",
+    "farmerId": "1d2e3f4a-7b8c-9d0e-1f2a-3b4c5d6e7f8a",
+    "rating": 5,
+    "comment": "Fresh basil is incredibly aromatic! Perfect for making pesto and Italian dishes. The greenhouse ensures consistent quality year-round.",
+    "createdAt": "2025-09-27T23:54:00.000Z"
+  },
+  {
+    "id": "f8a9b0c1-d2e3-4567-rabc-890123456789",
+    "customerId": "3f4a5b6c-9d0e-1f2a-3b4c-5d6e7f8a9b0c",
+    "farmerId": "1d2e3f4a-7b8c-9d0e-1f2a-3b4c5d6e7f8a",
+    "rating": 5,
+    "comment": "Microgreens are a game-changer! So nutrient-dense and flavorful. Perfect for adding to salads and sandwiches. The variety is impressive!",
+    "createdAt": "2025-09-27T23:56:00.000Z"
   }
 ]

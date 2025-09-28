@@ -30,5 +30,149 @@
     "content": "Both cash and cards work fine! Looking forward to seeing you. Feel free to walk around the farm and see our other produce too.",
     "isRead": false,
     "createdAt": "2025-09-27T22:52:54.785Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "fromUserId": "2e3f4a5b-8c9d-0e1f-2a3b-4c5d6e7f8a9b",
+    "toUserId": "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
+    "content": "Hi Michael! I'm interested in your fresh milk. Do you deliver to the downtown area?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:15:30.000Z"
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
+    "fromUserId": "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
+    "toUserId": "2e3f4a5b-8c9d-0e1f-2a3b-4c5d6e7f8a9b",
+    "content": "Hi Jennifer! Yes, we deliver to downtown on Tuesdays and Fridays. What size would you like? We have half-gallon and gallon bottles.",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:16:00.000Z"
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-cdef-345678901234",
+    "fromUserId": "3f4a5b6c-9d0e-1f2a-3b4c-5d6e7f8a9b0c",
+    "toUserId": "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
+    "content": "Hello David! I'd like to visit your orchard for apple picking. What are your hours this weekend?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:20:45.000Z"
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-defa-456789012345",
+    "fromUserId": "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
+    "toUserId": "3f4a5b6c-9d0e-1f2a-3b4c-5d6e7f8a9b0c",
+    "content": "Hi Alex! We're open Saturday 9 AM - 5 PM and Sunday 10 AM - 4 PM. The Honeycrisp apples are at their peak right now!",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:21:15.000Z"
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-efab-567890123456",
+    "fromUserId": "4a5b6c7d-0e1f-2a3b-4c5d-6e7f8a9b0c1d",
+    "toUserId": "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
+    "content": "Hi Linda! Are your strawberries still in season? I'd love to bring my kids for u-pick!",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:25:15.000Z"
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-fabc-678901234567",
+    "fromUserId": "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
+    "toUserId": "4a5b6c7d-0e1f-2a3b-4c5d-6e7f8a9b0c1d",
+    "content": "Hi Sophia! Yes, strawberries are still going strong! We're open for u-pick on weekends 8 AM - 2 PM. The kids will love it!",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:25:45.000Z"
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-gbcd-789012345678",
+    "fromUserId": "5b6c7d8e-1f2a-3b4c-5d6e-7f8a9b0c1d2e",
+    "toUserId": "0c1d2e3f-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
+    "content": "Hello Robert! I'm a baker and interested in your whole wheat flour. Do you have any bulk pricing?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:30:30.000Z"
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-hcde-890123456789",
+    "fromUserId": "0c1d2e3f-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
+    "toUserId": "5b6c7d8e-1f2a-3b4c-5d6e-7f8a9b0c1d2e",
+    "content": "Hi James! Yes, we offer 10% discount on orders over 50 lbs. The flour is stone-ground fresh weekly. How much are you looking for?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:31:00.000Z"
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-idef-901234567890",
+    "fromUserId": "6c7d8e9f-2a3b-4c5d-6e7f-8a9b0c1d2e3f",
+    "toUserId": "1d2e3f4a-7b8c-9d0e-1f2a-3b4c5d6e7f8a",
+    "content": "Hi Maria! I'm interested in your microgreens for my restaurant. Do you offer regular delivery?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:35:45.000Z"
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-jefa-012345678901",
+    "fromUserId": "1d2e3f4a-7b8c-9d0e-1f2a-3b4c5d6e7f8a",
+    "toUserId": "6c7d8e9f-2a3b-4c5d-6e7f-8a9b0c1d2e3f",
+    "content": "Hi Emma! Yes, we deliver to restaurants twice weekly. What's your restaurant name and how much volume do you need?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:36:15.000Z"
+  },
+  {
+    "id": "e1f2a3b4-c5d6-7890-kfab-123456789012",
+    "fromUserId": "7d8e9f0a-3b4c-5d6e-7f8a-9b0c1d2e3f4a",
+    "toUserId": "39333f70-4760-45d1-bc00-d72263be6d59",
+    "content": "Hi Sarah! I loved the goat cheese I bought last week. Do you have any more available?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:40:00.000Z"
+  },
+  {
+    "id": "f2a3b4c5-d6e7-8901-labc-234567890123",
+    "fromUserId": "39333f70-4760-45d1-bc00-d72263be6d59",
+    "toUserId": "7d8e9f0a-3b4c-5d6e-7f8a-9b0c1d2e3f4a",
+    "content": "Hi William! I'm so glad you enjoyed it! Yes, I have 8 wheels left from this week's batch. They're aged to perfection!",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:40:30.000Z"
+  },
+  {
+    "id": "a3b4c5d6-e7f8-9012-mbcd-345678901234",
+    "fromUserId": "8e9f0a1b-4c5d-6e7f-8a9b-0c1d2e3f4a5b",
+    "toUserId": "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
+    "content": "Hi Michael! I'm interested in your aged cheddar. How long has it been aged?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:45:00.000Z"
+  },
+  {
+    "id": "b4c5d6e7-f8a9-0123-ncde-456789012345",
+    "fromUserId": "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
+    "toUserId": "8e9f0a1b-4c5d-6e7f-8a9b-0c1d2e3f4a5b",
+    "content": "Hi Olivia! The cheddar is aged for 12 months. It has a nice sharp flavor that's perfect for cheese boards or cooking. Would you like to try a sample?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:45:30.000Z"
+  },
+  {
+    "id": "c5d6e7f8-a9b0-1234-odef-567890123456",
+    "fromUserId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "toUserId": "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
+    "content": "Hi David! I'm planning to make apple cider donuts. Which apple variety would you recommend?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:50:00.000Z"
+  },
+  {
+    "id": "d6e7f8a9-b0c1-2345-pfga-678901234567",
+    "fromUserId": "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
+    "toUserId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "content": "Hi Mike! For cider donuts, I'd recommend the Northern Spy apples - they have the perfect tartness and hold their shape well when cooked. We have plenty in stock!",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:50:30.000Z"
+  },
+  {
+    "id": "e7f8a9b0-c1d2-3456-qgab-789012345678",
+    "fromUserId": "2e3f4a5b-8c9d-0e1f-2a3b-4c5d6e7f8a9b",
+    "toUserId": "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
+    "content": "Hi Linda! I'm making a mixed berry pie. Do you have raspberries and blueberries available?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:55:00.000Z"
+  },
+  {
+    "id": "f8a9b0c1-d2e3-4567-rabc-890123456789",
+    "fromUserId": "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
+    "toUserId": "2e3f4a5b-8c9d-0e1f-2a3b-4c5d6e7f8a9b",
+    "content": "Hi Jennifer! Yes, both are in season and looking beautiful! The raspberries are especially sweet right now. How many pints do you need?",
+    "isRead": false,
+    "createdAt": "2025-09-27T23:55:30.000Z"
   }
 ]
