@@ -11,8 +11,12 @@ HarvestLink is a React + TypeScript + Tailwind CSS + Node.js/Express application
 - **🔐 Authentication**: Email/password registration & login with separate roles (farmer/customer)
 - **👨‍🌾 Farmer Dashboard**: Create, edit, delete product listings with farm profile management
 - **🛒 Customer Dashboard**: Browse products, view farmer profiles, and product details
+- **🛍️ Shopping Cart**: Add products to cart with quantity management and checkout flow
+- **📦 Order Management**: Complete order lifecycle from placement to fulfillment
+- **🔢 PIN System**: Secure pickup PINs for order verification (PIN: 5678)
 - **💬 Chat System**: Direct messaging between farmers and customers
 - **⭐ Reviews**: Customer reviews and ratings for farmers
+- **📊 Order History**: Comprehensive order tracking and past order management
 - **📱 Responsive Design**: Mobile-first design with HarvestLink custom theme
 
 ### 🎨 Design System
@@ -84,24 +88,57 @@ This will start:
 ```
 CoHack/
 ├── server/                 # Express backend
+│   ├── data/              # JSON data storage
+│   │   ├── farmer_profiles.json
+│   │   ├── messages.json
+│   │   ├── orders.json
+│   │   ├── products.json
+│   │   ├── reviews.json
+│   │   └── users.json
 │   ├── src/
-│   │   ├── models/        # Data models (User, Product, Message, Review)
-│   │   ├── routes/        # API routes
+│   │   ├── models/        # Data models (User, Product, Message, Review, Order)
+│   │   ├── routes/        # API routes (auth, farmers, messages, orders, products, reviews)
 │   │   ├── middleware/    # Auth middleware
 │   │   ├── storage/       # localStorage simulation
 │   │   ├── scripts/       # Seed script
 │   │   └── types/         # TypeScript types
-│   └── package.json
+│   ├── package.json
+│   └── tsconfig.json
 ├── client/                # React frontend
+│   ├── public/            # Static assets
+│   │   ├── farm-pattern.svg
+│   │   ├── farm1.jpg, farm2.avif, farm3.jpg, farm4.jpg
+│   │   ├── farmer.jpg
+│   │   ├── favicon.svg
+│   │   └── hero1.jpeg, hero2.jpeg
 │   ├── src/
 │   │   ├── components/    # Reusable UI components
+│   │   │   ├── layout/    # Layout components (Header, Footer, Layout, MobileMenu, ScrollNavbar)
+│   │   │   ├── profile/   # Profile components (EditProfileModal, ProfileLayout)
+│   │   │   └── ui/        # UI components (Button, Card, Input, Modal, etc.)
 │   │   ├── pages/         # Page components
-│   │   ├── store/         # Zustand state management
+│   │   │   ├── auth/      # Authentication pages
+│   │   │   ├── customer/  # Customer pages (Dashboard, Cart, Checkout, Farm, PastOrders, ProductListing, Profile)
+│   │   │   ├── farmer/    # Farmer pages (Dashboard, OrderFulfillment, Products, Profile)
+│   │   │   ├── About.tsx
+│   │   │   ├── Landing.tsx
+│   │   │   ├── Listing.tsx
+│   │   │   └── Messages.tsx
+│   │   ├── store/         # Zustand state management (auth, cart, messages)
 │   │   ├── lib/           # API utilities
-│   │   └── types/         # TypeScript types
+│   │   ├── types/         # TypeScript types
+│   │   ├── App.tsx
+│   │   ├── main.tsx
+│   │   └── index.css
+│   ├── index.html
 │   ├── tailwind.config.js # Tailwind configuration
+│   ├── postcss.config.js
+│   ├── vite.config.ts
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
 │   └── package.json
-└── package.json           # Root package.json
+├── package.json           # Root package.json
+└── README.md
 ```
 
 ## 🛠️ Technology Stack
@@ -149,6 +186,14 @@ CoHack/
 - `GET /api/messages/conversation/:userId` - Get conversation with user
 - `POST /api/messages/send` - Send message
 - `GET /api/messages/unread/count` - Get unread message count
+
+### Orders
+- `GET /api/orders` - Get all orders (farmers only)
+- `GET /api/orders/my` - Get my orders (customers) or my farm orders (farmers)
+- `POST /api/orders` - Create new order (customers only)
+- `PUT /api/orders/:id` - Update order status (farmers only)
+- `GET /api/orders/:id` - Get order details
+- `DELETE /api/orders/:id` - Cancel order
 
 ### Reviews
 - `POST /api/reviews` - Create review (customers only)
@@ -321,6 +366,29 @@ npm run client:build
 npm run seed
 ```
 
+## 🆕 Recent Updates
+
+### Order Management System
+- **Complete Order Lifecycle**: From cart to checkout to fulfillment
+- **Order Status Tracking**: Real-time status updates (pending → confirmed → preparing → ready → delivered)
+- **PIN System**: Secure pickup verification with PIN: 5678
+- **Order History**: Comprehensive past orders with search, filtering, and sorting
+- **Order Fulfillment**: Farmer dashboard for managing incoming orders
+
+### Enhanced UI Components
+- **Order Management Table**: Advanced table with sorting and filtering
+- **Status Badges**: Visual status indicators for orders
+- **PIN Entry Modal**: Secure PIN verification system
+- **Enhanced Farm Timeline**: Improved farm activity tracking
+- **Photo Galleries**: Horizontal and vertical photo displays
+- **Google Maps Integration**: Farm location mapping
+
+### Shopping Experience
+- **Shopping Cart**: Full cart functionality with quantity management
+- **Checkout Process**: Complete checkout flow with order confirmation
+- **Product Listings**: Enhanced product browsing and filtering
+- **Farm Profiles**: Detailed farmer and farm information pages
+
 ## 🚀 Extending Features
 
 ### Adding New API Endpoints
@@ -397,6 +465,41 @@ interface Review {
   rating: number;
   comment: string;
   createdAt: string;
+}
+```
+
+### Order
+```typescript
+interface Order {
+  id: string;
+  farmerId: string;
+  customerId: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string;
+  items: OrderItem[];
+  totalAmount: number;
+  status: 'pending' | 'confirmed' | 'preparing' | 'ready' | 'out_for_delivery' | 'delivered' | 'cancelled';
+  orderDate: string;
+  deliveryDate?: string;
+  deliveryAddress?: string;
+  deliveryPin?: string;
+  notes?: string;
+  rating?: number;
+  review?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface OrderItem {
+  id: string;
+  productId: string;
+  productName: string;
+  category: string;
+  quantity: number;
+  unit: string;
+  price: number;
+  imageUrl?: string;
 }
 ```
 
