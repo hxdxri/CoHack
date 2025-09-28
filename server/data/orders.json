@@ -2,9 +2,9 @@
   {
     "id": "order_1703123456789",
     "farmerId": "39333f70-4760-45d1-bc00-d72263be6d59",
-    "customerId": "customer_1",
-    "customerName": "John Smith",
-    "customerEmail": "john.smith@email.com",
+    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "customerName": "Mike Chen",
+    "customerEmail": "customer@harvestlink.com",
     "customerPhone": "(555) 123-4567",
     "items": [
       {
@@ -40,9 +40,9 @@
   {
     "id": "order_1703123456790",
     "farmerId": "39333f70-4760-45d1-bc00-d72263be6d59",
-    "customerId": "customer_2",
-    "customerName": "Sarah Johnson",
-    "customerEmail": "sarah.johnson@email.com",
+    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "customerName": "Mike Chen",
+    "customerEmail": "customer@harvestlink.com",
     "customerPhone": "(555) 987-6543",
     "items": [
       {
@@ -69,9 +69,9 @@
   {
     "id": "order_1703123456791",
     "farmerId": "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
-    "customerId": "customer_3",
-    "customerName": "Mike Wilson",
-    "customerEmail": "mike.wilson@email.com",
+    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "customerName": "Mike Chen",
+    "customerEmail": "customer@harvestlink.com",
     "customerPhone": "(555) 456-7890",
     "items": [
       {
@@ -108,9 +108,9 @@
   {
     "id": "order_1703123456792",
     "farmerId": "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
-    "customerId": "customer_4",
-    "customerName": "Emily Davis",
-    "customerEmail": "emily.davis@email.com",
+    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "customerName": "Mike Chen",
+    "customerEmail": "customer@harvestlink.com",
     "customerPhone": "(555) 321-0987",
     "items": [
       {
@@ -147,9 +147,9 @@
   {
     "id": "order_1703123456793",
     "farmerId": "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
-    "customerId": "customer_5",
-    "customerName": "David Brown",
-    "customerEmail": "david.brown@email.com",
+    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "customerName": "Mike Chen",
+    "customerEmail": "customer@harvestlink.com",
     "customerPhone": "(555) 654-3210",
     "items": [
       {
@@ -186,9 +186,9 @@
   {
     "id": "order_1703123456794",
     "farmerId": "0c1d2e3f-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
-    "customerId": "customer_6",
-    "customerName": "Lisa Anderson",
-    "customerEmail": "lisa.anderson@email.com",
+    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    "customerName": "Mike Chen",
+    "customerEmail": "customer@harvestlink.com",
     "customerPhone": "(555) 789-0123",
     "items": [
       {

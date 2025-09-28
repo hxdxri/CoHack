@@ -24,7 +24,7 @@ async function seedDatabase() {
       userId: farmer.id,
       farmName: 'Green Valley Organic Farm',
       description: 'Family-owned organic farm specializing in fresh vegetables and sustainable farming practices. We have been serving the local community for over 20 years with the highest quality produce.',
-      location: 'Sonoma County, California',
+      location: 'Saskatoon, Saskatchewan',
       farmHistory: 'Founded in 2003 by the Johnson family, Green Valley Organic Farm started as a small 5-acre plot and has grown to a 50-acre certified organic operation. We focus on sustainable farming methods, crop rotation, and natural pest management to provide the freshest, healthiest produce to our community.',
     });
 

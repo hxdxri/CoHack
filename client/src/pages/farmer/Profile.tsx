@@ -51,8 +51,19 @@ export const FarmerProfile: React.FC = () => {
     const handleScroll = () => {
       if (headerRef.current) {
         const headerBottom = headerRef.current.getBoundingClientRect().bottom;
-        // Add offset for navigation bar height (typically 64px)
-        setShowStickySidebar(headerBottom < 80);
+        const footer = document.querySelector('footer');
+        
+        // Show sidebar when header is scrolled past
+        const headerPassed = headerBottom < 80;
+        
+        // Hide sidebar when footer comes into view
+        let footerNotReached = true;
+        if (footer) {
+          const footerRect = footer.getBoundingClientRect();
+          footerNotReached = footerRect.top > window.innerHeight * 0.3; // Hide when footer is 30% into viewport
+        }
+        
+        setShowStickySidebar(headerPassed && footerNotReached);
       }
     };
 
@@ -185,7 +196,7 @@ export const FarmerProfile: React.FC = () => {
 
   return (
     <ProfileLayout>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:pr-96">
         {/* Cover Photo Section */}
         {profile.coverPhoto && (
           <section className="mb-6 relative">
@@ -588,7 +599,7 @@ export const FarmerProfile: React.FC = () => {
           </div>
 
           {/* Sticky Sidebar */}
-          <div className={`hidden lg:block w-80 flex-shrink-0 transition-all duration-300 ${
+          <div className={`hidden lg:block w-72 flex-shrink-0 transition-all duration-300 ${
             showStickySidebar ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
           }`}>
             <div className="sticky top-20 space-y-4">
