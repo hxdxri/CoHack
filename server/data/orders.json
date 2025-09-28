@@ -1,111 +1,5 @@
 [
   {
-    "id": "order_1703123456789",
-    "farmerId": "39333f70-4760-45d1-bc00-d72263be6d59",
-    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    "customerName": "Mike Chen",
-    "customerEmail": "customer@harvestlink.com",
-    "customerPhone": "(555) 123-4567",
-    "items": [
-      {
-        "id": "item_1",
-        "productId": "83e254ff-12f3-4e76-95f7-fb3ab45e3c23",
-        "productName": "Organic Heirloom Tomatoes",
-        "category": "vegetables",
-        "quantity": 3,
-        "unit": "lb",
-        "price": 4.99,
-        "imageUrl": null
-      },
-      {
-        "id": "item_2",
-        "productId": "c0bd2b4e-b24b-4895-bebc-76cd8a976641",
-        "productName": "Fresh Spinach Bunches",
-        "category": "vegetables",
-        "quantity": 2,
-        "unit": "bunch",
-        "price": 3.5,
-        "imageUrl": null
-      }
-    ],
-    "totalAmount": 20.47,
-    "status": "pending",
-    "orderDate": "2025-01-15T10:30:00.000Z",
-    "deliveryAddress": "123 Main Street, Saskatoon, SK S7K 1A1",
-    "deliveryPin": "ABC123",
-    "notes": "Please leave at front door if no answer",
-    "rating": null,
-    "review": null
-  },
-  {
-    "id": "order_1703123456790",
-    "farmerId": "39333f70-4760-45d1-bc00-d72263be6d59",
-    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    "customerName": "Mike Chen",
-    "customerEmail": "customer@harvestlink.com",
-    "customerPhone": "(555) 987-6543",
-    "items": [
-      {
-        "id": "item_3",
-        "productId": "d8a3bc95-9cb9-4c0e-a6ea-749ac6d387c7",
-        "productName": "Artisan Goat Cheese",
-        "category": "dairy",
-        "quantity": 1,
-        "unit": "wheel",
-        "price": 12.99,
-        "imageUrl": null
-      }
-    ],
-    "totalAmount": 12.99,
-    "status": "confirmed",
-    "orderDate": "2025-01-14T14:20:00.000Z",
-    "deliveryDate": "2025-01-16T09:00:00.000Z",
-    "deliveryAddress": "456 Oak Avenue, Saskatoon, SK S7K 2B2",
-    "deliveryPin": "XYZ789",
-    "notes": "Customer prefers morning delivery",
-    "rating": null,
-    "review": null
-  },
-  {
-    "id": "order_1703123456791",
-    "farmerId": "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
-    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    "customerName": "Mike Chen",
-    "customerEmail": "customer@harvestlink.com",
-    "customerPhone": "(555) 456-7890",
-    "items": [
-      {
-        "id": "item_4",
-        "productId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-        "productName": "Fresh Whole Milk",
-        "category": "dairy",
-        "quantity": 2,
-        "unit": "gallon",
-        "price": 6.99,
-        "imageUrl": null
-      },
-      {
-        "id": "item_5",
-        "productId": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
-        "productName": "Aged Cheddar Cheese",
-        "category": "dairy",
-        "quantity": 1,
-        "unit": "lb",
-        "price": 18.99,
-        "imageUrl": null
-      }
-    ],
-    "totalAmount": 32.97,
-    "status": "preparing",
-    "orderDate": "2025-01-13T16:45:00.000Z",
-    "deliveryDate": "2025-01-17T10:00:00.000Z",
-    "deliveryAddress": "789 Pine Street, Regina, SK S4P 1A1",
-    "deliveryPin": "DEF456",
-    "notes": "Customer will pick up at farm",
-    "rating": null,
-    "review": null
-  },
-  {
     "id": "order_1703123456792",
     "farmerId": "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
     "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
@@ -145,81 +39,30 @@
     "review": null
   },
   {
-    "id": "order_1703123456793",
-    "farmerId": "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
-    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    "customerName": "Mike Chen",
-    "customerEmail": "customer@harvestlink.com",
-    "customerPhone": "(555) 654-3210",
+    "id": "ORD-002",
+    "farmerId": "39333f70-4760-45d1-bc00-d72263be6d59",
+    "customerId": "customer-2",
+    "customerName": "Michael Chen",
+    "customerEmail": "michael.chen@email.com",
+    "customerPhone": "+1 (555) 987-6543",
     "items": [
       {
-        "id": "item_8",
-        "productId": "a7b8c9d0-e1f2-3456-gbcd-789012345678",
-        "productName": "Fresh Strawberries",
-        "category": "fruits",
-        "quantity": 4,
-        "unit": "pint",
-        "price": 5.99,
-        "imageUrl": null
-      },
-      {
-        "id": "item_9",
-        "productId": "b8c9d0e1-f2a3-4567-hcde-890123456789",
-        "productName": "Blueberries",
-        "category": "fruits",
+        "id": "item-3",
+        "productId": "product-3",
+        "productName": "Fresh Basil",
+        "category": "vegetables",
         "quantity": 2,
-        "unit": "pint",
-        "price": 6.99,
-        "imageUrl": null
+        "unit": "bunches",
+        "price": 2.99,
+        "imageUrl": "/products/basil.jpg"
       }
     ],
-    "totalAmount": 35.94,
-    "status": "out_for_delivery",
-    "orderDate": "2025-01-11T09:30:00.000Z",
-    "deliveryDate": "2025-01-15T15:30:00.000Z",
-    "deliveryAddress": "654 Maple Drive, Moose Jaw, SK S6H 2C2",
-    "deliveryPin": "JKL012",
-    "notes": "Out for delivery - ETA 15:30",
-    "rating": null,
-    "review": null
-  },
-  {
-    "id": "order_1703123456794",
-    "farmerId": "0c1d2e3f-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
-    "customerId": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    "customerName": "Mike Chen",
-    "customerEmail": "customer@harvestlink.com",
-    "customerPhone": "(555) 789-0123",
-    "items": [
-      {
-        "id": "item_10",
-        "productId": "d0e1f2a3-b4c5-6789-jefa-012345678901",
-        "productName": "Whole Wheat Flour",
-        "category": "grains",
-        "quantity": 2,
-        "unit": "lb",
-        "price": 4.99,
-        "imageUrl": null
-      },
-      {
-        "id": "item_11",
-        "productId": "e1f2a3b4-c5d6-7890-kfab-123456789012",
-        "productName": "Rolled Oats",
-        "category": "grains",
-        "quantity": 3,
-        "unit": "lb",
-        "price": 3.99,
-        "imageUrl": null
-      }
-    ],
-    "totalAmount": 18.95,
-    "status": "delivered",
-    "orderDate": "2025-01-10T13:20:00.000Z",
-    "deliveryDate": "2025-01-12T11:00:00.000Z",
-    "deliveryAddress": "987 Cedar Lane, North Battleford, SK S9A 3D3",
-    "deliveryPin": "MNO345",
-    "notes": "Successfully delivered",
-    "rating": 5,
-    "review": "Excellent quality flour and oats! Will definitely order again."
+    "totalAmount": 5.98,
+    "status": "preparing",
+    "orderDate": "2025-01-15T14:20:00.000Z",
+    "deliveryDate": "2025-01-16T10:00:00.000Z",
+    "deliveryAddress": "456 Oak Avenue, Regina, SK S4P 1A1",
+    "notes": "Customer prefers morning delivery",
+    "deliveryPin": "5678"
   }
 ]

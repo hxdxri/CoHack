@@ -15,43 +15,43 @@ import toast from 'react-hot-toast';
 
 // Mock order data for demonstration
 const mockOrders: Order[] = [
-  {
-    id: 'ORD-001',
-    farmerId: 'farmer-1',
-    customerId: 'customer-1',
-    customerName: 'Mike Tyson',
-    customerEmail: 'mike.tyson@email.com',
-    customerPhone: '+1 (555) 123-4567',
-    items: [
-      {
-        id: 'item-1',
-        productId: 'product-1',
-        productName: 'Organic Heirloom Tomatoes',
-        category: 'vegetables',
-        quantity: 5,
-        unit: 'lbs',
-        price: 4.99,
-        imageUrl: '/products/tomatoes.jpg'
-      },
-      {
-        id: 'item-2',
-        productId: 'product-2',
-        productName: 'Fresh Spinach Bunches',
-        category: 'vegetables',
-        quantity: 3,
-        unit: 'bunches',
-        price: 3.50,
-        imageUrl: '/products/spinach.jpg'
-      }
-    ],
-    totalAmount: 33.45,
-    status: 'out_for_delivery',
-    orderDate: '2025-01-15T10:30:00.000Z',
-    deliveryDate: '2025-01-15T16:00:00.000Z',
-    deliveryAddress: '123 Main St, Apt 4B, Saskatoon, SK S7K 1A1',
-    notes: 'Please ring doorbell twice. Leave at door if no answer.',
-    deliveryPin: '1234'
-  },
+  // {
+  //   id: 'ORD-001',
+  //   farmerId: 'farmer-1',
+  //   customerId: 'customer-1',
+  //   customerName: 'Mike Tyson',
+  //   customerEmail: 'mike.tyson@email.com',
+  //   customerPhone: '+1 (555) 123-4567',
+  //   items: [
+  //     {
+  //       id: 'item-1',
+  //       productId: 'product-1',
+  //       productName: 'Organic Heirloom Tomatoes',
+  //       category: 'vegetables',
+  //       quantity: 5,
+  //       unit: 'lbs',
+  //       price: 4.99,
+  //       imageUrl: '/products/tomatoes.jpg'
+  //     },
+  //     {
+  //       id: 'item-2',
+  //       productId: 'product-2',
+  //       productName: 'Fresh Spinach Bunches',
+  //       category: 'vegetables',
+  //       quantity: 3,
+  //       unit: 'bunches',
+  //       price: 3.50,
+  //       imageUrl: '/products/spinach.jpg'
+  //     }
+  //   ],
+  //   totalAmount: 33.45,
+  //   status: 'out_for_delivery',
+  //   orderDate: '2025-01-15T10:30:00.000Z',
+  //   deliveryDate: '2025-01-15T16:00:00.000Z',
+  //   deliveryAddress: '123 Main St, Apt 4B, Saskatoon, SK S7K 1A1',
+  //   notes: 'Please ring doorbell twice. Leave at door if no answer.',
+  //   deliveryPin: '1234'
+  // },
   {
     id: 'ORD-002',
     farmerId: 'farmer-1',
@@ -72,78 +72,78 @@ const mockOrders: Order[] = [
       }
     ],
     totalAmount: 5.98,
-    status: 'preparing',
+    status: 'out_for_delivery',
     orderDate: '2025-01-15T14:20:00.000Z',
     deliveryDate: '2025-01-16T10:00:00.000Z',
     deliveryAddress: '456 Oak Avenue, Regina, SK S4P 1A1',
     notes: 'Customer prefers morning delivery',
     deliveryPin: '5678'
   },
-  {
-    id: 'ORD-003',
-    farmerId: 'farmer-1',
-    customerId: 'customer-3',
-    customerName: 'Emily Rodriguez',
-    customerEmail: 'emily.rodriguez@email.com',
-    items: [
-      {
-        id: 'item-4',
-        productId: 'product-4',
-        productName: 'Organic Carrots',
-        category: 'vegetables',
-        quantity: 8,
-        unit: 'lbs',
-        price: 2.49,
-        imageUrl: '/products/carrots.jpg'
-      },
-      {
-        id: 'item-5',
-        productId: 'product-5',
-        productName: 'Fresh Lettuce',
-        category: 'vegetables',
-        quantity: 4,
-        unit: 'heads',
-        price: 1.99,
-        imageUrl: '/products/lettuce.jpg'
-      }
-    ],
-    totalAmount: 27.88,
-    status: 'confirmed',
-    orderDate: '2025-01-15T16:45:00.000Z',
-    deliveryDate: '2025-01-17T14:00:00.000Z',
-    pickupInstructions: 'Pick up at farm stand between 2-6 PM. Look for the green tent.',
-    notes: 'Customer will pick up in person',
-    deliveryPin: '9999'
-  },
-  {
-    id: 'ORD-004',
-    farmerId: 'farmer-1',
-    customerId: 'customer-4',
-    customerName: 'David Kim',
-    customerEmail: 'david.kim@email.com',
-    customerPhone: '+1 (555) 456-7890',
-    items: [
-      {
-        id: 'item-6',
-        productId: 'product-6',
-        productName: 'Fresh Strawberries',
-        category: 'fruits',
-        quantity: 3,
-        unit: 'pints',
-        price: 5.99,
-        imageUrl: '/products/strawberries.jpg'
-      }
-    ],
-    totalAmount: 17.97,
-    status: 'delivered',
-    orderDate: '2025-01-14T09:15:00.000Z',
-    deliveryDate: '2025-01-14T15:30:00.000Z',
-    deliveryAddress: '789 Pine Street, Prince Albert, SK S6V 1B1',
-    notes: 'Delivered successfully',
-    deliveryPin: '2468',
-    rating: 5,
-    review: 'Excellent quality strawberries! Very fresh and sweet.'
-  }
+  // {
+  //   id: 'ORD-003',
+  //   farmerId: 'farmer-1',
+  //   customerId: 'customer-3',
+  //   customerName: 'Emily Rodriguez',
+  //   customerEmail: 'emily.rodriguez@email.com',
+  //   items: [
+  //     {
+  //       id: 'item-4',
+  //       productId: 'product-4',
+  //       productName: 'Organic Carrots',
+  //       category: 'vegetables',
+  //       quantity: 8,
+  //       unit: 'lbs',
+  //       price: 2.49,
+  //       imageUrl: '/products/carrots.jpg'
+  //     },
+  //     {
+  //       id: 'item-5',
+  //       productId: 'product-5',
+  //       productName: 'Fresh Lettuce',
+  //       category: 'vegetables',
+  //       quantity: 4,
+  //       unit: 'heads',
+  //       price: 1.99,
+  //       imageUrl: '/products/lettuce.jpg'
+  //     }
+  //   ],
+  //   totalAmount: 27.88,
+  //   status: 'confirmed',
+  //   orderDate: '2025-01-15T16:45:00.000Z',
+  //   deliveryDate: '2025-01-17T14:00:00.000Z',
+  //   pickupInstructions: 'Pick up at farm stand between 2-6 PM. Look for the green tent.',
+  //   notes: 'Customer will pick up in person',
+  //   deliveryPin: '9999'
+  // },
+  // {
+  //   id: 'ORD-004',
+  //   farmerId: 'farmer-1',
+  //   customerId: 'customer-4',
+  //   customerName: 'David Kim',
+  //   customerEmail: 'david.kim@email.com',
+  //   customerPhone: '+1 (555) 456-7890',
+  //   items: [
+  //     {
+  //       id: 'item-6',
+  //       productId: 'product-6',
+  //       productName: 'Fresh Strawberries',
+  //       category: 'fruits',
+  //       quantity: 3,
+  //       unit: 'pints',
+  //       price: 5.99,
+  //       imageUrl: '/products/strawberries.jpg'
+  //     }
+  //   ],
+  //   totalAmount: 17.97,
+  //   status: 'delivered',
+  //   orderDate: '2025-01-14T09:15:00.000Z',
+  //   deliveryDate: '2025-01-14T15:30:00.000Z',
+  //   deliveryAddress: '789 Pine Street, Prince Albert, SK S6V 1B1',
+  //   notes: 'Delivered successfully',
+  //   deliveryPin: '2468',
+  //   rating: 5,
+  //   review: 'Excellent quality strawberries! Very fresh and sweet.'
+  // }
 ];
 
 /**
