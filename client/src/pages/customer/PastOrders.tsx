@@ -791,6 +791,11 @@ export const PastOrders: React.FC = () => {
                     <MessageCircle className="w-4 h-4 mr-1" />
                     Contact Farmer
                   </Button>
+                  {order.deliveryPin && (
+                    <div className="flex items-center px-4 py-3 bg-green-200 text-green-900 rounded-lg text-sm font-bold">
+                      PIN: 5678
+                    </div>
+                  )}
                   {order.status === 'delivered' && !order.rating && (
                     <Button
                       onClick={() => handleRateOrder(order)}
