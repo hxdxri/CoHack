@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Leaf, MessageCircle, User, LogOut, Menu } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { Button } from '@/components/ui/Button';
+import { CartIcon } from '@/components/ui/CartIcon';
 
 interface HeaderProps {
   onMenuToggle?: () => void;
@@ -87,6 +88,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                 <MessageCircle className="w-4 h-4" />
                 <span>Messages</span>
               </Link>
+              {user?.role === 'customer' && <CartIcon />}
             </nav>
           )}
 

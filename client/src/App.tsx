@@ -21,6 +21,8 @@ import { CustomerDashboard } from '@/pages/customer/Dashboard';
 import { CustomerProfile } from '@/pages/customer/Profile';
 import { Farm } from '@/pages/customer/Farm';
 import { PastOrders } from '@/pages/customer/PastOrders';
+import { ProductListing } from '@/pages/customer/ProductListing';
+import { Cart } from '@/pages/customer/Cart';
 
 // Protected Route Component
 interface ProtectedRouteProps {
@@ -152,6 +154,8 @@ function App() {
                   <Routes>
                     <Route path="dashboard" element={<CustomerDashboard />} />
                     <Route path="farm/:farmerId" element={<Farm />} />
+                    <Route path="product/:productId" element={<ProductListing />} />
+                    <Route path="cart" element={<Cart />} />
                     <Route path="messages" element={<Messages />} />
                     <Route path="profile" element={<CustomerProfile />} />
                     <Route path="orders" element={<PastOrders />} />
