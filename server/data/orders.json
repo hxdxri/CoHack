@@ -32,8 +32,8 @@
     "status": "ready",
     "orderDate": "2025-01-12T11:15:00.000Z",
     "deliveryDate": "2025-01-15T14:00:00.000Z",
-    "deliveryAddress": "321 Elm Street, Prince Albert, SK S6V 1B1",
-    "deliveryPin": "GHI789",
+    "deliveryAddress": "456 Oak Avenue, Regina, SK S4P 1A1",
+    "deliveryPin": "5678",
     "notes": "Ready for pickup",
     "rating": null,
     "review": null
