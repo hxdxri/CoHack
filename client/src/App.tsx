@@ -15,6 +15,7 @@ import { Auth } from '@/pages/auth/Auth';
 import { FarmerDashboard } from '@/pages/farmer/Dashboard';
 import { FarmerProducts } from '@/pages/farmer/Products';
 import { FarmerProfile } from '@/pages/farmer/Profile';
+import { OrderFulfillment } from '@/pages/farmer/OrderFulfillment';
 
 // Customer Pages
 import { CustomerDashboard } from '@/pages/customer/Dashboard';
@@ -138,6 +139,7 @@ function App() {
                   <Routes>
                     <Route path="dashboard" element={<FarmerDashboard />} />
                     <Route path="products" element={<FarmerProducts />} />
+                    <Route path="orders" element={<OrderFulfillment />} />
                     <Route path="messages" element={<Messages />} />
                     <Route path="profile" element={<FarmerProfile />} />
                   </Routes>

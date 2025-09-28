@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Leaf, MessageCircle, User, LogOut, Menu } from 'lucide-react';
+import { Leaf, User, LogOut, Menu } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { Button } from '@/components/ui/Button';
 import { CartIcon } from '@/components/ui/CartIcon';
@@ -63,6 +63,9 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                   </Link>
                   <Link to="/farmer/products" className="nav-link">
                     Products
+                  </Link>
+                  <Link to="/farmer/orders" className="nav-link">
+                    Orders
                   </Link>
                 </>
               ) : (
