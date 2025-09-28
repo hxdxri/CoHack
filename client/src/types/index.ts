@@ -164,3 +164,40 @@ export interface ReviewFormData {
 export interface MessageFormData {
   content: string;
 }
+
+export interface OrderItem {
+  id: string;
+  productId: string;
+  productName: string;
+  category: string;
+  quantity: number;
+  unit: string;
+  price: number;
+  imageUrl?: string;
+}
+
+export interface Order {
+  id: string;
+  farmerId: string;
+  customerId: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string;
+  items: OrderItem[];
+  totalAmount: number;
+  status: 'pending' | 'confirmed' | 'preparing' | 'ready' | 'out_for_delivery' | 'delivered' | 'cancelled';
+  orderDate: string;
+  deliveryDate?: string;
+  deliveryAddress?: string;
+  pickupInstructions?: string;
+  notes?: string;
+  deliveryPin?: string;
+  rating?: number;
+  review?: string;
+}
+
+export interface OrderFormData {
+  status: Order['status'];
+  deliveryPin?: string;
+  notes?: string;
+}

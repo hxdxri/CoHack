@@ -201,6 +201,12 @@ export const FarmerDashboard: React.FC = () => {
                   Add New Product
                 </Button>
               </Link>
+              <Link to="/farmer/orders" className="block">
+                <Button variant="outline" className="w-full justify-start">
+                  <Package className="w-4 h-4 mr-2" />
+                  Manage Orders
+                </Button>
+              </Link>
               <Link to="/farmer/profile" className="block">
                 <Button variant="outline" className="w-full justify-start">
                   <Edit className="w-4 h-4 mr-2" />

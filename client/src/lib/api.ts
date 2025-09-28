@@ -12,7 +12,9 @@ import {
   FarmerProfileFormData,
   ReviewFormData,
   ReviewWithCustomer,
-  ReviewWithFarmer
+  ReviewWithFarmer,
+  Order,
+  OrderFormData
 } from '@/types';
 
 // Create axios instance
@@ -142,6 +144,21 @@ export const reviewsAPI = {
   
   getFarmerStats: (farmerId: string): Promise<AxiosResponse<{ averageRating: number; totalReviews: number }>> =>
     api.get(`/reviews/farmer/${farmerId}/stats`),
+};
+
+// Orders API
+export const ordersAPI = {
+  getMyOrders: (): Promise<AxiosResponse<Order[]>> =>
+    api.get('/orders/my/orders'),
+  
+  getOrderById: (orderId: string): Promise<AxiosResponse<Order>> =>
+    api.get(`/orders/${orderId}`),
+  
+  updateOrderStatus: (orderId: string, data: OrderFormData): Promise<AxiosResponse<Order>> =>
+    api.put(`/orders/${orderId}/status`, data),
+  
+  verifyDeliveryPin: (orderId: string, pin: string): Promise<AxiosResponse<{ isValid: boolean }>> =>
+    api.post(`/orders/${orderId}/verify-pin`, { pin }),
 };
 
 export default api;

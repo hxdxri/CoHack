@@ -106,6 +106,13 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                       Products
                     </Link>
                     <Link
+                      to="/farmer/orders"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-ink hover:bg-primary-50 hover:text-primary-500 rounded-md transition-colors duration-200"
+                    >
+                      Orders
+                    </Link>
+                    <Link
                       to="/farmer/profile"
                       onClick={handleLinkClick}
                       className="block px-3 py-2 text-ink hover:bg-primary-50 hover:text-primary-500 rounded-md transition-colors duration-200"
