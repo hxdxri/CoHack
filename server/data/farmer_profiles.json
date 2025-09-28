@@ -9,7 +9,93 @@
     "averageRating": 4.8,
     "totalReviews": 12,
     "createdAt": "2025-09-27T22:52:54.673Z",
-    "updatedAt": "2025-09-27T22:52:54.781Z"
+    "updatedAt": "2025-09-27T22:52:54.781Z",
+    "ourStory": "My name is Sarah Johnson, and farming has been in my blood for three generations. When my grandfather first tilled the soil here in 1985, he dreamed of creating a place where families could get the freshest, most nutritious vegetables while respecting the land that provides for us. Today, I carry on that dream with my husband Mike and our three children. Every morning, I wake up grateful to work the same land that taught me the value of hard work, patience, and the incredible cycle of life. Our farm isn't just our livelihood—it's our home, our classroom, and our way of giving back to the community that has supported us for nearly four decades.",
+    "aboutOurFarm": "Prairie Gold Organic Farm spans 2,400 acres of certified organic land in the heart of Saskatchewan's fertile prairies. We grow over 50 varieties of vegetables using sustainable farming practices that have been refined over three generations. Our fields are managed with crop rotation, cover cropping, and natural pest management to maintain soil health and biodiversity. We operate a 15,000-square-foot greenhouse for year-round production of tomatoes, peppers, and leafy greens. Our farm also includes a 200-acre pollinator habitat, a composting facility that processes 500 tons of organic matter annually, and a solar-powered irrigation system. We're proud to be certified organic by Pro-Cert and are members of the Saskatchewan Organic Directorate. Our commitment to sustainability extends beyond our fields—we use electric vehicles for local deliveries, package our products in biodegradable materials, and donate surplus produce to local food banks.",
+    "farmerPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+    "farmPhotos": [
+      {
+        "id": "farm1",
+        "url": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=400&fit=crop",
+        "caption": "Our main field during peak growing season",
+        "type": "farm",
+        "createdAt": "2025-09-27T22:52:54.673Z"
+      },
+      {
+        "id": "farm2",
+        "url": "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600&h=400&fit=crop",
+        "caption": "Greenhouse operations for year-round production",
+        "type": "farm",
+        "createdAt": "2025-09-27T22:52:54.673Z"
+      },
+      {
+        "id": "farm3",
+        "url": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600&h=400&fit=crop",
+        "caption": "Pollinator habitat supporting local bee populations",
+        "type": "landscape",
+        "createdAt": "2025-09-27T22:52:54.673Z"
+      }
+    ],
+    "workPhotos": [
+      {
+        "id": "work1",
+        "url": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=600&h=400&fit=crop",
+        "caption": "Harvesting organic tomatoes in our greenhouse",
+        "type": "harvesting",
+        "createdAt": "2025-09-27T22:52:54.673Z"
+      },
+      {
+        "id": "work2",
+        "url": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop",
+        "caption": "Sorting and packaging fresh vegetables",
+        "type": "packaging",
+        "createdAt": "2025-09-27T22:52:54.673Z"
+      }
+    ],
+    "timeline": [
+      {
+        "id": "timeline1",
+        "year": 1985,
+        "title": "Farm Founded",
+        "description": "My grandfather, Robert Johnson, purchased 5 acres of land and began growing vegetables using traditional methods.",
+        "type": "founding"
+      },
+      {
+        "id": "timeline2",
+        "year": 1995,
+        "title": "First Organic Certification",
+        "description": "Became one of the first certified organic farms in Saskatchewan, pioneering sustainable agriculture in the region.",
+        "type": "achievement"
+      },
+      {
+        "id": "timeline3",
+        "year": 2005,
+        "title": "Major Expansion",
+        "description": "Expanded to 500 acres and built our first greenhouse, allowing for year-round production.",
+        "type": "expansion"
+      },
+      {
+        "id": "timeline4",
+        "year": 2015,
+        "title": "Solar Power Installation",
+        "description": "Installed a 100kW solar array, making our farm 100% renewable energy powered.",
+        "type": "milestone"
+      },
+      {
+        "id": "timeline5",
+        "year": 2020,
+        "title": "Saskatchewan Farm of the Year",
+        "description": "Awarded Saskatchewan Farm of the Year for our commitment to sustainability and community involvement.",
+        "type": "award"
+      },
+      {
+        "id": "timeline6",
+        "year": 2023,
+        "title": "Third Generation Leadership",
+        "description": "I took over full management of the farm, bringing fresh ideas while honoring our family's traditions.",
+        "type": "milestone"
+      }
+    ]
   },
   {
     "id": "2a8f9c3e-1b4d-4e7f-8a2c-9d6e5f3a1b8c",
