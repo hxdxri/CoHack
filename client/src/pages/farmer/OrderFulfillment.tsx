@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Package, 
-  Filter, 
   Search, 
   RefreshCw,
   TrendingUp,
   Clock,
-  CheckCircle,
-  Truck
+  CheckCircle
 } from 'lucide-react';
-import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { OrderManagementTable } from '@/components/ui/OrderManagementTable';
 import { Order } from '@/types';
-import { ordersAPI } from '@/lib/api';
 import toast from 'react-hot-toast';
 
 // Mock order data for demonstration

@@ -51,7 +51,7 @@ export const OrderManagementTable: React.FC<OrderManagementTableProps> = ({
   };
 
   const canMarkAsDelivered = (status: Order['status']) => {
-    return ['confirmed', 'preparing', 'ready', 'out_for_delivery'].includes(status);
+    return ['pending', 'confirmed', 'preparing', 'ready', 'out_for_delivery'].includes(status);
   };
 
   const handleMarkAsDelivered = (order: Order) => {
@@ -105,7 +105,6 @@ export const OrderManagementTable: React.FC<OrderManagementTableProps> = ({
     { value: 'preparing', label: 'Preparing' },
     { value: 'ready', label: 'Ready for Pickup' },
     { value: 'out_for_delivery', label: 'Out for Delivery' },
-    { value: 'delivered', label: 'Delivered' },
     { value: 'cancelled', label: 'Cancelled' }
   ];
 
