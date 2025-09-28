@@ -56,6 +56,9 @@ export const authAPI = {
   getCurrentUser: (): Promise<AxiosResponse<{ user: User }>> =>
     api.get('/auth/me'),
   
+  updateUser: (data: Partial<User>): Promise<AxiosResponse<{ user: User }>> =>
+    api.put('/auth/me', data),
+  
   logout: (): Promise<AxiosResponse<{ message: string }>> =>
     api.post('/auth/logout'),
 };
