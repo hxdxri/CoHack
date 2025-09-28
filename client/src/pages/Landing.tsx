@@ -22,6 +22,7 @@ export const Landing: React.FC = () => {
     const handleScroll = () => {
       const farmMapSection = document.querySelector('[data-section="farm-map"]');
       const featuresSection = document.querySelector('[data-section="features"]');
+      const reviewsSection = document.querySelector('section:nth-of-type(4)'); // Community Reviews section
       const footer = document.querySelector('footer');
       
       if (farmMapSection && featuresSection && footer) {
@@ -29,15 +30,23 @@ export const Landing: React.FC = () => {
         const featuresRect = featuresSection.getBoundingClientRect();
         const footerRect = footer.getBoundingClientRect();
         
-        // Show impact section only when:
-        // 1. User has scrolled past the map section (map is above viewport)
+        // Show impact section when:
+        // 1. User has mostly scrolled past the map section (map is mostly above viewport)
         // 2. Why Choose HarvestLink section is in view
         // 3. Footer hasn't appeared yet
-        const mapPassed = farmMapRect.bottom < 0; // Map section is completely above viewport
+        // 4. Community Reviews section is not in view (to prevent overlap)
+        const mapPassed = farmMapRect.bottom < window.innerHeight * 0.2; // Map section is 80% above viewport
         const featuresInView = featuresRect.top < window.innerHeight && featuresRect.bottom > 0;
         const footerNotReached = footerRect.top > window.innerHeight;
         
-        setShowImpact(mapPassed && featuresInView && footerNotReached);
+        // Hide impact card when Community Reviews section comes into view
+        let reviewsNotInView = true;
+        if (reviewsSection) {
+          const reviewsRect = reviewsSection.getBoundingClientRect();
+          reviewsNotInView = reviewsRect.top > window.innerHeight * 0.3; // Hide when reviews section is 30% into viewport
+        }
+        
+        setShowImpact(mapPassed && featuresInView && footerNotReached && reviewsNotInView);
       }
     };
 
@@ -308,24 +317,24 @@ export const Landing: React.FC = () => {
       </section>
 
       {/* Persistent Our Impact Section - Floating Overlay */}
-      <div className={`fixed top-1/2 right-8 transform -translate-y-1/2 z-50 hidden lg:block transition-all duration-500 ${showImpact ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`}>
-        <div className="w-80 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 p-6">
-          <div className="text-center mb-6">
-            <div className="flex items-center justify-center mb-3">
-              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center mr-3">
-                <Leaf className="w-5 h-5 text-primary-600" />
+      <div className={`fixed top-1/2 right-2 transform -translate-y-1/2 z-50 hidden lg:block transition-all duration-500 ${showImpact ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`}>
+        <div className="w-60 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 p-4">
+          <div className="text-center mb-3">
+            <div className="flex items-center justify-center mb-1">
+              <div className="w-5 h-5 bg-primary-100 rounded-full flex items-center justify-center mr-2">
+                <Leaf className="w-3 h-3 text-primary-600" />
               </div>
-              <h2 className="text-2xl font-bold text-ink">
+              <h2 className="text-lg font-bold text-ink">
                 Our Impact
               </h2>
             </div>
-            <p className="text-sm text-graphite">
+            <p className="text-xs text-graphite">
               Building a sustainable future together
             </p>
           </div>
 
           {/* Impact Stats - Vertically Stacked with Original Icons */}
-          <div className="space-y-4">
+          <div className="space-y-2">
             {[
               { 
                 icon: Leaf, 
@@ -378,18 +387,18 @@ export const Landing: React.FC = () => {
             ].map((stat, index) => (
               <div 
                 key={index}
-                className={`group flex items-center space-x-3 p-3 ${stat.bgColor} rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-md`}
+                className={`group flex items-center space-x-2 p-1.5 ${stat.bgColor} rounded-md transition-all duration-300 hover:scale-105 hover:shadow-md`}
                 style={{ 
-                  transform: `translateX(${index * 5}px)`,
+                  transform: `translateX(${index * 2}px)`,
                   zIndex: 6 - index
                 }}
               >
-                <div className={`w-10 h-10 ${stat.bgColor} rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
-                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                <div className={`w-6 h-6 ${stat.bgColor} rounded-md flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                  <stat.icon className={`w-3 h-3 ${stat.color}`} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center">
-                    <span className={`text-lg font-bold ${stat.color} group-hover:text-primary-600 transition-colors duration-300`}>
+                    <span className={`text-xs font-bold ${stat.color} group-hover:text-primary-600 transition-colors duration-300`}>
                       {stat.value}
                     </span>
                     {stat.unit && (
@@ -407,11 +416,11 @@ export const Landing: React.FC = () => {
           </div>
 
           {/* Live indicator */}
-          <div className="mt-4 flex items-center justify-center">
-            <div className="inline-flex items-center px-3 py-1 bg-primary-50 rounded-full">
-              <TrendingUp className="w-3 h-3 text-primary-600 mr-1" />
+          <div className="mt-2 flex items-center justify-center">
+            <div className="inline-flex items-center px-2 py-0.5 bg-primary-50 rounded-full">
+              <TrendingUp className="w-2 h-2 text-primary-600 mr-1" />
               <span className="text-xs text-graphite font-medium">
-                Live Updates
+                Live
               </span>
             </div>
           </div>
@@ -419,9 +428,9 @@ export const Landing: React.FC = () => {
       </div>
 
       {/* Why Choose HarvestLink Section */}
-      <section className="py-16 bg-mist" data-section="features">
-        <div className="container-custom">
-          <div className="text-center mb-12">
+      <section className="py-12 bg-mist" data-section="features">
+        <div className="container-custom lg:pr-64">
+          <div className="text-center mb-8 lg:pr-16">
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
               Why Choose HarvestLink?
             </h2>
@@ -430,22 +439,22 @@ export const Landing: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:pr-16">
             {features.map((feature, index) => (
               <div 
                 key={index} 
-                className="group text-center p-6 bg-white/60 backdrop-blur-sm rounded-xl transition-all duration-300 hover:bg-white/80 hover:scale-105 hover:shadow-lg"
+                className="group text-center p-5 bg-white/60 backdrop-blur-sm rounded-xl transition-all duration-300 hover:bg-white/80 hover:scale-105 hover:shadow-lg"
                 style={{ 
-                  transform: `translateX(${index * -5}px)`,
+                  transform: `translateX(${index * -3}px)`,
                   zIndex: 6 - index,
                   transitionDelay: `${index * 100}ms`
                 }}
               >
-                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <feature.icon className="w-6 h-6 text-primary-500" />
+                <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <feature.icon className="w-5 h-5 text-primary-500" />
                 </div>
-                <h3 className="text-xl font-semibold text-ink mb-2 group-hover:text-primary-600 transition-colors duration-300">{feature.title}</h3>
-                <p className="text-graphite">{feature.description}</p>
+                <h3 className="text-lg font-semibold text-ink mb-2 group-hover:text-primary-600 transition-colors duration-300">{feature.title}</h3>
+                <p className="text-sm text-graphite">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -456,9 +465,9 @@ export const Landing: React.FC = () => {
       <div className="h-6 bg-gradient-to-b from-mist to-bone"></div>
 
       {/* Community Reviews Section */}
-      <section className="py-16 bg-bone">
-        <div className="container-custom">
-          <div className="text-center mb-12">
+      <section className="py-12 bg-bone">
+        <div className="container-custom lg:pr-64">
+          <div className="text-center mb-8 lg:pr-16">
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
               What Our Community Says
             </h2>
@@ -467,29 +476,29 @@ export const Landing: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto lg:pr-16">
             {testimonials.map((testimonial, index) => (
               <Card 
                 key={index}
                 className="group transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 style={{ 
-                  transform: `translateX(${index * -8}px)`,
+                  transform: `translateX(${index * -4}px)`,
                   zIndex: 2 - index,
                   transitionDelay: `${index * 150}ms`
                 }}
               >
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
+                <CardContent className="p-5">
+                  <div className="flex items-center mb-3">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
                     ))}
                   </div>
                   
-                  <p className="text-graphite mb-4 italic">"{testimonial.content}"</p>
+                  <p className="text-graphite mb-3 italic text-sm">"{testimonial.content}"</p>
                   
                   <div>
-                    <p className="font-semibold text-ink">{testimonial.name}</p>
-                    <p className="text-sm text-graphite">{testimonial.role}</p>
+                    <p className="font-semibold text-ink text-sm">{testimonial.name}</p>
+                    <p className="text-xs text-graphite">{testimonial.role}</p>
                   </div>
                 </CardContent>
               </Card>
