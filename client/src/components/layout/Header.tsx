@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Leaf, MessageCircle, User, LogOut, Menu, ShoppingCart, Package, History, LayoutDashboard } from 'lucide-react';
+import { Leaf, MessageCircle, User, LogOut, Menu, ShoppingCart, Package, History, LayoutDashboard, ClipboardList } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { useCartStore } from '@/store/cart';
 import { Button } from '@/components/ui/Button';
@@ -67,8 +67,9 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                     <Package className="w-4 h-4" />
                     <span>Products</span>
                   </Link>
-                  <Link to="/farmer/orders" className="nav-link">
-                    Orders
+                  <Link to="/farmer/orders" className="nav-link flex items-center space-x-2">
+                    <ClipboardList className="w-4 h-4" />
+                    <span>Orders</span>
                   </Link>
                 </>
               ) : (

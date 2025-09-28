@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { farmersAPI } from '@/lib/api';
@@ -12,11 +12,9 @@ import { ProfileLayout } from '@/components/profile/ProfileLayout';
 import { EditProfileModal } from '@/components/profile/EditProfileModal';
 import { HorizontalPhotoGallery } from '@/components/ui/HorizontalPhotoGallery';
 import { HorizontalFarmTimeline } from '@/components/ui/HorizontalFarmTimeline';
-import { FarmingPractices } from '@/components/ui/FarmingPractices';
-import { FarmerBio } from '@/components/ui/FarmerBio';
 import { RichTextEditor } from '@/components/ui/RichTextEditor';
 import { VideoEmbed } from '@/components/ui/VideoEmbed';
-import { User as UserIcon, Mail, Star, MessageCircle, Package, MapPin, Building, FileText, Settings, Camera, History, Upload } from 'lucide-react';
+import { User as UserIcon, Mail, Star, MessageCircle, Package, MapPin, Building, FileText, Settings, Camera, History, Upload, Clock, Calendar } from 'lucide-react';
 
 interface FarmerProfileWithDetails extends FarmerProfileType {
   name: string;
@@ -37,6 +35,8 @@ export const FarmerProfile: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(user);
   const [editingSection, setEditingSection] = useState<string | null>(null);
   const [tempContent, setTempContent] = useState<string>('');
+  const [showStickySidebar, setShowStickySidebar] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   // Determine if this is the current user's profile or viewing another farmer
   const isOwnProfile = !id || id === user?.id;
@@ -45,6 +45,20 @@ export const FarmerProfile: React.FC = () => {
   useEffect(() => {
     setCurrentUser(user);
   }, [user]);
+
+  // Scroll detection for sticky sidebar
+  useEffect(() => {
+    const handleScroll = () => {
+      if (headerRef.current) {
+        const headerBottom = headerRef.current.getBoundingClientRect().bottom;
+        // Add offset for navigation bar height (typically 64px)
+        setShowStickySidebar(headerBottom < 80);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -199,8 +213,8 @@ export const FarmerProfile: React.FC = () => {
         )}
 
         {/* Header Section */}
-        <section className="mb-6 transition-all duration-300">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+        <section ref={headerRef} className="mb-8 transition-all duration-300">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
             <div className="flex items-center space-x-4">
               {/* Farmer Portrait */}
               <div className="relative">
@@ -208,28 +222,28 @@ export const FarmerProfile: React.FC = () => {
                   <img
                     src={profile.farmerPhoto}
                     alt={profile.name}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md"
+                    className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
                   />
                 ) : (
-                  <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center shadow-md">
-                    <Building className="w-8 h-8 text-white" />
+                  <div className="w-20 h-20 bg-gradient-primary rounded-full flex items-center justify-center shadow-lg">
+                    <Building className="w-10 h-10 text-white" />
                   </div>
                 )}
                 {isOwnProfile && (
                   <Button
                     onClick={() => setIsEditModalOpen(true)}
-                    className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-blue-600 hover:bg-blue-700 text-white p-0"
+                    className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-blue-600 hover:bg-blue-700 text-white p-0"
                     size="sm"
                   >
-                    <Upload className="w-3 h-3" />
+                    <Upload className="w-4 h-4" />
                   </Button>
                 )}
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">{profile.farmName}</h1>
-                <p className="text-base text-gray-600">by {profile.name}</p>
+                <h1 className="text-3xl font-bold text-ink">{profile.farmName}</h1>
+                <p className="text-lg text-graphite">by {profile.name}</p>
                 {profile.yearsFarming && (
-                  <p className="text-xs text-gray-500">{profile.yearsFarming} years farming</p>
+                  <p className="text-sm text-graphite">{profile.yearsFarming} years farming</p>
                 )}
               </div>
             </div>
@@ -246,25 +260,105 @@ export const FarmerProfile: React.FC = () => {
             )}
           </div>
           
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-            <div className="flex items-center">
-              <MapPin className="w-4 h-4 mr-1" />
-              {profile.location}
+          {/* Farm Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="bg-mist rounded-lg p-4 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <MapPin className="w-5 h-5 text-primary-500 mr-2" />
+                <span className="text-sm font-medium text-ink">Location</span>
+              </div>
+              <p className="text-graphite text-sm">{profile.location}</p>
             </div>
-            <div className="flex items-center">
-              <Package className="w-4 h-4 mr-1" />
-              {profile.productCount} Products
+            <div className="bg-mist rounded-lg p-4 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Package className="w-5 h-5 text-primary-500 mr-2" />
+                <span className="text-sm font-medium text-ink">Products</span>
+              </div>
+              <p className="text-2xl font-bold text-ink">{profile.productCount}</p>
             </div>
-            <div className="flex items-center">
-              {renderStarRating(profile.averageRating)}
-              <span className="ml-1">({profile.totalReviews} reviews)</span>
+            <div className="bg-mist rounded-lg p-4 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Star className="w-5 h-5 text-yellow-500 mr-2" />
+                <span className="text-sm font-medium text-ink">Rating</span>
+              </div>
+              <div className="flex items-center justify-center">
+                {renderStarRating(profile.averageRating)}
+                <span className="ml-1 text-sm text-graphite">({profile.totalReviews})</span>
+              </div>
             </div>
             {profile.farmSize && (
-              <div className="flex items-center">
-                <Building className="w-4 h-4 mr-1" />
-                {profile.farmSize} acres
+              <div className="bg-mist rounded-lg p-4 text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <Building className="w-5 h-5 text-primary-500 mr-2" />
+                  <span className="text-sm font-medium text-ink">Farm Size</span>
+                </div>
+                <p className="text-2xl font-bold text-ink">{profile.farmSize}</p>
+                <p className="text-xs text-graphite">acres</p>
               </div>
             )}
+          </div>
+
+          {/* Seamless Banner and Story Section */}
+          <div className="relative -mx-6 mb-8">
+            {/* Banner Image */}
+            <div className="relative h-96 w-full overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                alt="Farm Banner"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-8 left-8 text-white">
+                <h2 className="text-5xl font-bold mb-3 drop-shadow-lg text-white">Welcome to {profile.farmName}</h2>
+                <p className="text-2xl opacity-95 drop-shadow-md text-white">Discover our story and farming practices</p>
+              </div>
+            </div>
+
+            {/* Connected Story Section - Seamlessly attached */}
+            <div className="bg-white rounded-t-xl shadow-lg overflow-hidden">
+              <div className="flex flex-col lg:flex-row">
+                {/* Our Story Section */}
+                <div className="bg-gray-50 p-8 flex-1">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                      <Building className="w-6 h-6 text-primary-600" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-ink">Our Story</h2>
+                  </div>
+                  <div className="prose prose-lg max-w-none text-graphite">
+                    <RichTextEditor
+                      title=""
+                      content={profile.ourStoryRich || profile.ourStory || ''}
+                      onChange={(content) => setTempContent(content)}
+                      onSave={() => saveContent('ourStory')}
+                      onCancel={cancelEditing}
+                      isEditing={editingSection === 'ourStory'}
+                      placeholder="Share your farm's story, values, and what makes you unique..."
+                    />
+                  </div>
+                </div>
+
+                {/* Divider */}
+                <div className="hidden lg:block w-px bg-gray-200"></div>
+
+                {/* About Our Farm Section */}
+                <div className="bg-white p-8 flex-1">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                      <Package className="w-6 h-6 text-primary-600" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-ink">About Our Farm</h2>
+                  </div>
+                  <div className="prose prose-lg max-w-none text-graphite">
+                    <div 
+                      dangerouslySetInnerHTML={{ 
+                        __html: profile.aboutOurFarmRich || profile.aboutOurFarm || profile.description || `<p class="text-graphite italic">Describe your farm, practices, and what you grow...</p>` 
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -272,47 +366,38 @@ export const FarmerProfile: React.FC = () => {
         <div className="flex gap-6">
           {/* Main Content */}
           <div className="flex-1 max-w-4xl space-y-6">
-            {/* Hero Section with Story */}
-            <section className="relative bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
-              <div className="space-y-6">
-                {/* Our Story Section */}
-                <div className="animate-fade-in">
-                  <RichTextEditor
-                    title="Our Story"
-                    content={profile.ourStoryRich || profile.ourStory || ''}
-                    onChange={(content) => setTempContent(content)}
-                    onSave={() => saveContent('ourStory')}
-                    onCancel={cancelEditing}
-                    isEditing={editingSection === 'ourStory'}
-                    placeholder="Share your farm's story, values, and what makes you unique..."
-                  />
-                </div>
 
-                {/* About Our Farm Section with Wrapped Portrait */}
-                <div className="animate-fade-in">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">About Our Farm</h3>
-                  <div className="prose prose-lg max-w-none">
-                    {profile.farmerPhoto && (
-                      <div className="float-right ml-6 mb-4">
-                        <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:scale-105 w-48 h-64">
-                          <img
-                            src={profile.farmerPhoto}
-                            alt="Farmer"
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                        </div>
-                      </div>
-                    )}
-                    <div 
-                      dangerouslySetInnerHTML={{ 
-                        __html: profile.aboutOurFarmRich || profile.aboutOurFarm || profile.description || `<p class="text-gray-500 italic">Describe your farm, practices, and what you grow...</p>` 
-                      }}
-                    />
+            {/* Divider */}
+            <div className="border-t border-gray-200 my-8"></div>
+
+            {/* Farm Stats Highlight */}
+            <div className="bg-white rounded-xl p-8 shadow-lg mb-8">
+              <h2 className="text-2xl font-bold text-ink mb-6 text-center">Farm Highlights</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Building className="w-8 h-8 text-primary-600" />
                   </div>
+                  <div className="text-3xl font-bold text-ink mb-2">2,400</div>
+                  <div className="text-graphite">Acres of farmland</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Package className="w-8 h-8 text-primary-600" />
+                  </div>
+                  <div className="text-3xl font-bold text-ink mb-2">50+</div>
+                  <div className="text-graphite">Vegetable varieties</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Building className="w-8 h-8 text-primary-600" />
+                  </div>
+                  <div className="text-3xl font-bold text-ink mb-2">15,000</div>
+                  <div className="text-graphite">Sq-ft greenhouse</div>
                 </div>
               </div>
-            </section>
+            </div>
+
 
             {/* Photo Gallery Section */}
             <HorizontalPhotoGallery
@@ -338,11 +423,19 @@ export const FarmerProfile: React.FC = () => {
 
             {/* Farm Timeline Section */}
             {profile.timeline && profile.timeline.length > 0 && (
-            <HorizontalFarmTimeline
-              timeline={profile.timeline}
-              isEditable={false}
-            />
-          )}
+              <div className="mb-8">
+                <div className="flex items-center mb-8">
+                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                    <Clock className="w-6 h-6 text-primary-600" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-ink">Farm Timeline</h2>
+                </div>
+                <HorizontalFarmTimeline
+                  timeline={profile.timeline}
+                  isEditable={false}
+                />
+              </div>
+            )}
 
             {/* Call to Action for Enhanced Profile */}
             {isOwnProfile && (!profile.ourStory || !profile.aboutOurFarm || !profile.farmerPhoto || !profile.farmPhotos?.length || !profile.timeline?.length) && (
@@ -402,16 +495,18 @@ export const FarmerProfile: React.FC = () => {
 
             {/* Products Section */}
             {profile.products && profile.products.length > 0 && (
-              <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-bold text-gray-900 flex items-center">
-                    <Package className="w-5 h-5 mr-2" />
-                    Our Products
-                  </h2>
+              <section className="bg-white rounded-xl p-8 shadow-lg transition-all duration-300 hover:shadow-xl mb-8">
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center">
+                    <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                      <Package className="w-6 h-6 text-primary-600" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-ink">Our Products</h2>
+                  </div>
                   <Button
                     variant="outline"
                     onClick={() => navigate('/farmer/products')}
-                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105"
+                    className="px-6 py-3 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105"
                     size="sm"
                   >
                     Manage Products
@@ -441,11 +536,13 @@ export const FarmerProfile: React.FC = () => {
 
             {/* Customer Reviews Section */}
             {profile.reviews && profile.reviews.length > 0 && (
-              <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
-                <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                  <Star className="w-5 h-5 mr-2" />
-                  Customer Reviews
-                </h2>
+              <section className="bg-white rounded-xl p-8 shadow-lg transition-all duration-300 hover:shadow-xl mb-8">
+                <div className="flex items-center mb-8">
+                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                    <Star className="w-6 h-6 text-primary-600" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-ink">Customer Reviews</h2>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {profile.reviews.slice(0, 4).map((review) => (
                     <div key={review.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
@@ -475,12 +572,12 @@ export const FarmerProfile: React.FC = () => {
 
             {/* No Reviews Message */}
             {(!profile.reviews || profile.reviews.length === 0) && (
-              <section className="bg-white rounded-xl p-4 shadow-lg text-center transition-all duration-300 hover:shadow-xl">
-                <div className="text-gray-400 mb-4">
-                  <Star className="w-12 h-12 mx-auto" />
+              <section className="bg-white rounded-xl p-8 shadow-lg text-center transition-all duration-300 hover:shadow-xl mb-8">
+                <div className="text-gray-400 mb-6">
+                  <Star className="w-16 h-16 mx-auto" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">No Reviews Yet</h3>
-                <p className="text-gray-600 text-sm max-w-2xl mx-auto leading-relaxed">
+                <h3 className="text-2xl font-bold text-ink mb-4">No Reviews Yet</h3>
+                <p className="text-graphite text-lg max-w-2xl mx-auto leading-relaxed">
                   {isOwnProfile 
                     ? "You haven't received any reviews yet. Keep providing great products and service!"
                     : "This farmer hasn't received any reviews yet. Be the first to leave a review!"
@@ -491,90 +588,109 @@ export const FarmerProfile: React.FC = () => {
           </div>
 
           {/* Sticky Sidebar */}
-          <div className="hidden lg:block w-80 flex-shrink-0">
-            <div className="sticky top-6 space-y-4">
-              {/* Farmer Bio */}
-              <FarmerBio
-                farmerName={profile.name}
-                farmerBio={profile.farmerBio}
-                farmerInterests={profile.farmerInterests}
-                yearsFarming={profile.yearsFarming}
-                farmSize={profile.farmSize}
-                specialties={profile.specialties}
-                location={profile.location}
-                isEditable={false}
-              />
-
-              {/* Farming Practices */}
-              <FarmingPractices
-                practices={profile.farmingPractices || []}
-                isEditable={false}
-                onTogglePractice={(practiceId) => {
-                  if (profile) {
-                    const updatedPractices = profile.farmingPractices?.map(p => 
-                      p.id === practiceId ? { ...p, isActive: !p.isActive } : p
-                    ) || [];
-                    setProfile({ ...profile, farmingPractices: updatedPractices });
-                  }
-                }}
-              />
-
-              {/* Farm Stats */}
-              <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Farm Statistics</h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600 font-medium text-sm">Total Products</span>
-                    <span className="font-bold text-xl text-gray-900">{profile.productCount}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600 font-medium text-sm">Average Rating</span>
-                    <div className="flex items-center">
-                      {renderStarRating(profile.averageRating)}
+          <div className={`hidden lg:block w-80 flex-shrink-0 transition-all duration-300 ${
+            showStickySidebar ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
+          }`}>
+            <div className="sticky top-20 space-y-4">
+              {/* Combined Farmer Info Section */}
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+                {/* Farmer Bio Header */}
+                <div className="bg-gradient-to-r from-primary-500 to-green-600 p-6 text-white">
+                  <div className="flex items-center space-x-4">
+                    {profile.farmerPhoto ? (
+                      <img
+                        src={profile.farmerPhoto}
+                        alt={profile.name}
+                        className="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg"
+                      />
+                    ) : (
+                      <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                        <UserIcon className="w-8 h-8 text-white" />
+                      </div>
+                    )}
+                    <div>
+                      <h3 className="text-xl font-bold">{profile.name}</h3>
+                      <p className="text-white/90 text-sm">Farmer & Owner</p>
                     </div>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600 font-medium text-sm">Total Reviews</span>
-                    <span className="font-bold text-xl text-gray-900">{profile.totalReviews}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="text-gray-600 font-medium text-sm">Member Since</span>
-                    <span className="font-semibold text-gray-900 text-sm">
-                      {formatDate(profile.createdAt)}
-                    </span>
-                  </div>
                 </div>
-              </section>
 
-              {/* Contact Information */}
-              <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Contact Information</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center">
-                    <UserIcon className="w-4 h-4 mr-2 text-gray-400" />
-                    <span className="text-gray-700 font-medium text-sm">{profile.name}</span>
+                {/* Content Grid */}
+                <div className="p-6">
+                  {/* Stats Row */}
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="text-center p-4 bg-gray-50 rounded-lg">
+                      <div className="text-2xl font-bold text-ink">{profile.productCount}</div>
+                      <div className="text-sm text-graphite">Products</div>
+                    </div>
+                    <div className="text-center p-4 bg-gray-50 rounded-lg">
+                      <div className="text-2xl font-bold text-ink">{profile.totalReviews}</div>
+                      <div className="text-sm text-graphite">Reviews</div>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <Mail className="w-4 h-4 mr-2 text-gray-400" />
-                    <span className="text-gray-700 font-medium text-sm">{profile.email}</span>
+
+                  {/* Rating */}
+                  <div className="flex items-center justify-center mb-6">
+                    <div className="flex items-center">
+                      {renderStarRating(profile.averageRating)}
+                      <span className="ml-2 text-graphite text-sm">({profile.averageRating.toFixed(1)})</span>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <MapPin className="w-4 h-4 mr-2 text-gray-400" />
-                    <span className="text-gray-700 font-medium text-sm">{profile.location}</span>
+
+                  {/* Contact Info */}
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center text-sm">
+                      <Mail className="w-4 h-4 mr-3 text-primary-500" />
+                      <span className="text-graphite">{profile.email}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <MapPin className="w-4 h-4 mr-3 text-primary-500" />
+                      <span className="text-graphite">{profile.location}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <Calendar className="w-4 h-4 mr-3 text-primary-500" />
+                      <span className="text-graphite">Member since {formatDate(profile.createdAt)}</span>
+                    </div>
                   </div>
-                </div>
-                {!isOwnProfile && (
-                  <div className="mt-4">
+
+                  {/* Farming Practices */}
+                  {profile.farmingPractices && profile.farmingPractices.length > 0 && (
+                    <div className="mb-6">
+                      <h4 className="text-sm font-semibold text-ink mb-3">Farming Practices</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {profile.farmingPractices.slice(0, 4).map((practice) => (
+                          <span
+                            key={practice.id}
+                            className={`px-3 py-1 rounded-full text-xs font-medium ${
+                              practice.isActive
+                                ? 'bg-green-100 text-green-800'
+                                : 'bg-gray-100 text-gray-600'
+                            }`}
+                          >
+                            {practice.name}
+                          </span>
+                        ))}
+                        {profile.farmingPractices.length > 4 && (
+                          <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                            +{profile.farmingPractices.length - 4} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Action Button */}
+                  {!isOwnProfile && (
                     <Button 
-                      className="w-full bg-black hover:bg-gray-800 text-white py-2 rounded-lg font-medium text-sm transition-all duration-200 hover:scale-105"
+                      className="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105"
                       onClick={() => navigate(`/messages?user=${farmerId}`)}
                     >
                       <MessageCircle className="w-4 h-4 mr-2" />
                       Send Message
                     </Button>
-                  </div>
-                )}
-              </section>
+                  )}
+                </div>
+              </div>
 
               {/* Quick Actions - Only for own profile */}
               {isOwnProfile && (
@@ -623,3 +739,4 @@ export const FarmerProfile: React.FC = () => {
     </ProfileLayout>
   );
 };
+

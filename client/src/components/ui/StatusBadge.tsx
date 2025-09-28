@@ -28,45 +28,31 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     const configs = {
       pending: {
         label: 'Pending Delivery',
-        color: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-        icon: Clock,
-        animation: 'animate-pulse'
+        icon: Clock
       },
       confirmed: {
         label: 'Confirmed',
-        color: 'bg-blue-100 text-blue-800 border-blue-200',
-        icon: CheckCircle,
-        animation: ''
+        icon: CheckCircle
       },
       preparing: {
         label: 'Preparing',
-        color: 'bg-orange-100 text-orange-800 border-orange-200',
-        icon: Package,
-        animation: ''
+        icon: Package
       },
       ready: {
         label: 'Ready for Pickup',
-        color: 'bg-purple-100 text-purple-800 border-purple-200',
-        icon: CheckCircle,
-        animation: ''
+        icon: CheckCircle
       },
       out_for_delivery: {
         label: 'Out for Delivery',
-        color: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-        icon: Truck,
-        animation: 'animate-bounce'
+        icon: Truck
       },
       delivered: {
         label: 'Delivered',
-        color: 'bg-green-100 text-green-800 border-green-200',
-        icon: CheckCircle,
-        animation: ''
+        icon: CheckCircle
       },
       cancelled: {
         label: 'Cancelled',
-        color: 'bg-red-100 text-red-800 border-red-200',
-        icon: AlertCircle,
-        animation: ''
+        icon: AlertCircle
       }
     };
     return configs[status];
@@ -77,8 +63,8 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
   return (
     <Badge 
-      variant="custom" 
-      className={`${config.color} ${config.animation} ${className}`}
+      variant="outline" 
+      className={`${className}`}
     >
       <Icon className="w-4 h-4 mr-1" />
       {config.label}

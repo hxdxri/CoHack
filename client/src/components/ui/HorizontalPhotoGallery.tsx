@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from './Button';
 import { ChevronLeft, ChevronRight, Edit3, Plus } from 'lucide-react';
 
@@ -27,10 +27,31 @@ export const HorizontalPhotoGallery: React.FC<HorizontalPhotoGalleryProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  // Auto-scroll effect
+  useEffect(() => {
+    if (photos.length <= 1) return;
+
+    const interval = setInterval(() => {
+      if (scrollContainerRef.current) {
+        const container = scrollContainerRef.current;
+        const scrollAmount = 400; // Scroll by image width + gap
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        
+        if (container.scrollLeft >= maxScroll) {
+          container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+      }
+    }, 3000); // Auto-scroll every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [photos.length]);
+
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: -300,
+        left: -400,
         behavior: 'smooth'
       });
     }
@@ -39,7 +60,7 @@ export const HorizontalPhotoGallery: React.FC<HorizontalPhotoGalleryProps> = ({
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: 300,
+        left: 400,
         behavior: 'smooth'
       });
     }
@@ -96,7 +117,7 @@ export const HorizontalPhotoGallery: React.FC<HorizontalPhotoGalleryProps> = ({
           {/* Photo container */}
           <div
             ref={scrollContainerRef}
-            className="flex gap-4 overflow-x-auto scrollbar-hide pb-2"
+            className="flex overflow-x-auto scrollbar-hide"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {photos.map((photo, index) => (
@@ -104,18 +125,13 @@ export const HorizontalPhotoGallery: React.FC<HorizontalPhotoGalleryProps> = ({
                 key={photo.id}
                 className="flex-shrink-0 relative group"
               >
-                <div className="relative w-48 h-32 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="relative w-80 h-48 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img
                     src={photo.url}
-                    alt={photo.caption || `Photo ${index + 1}`}
+                    alt={`Photo ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-                  {photo.caption && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
-                      <p className="text-white text-xs font-medium truncate">{photo.caption}</p>
-                    </div>
-                  )}
                 </div>
               </div>
             ))}

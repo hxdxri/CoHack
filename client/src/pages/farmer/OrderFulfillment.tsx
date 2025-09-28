@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Package, 
-  Filter, 
   Search, 
   RefreshCw,
   TrendingUp,
   Clock,
-  CheckCircle,
-  Truck
+  CheckCircle
 } from 'lucide-react';
-import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { OrderManagementTable } from '@/components/ui/OrderManagementTable';
 import { Order } from '@/types';
-import { ordersAPI } from '@/lib/api';
 import toast from 'react-hot-toast';
 
 // Mock order data for demonstration
@@ -360,48 +355,41 @@ export const OrderFulfillment: React.FC = () => {
         </Card>
       </div>
 
-      {/* Filters and Search */}
-      <Card className="mb-6">
-        <CardContent className="p-6">
-          <div className="space-y-4">
-            {/* Search Bar - Full Width */}
-            <div className="w-full">
-              <div className="relative max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-graphite w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search orders by ID, customer name, or product..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base"
-                />
-              </div>
-            </div>
+      {/* Search Bar */}
+      <div className="mb-6">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-graphite w-5 h-5" />
+          <input
+            type="text"
+            placeholder="Search orders by ID, customer name, or product..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-12 pr-4 py-3 text-lg bg-gray-100 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white transition-colors"
+          />
+        </div>
+      </div>
 
-            {/* Status Filter - Compact Design */}
-            <div className="flex flex-wrap gap-1.5">
-              {statusCounts.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => setStatusFilter(option.value)}
-                  className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors whitespace-nowrap ${
-                    statusFilter === option.value
-                      ? 'bg-primary-500 text-white'
-                      : 'bg-gray-100 text-graphite hover:bg-gray-200'
-                  }`}
-                >
-                  {option.label}
-                  {option.count > 0 && (
-                    <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 bg-white text-primary-500 text-xs font-bold rounded-full">
-                      {option.count}
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Status Filter */}
+      <div className="flex flex-wrap gap-1.5 mb-6">
+        {statusCounts.map((option) => (
+          <button
+            key={option.value}
+            onClick={() => setStatusFilter(option.value)}
+            className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors whitespace-nowrap ${
+              statusFilter === option.value
+                ? 'bg-primary-500 text-white'
+                : 'bg-white text-graphite hover:bg-gray-50 border border-gray-200'
+            }`}
+          >
+            {option.label}
+            {option.count > 0 && (
+              <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 bg-white text-primary-500 text-xs font-bold rounded-full">
+                {option.count}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
 
       {/* Orders Table */}
       <OrderManagementTable

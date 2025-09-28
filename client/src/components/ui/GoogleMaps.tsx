@@ -327,17 +327,17 @@ export const GoogleMaps: React.FC<GoogleMapsProps> = ({
   return (
     <div className={`w-full ${className}`}>
       {/* Search and Filter Section */}
-      <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
+      <div className="mb-6">
         <div className="flex flex-col lg:flex-row gap-4 items-center">
           {/* Search Bar */}
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <Input
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-graphite w-5 h-5" />
+            <input
               type="text"
               placeholder="Search farms, locations, or specialties..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 w-full"
+              className="w-full pl-12 pr-4 py-3 text-lg bg-gray-100 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white transition-colors"
             />
           </div>
 
