@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from './Button';
 
 interface Slide {
@@ -39,19 +39,19 @@ export const Slideshow: React.FC<SlideshowProps> = ({
   className = '',
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [imageLoaded, setImageLoaded] = useState<boolean[]>([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
-    if (!isPlaying || slides.length <= 1) return;
+    if (!autoPlay || slides.length <= 1) return;
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [isPlaying, slides.length, autoPlayInterval]);
+  }, [autoPlay, slides.length, autoPlayInterval]);
 
   // Preload images
   useEffect(() => {
@@ -92,16 +92,17 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     setTimeout(() => setIsTransitioning(false), 1000);
   };
 
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
 
   if (slides.length === 0) return null;
 
   const currentSlideData = slides[currentSlide];
 
   return (
-    <div className={`relative w-full h-screen overflow-hidden ${className}`}>
+    <div 
+      className={`relative w-full h-screen overflow-hidden ${className}`}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       {/* Slide Images with Crossfade */}
       <div className="absolute inset-0 overflow-hidden">
         {slides.map((slide, index) => (
@@ -177,7 +178,9 @@ export const Slideshow: React.FC<SlideshowProps> = ({
         <>
           <button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-3 rounded-full transition-all duration-200"
+            className={`absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-3 rounded-full transition-all duration-200 ${
+              isHovering ? 'opacity-100' : 'opacity-0'
+            }`}
             aria-label="Previous slide"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -185,7 +188,9 @@ export const Slideshow: React.FC<SlideshowProps> = ({
           
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-3 rounded-full transition-all duration-200"
+            className={`absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-3 rounded-full transition-all duration-200 ${
+              isHovering ? 'opacity-100' : 'opacity-0'
+            }`}
             aria-label="Next slide"
           >
             <ChevronRight className="w-6 h-6" />
@@ -193,34 +198,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
         </>
       )}
 
-      {/* Play/Pause Button */}
-      {autoPlay && slides.length > 1 && (
-        <button
-          onClick={togglePlayPause}
-          className="absolute top-4 right-4 z-20 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-3 rounded-full transition-all duration-200"
-          aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
-        >
-          {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-        </button>
-      )}
 
-      {/* Slide Indicators */}
-      {showIndicators && slides.length > 1 && (
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                index === currentSlide
-                  ? 'bg-white'
-                  : 'bg-white bg-opacity-50 hover:bg-opacity-70'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 };
