@@ -105,8 +105,8 @@ export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             <div className="flex items-start min-w-max px-8">
-              {/* Timeline line */}
-              <div className="absolute top-8 left-8 right-8 h-0.5 bg-gray-200"></div>
+              {/* Timeline line - extends across all events */}
+              <div className="absolute top-8 left-0 h-0.5 bg-gray-200" style={{ width: 'calc(100% + 1250px)' }}></div>
               
               {sortedTimeline.map((event, index) => (
                 <div
