@@ -270,13 +270,13 @@ export const Landing: React.FC = () => {
 
   const testimonials = [
     {
-      name: 'Sarah Johnson',
+      name: 'Klark Kent',
       role: 'Organic Farmer',
       content: 'HarvestLink has transformed how I sell my produce. I can connect directly with customers who appreciate quality organic vegetables.',
       rating: 5,
     },
     {
-      name: 'Mike Chen',
+      name: 'Lois Lane',
       role: 'Customer',
       content: 'The freshness and quality of produce I get through HarvestLink is amazing. Plus, I love supporting local farmers directly.',
       rating: 5,

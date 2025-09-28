@@ -94,6 +94,8 @@ router.post('/login', async (req, res) => {
 
 // Get current user
 router.get('/me', authenticateToken, (req: AuthRequest, res) => {
+  console.log('GET /api/auth/me - User:', req.user ? 'Found' : 'Not found');
+  
   if (!req.user) {
     return res.status(401).json({ error: 'User not found' });
   }

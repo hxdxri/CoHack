@@ -161,7 +161,7 @@ export const PastOrders: React.FC = () => {
           id: 'order_sample_1',
           farmerId: 'farmer_1',
           customerId: 'customer_1',
-          customerName: 'Mike Chen',
+          customerName: 'Lois Lane',
           customerEmail: 'customer@harvestlink.com',
           customerPhone: '(555) 123-4567',
           items: [

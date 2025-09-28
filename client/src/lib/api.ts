@@ -23,6 +23,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000, // 10 second timeout
 });
 
 // Add auth token to requests
@@ -38,10 +39,11 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Only handle authentication errors, not connection errors
     if (error.response?.status === 401) {
       localStorage.removeItem('harvestlink_token');
       localStorage.removeItem('harvestlink_user');
-      window.location.href = '/login';
+      window.location.href = '/auth';
     }
     return Promise.reject(error);
   }
