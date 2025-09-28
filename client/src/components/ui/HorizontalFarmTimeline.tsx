@@ -27,19 +27,6 @@ const getTimelineIcon = (type: FarmTimelineEvent['type']) => {
   return iconMap[type] || '•';
 };
 
-const getTimelineColor = (type: FarmTimelineEvent['type']) => {
-  const colorMap = {
-    founding: 'bg-green-100 text-green-800 border-green-200',
-    expansion: 'bg-blue-100 text-blue-800 border-blue-200',
-    achievement: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-    milestone: 'bg-purple-100 text-purple-800 border-purple-200',
-    award: 'bg-orange-100 text-orange-800 border-orange-200',
-    certification: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-    partnership: 'bg-pink-100 text-pink-800 border-pink-200',
-    innovation: 'bg-cyan-100 text-cyan-800 border-cyan-200'
-  };
-  return colorMap[type] || 'bg-gray-100 text-gray-800 border-gray-200';
-};
 
 export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
   timeline,
@@ -72,14 +59,14 @@ export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
   };
 
   return (
-    <div className={`bg-gradient-to-r from-gray-900 to-black rounded-xl p-4 text-white ${className}`}>
+    <div className={`bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl ${className}`}>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold text-white">Farm History Timeline</h3>
+        <h3 className="text-lg font-bold text-gray-900">Farm History Timeline</h3>
         {isEditable && (
           <div className="flex gap-2">
             <Button
               onClick={onAddEvent}
-              className="bg-white/20 hover:bg-white/30 text-white border-white/30"
+              className="bg-green-600 hover:bg-green-700 text-white"
               size="sm"
             >
               <Plus className="w-4 h-4 mr-1" />
@@ -88,7 +75,7 @@ export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
             <Button
               onClick={onEdit}
               variant="outline"
-              className="border-white/30 text-white hover:bg-white/10"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50"
               size="sm"
             >
               <Edit3 className="w-4 h-4 mr-1" />
@@ -103,14 +90,14 @@ export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
           {/* Scroll buttons */}
           <Button
             onClick={scrollLeft}
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 text-white"
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg border border-gray-200 text-gray-700"
             size="sm"
           >
             <ChevronLeft className="w-4 h-4" />
           </Button>
           <Button
             onClick={scrollRight}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 text-white"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg border border-gray-200 text-gray-700"
             size="sm"
           >
             <ChevronRight className="w-4 h-4" />
@@ -119,70 +106,75 @@ export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
           {/* Timeline container */}
           <div
             ref={scrollContainerRef}
-            className="flex gap-4 overflow-x-auto scrollbar-hide pb-2"
+            className="relative overflow-x-auto scrollbar-hide pb-4"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {sortedTimeline.map((event, index) => (
-              <div
-                key={event.id}
-                className="flex-shrink-0 relative group"
-              >
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/15 transition-all duration-300 group-hover:scale-105 w-64">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-sm text-white/60">{getTimelineIcon(event.type)}</span>
-                    <span className="text-xl font-bold">{event.year}</span>
-                  </div>
+            <div className="flex items-start min-w-max px-8">
+              {/* Timeline line */}
+              <div className="absolute top-8 left-8 right-8 h-0.5 bg-gray-200"></div>
+              
+              {sortedTimeline.map((event, index) => (
+                <div
+                  key={event.id}
+                  className="flex-shrink-0 relative group px-8"
+                >
+                  {/* Timeline bullet */}
+                  <div className="absolute top-6 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gray-900 rounded-full border-4 border-white shadow-lg z-10"></div>
                   
-                  <h4 className="text-lg font-bold text-white mb-2 line-clamp-2">{event.title}</h4>
-                  <p className="text-white/80 text-sm line-clamp-3 mb-3">{event.description}</p>
-                  
-                  {event.imageUrl && (
-                    <div className="mb-3">
-                      <img
-                        src={event.imageUrl}
-                        alt={event.title}
-                        className="w-full h-24 object-cover rounded"
-                      />
-                    </div>
-                  )}
+                  {/* Event content */}
+                  <div className="pt-8 text-center max-w-xs">
+                    <div className="text-2xl font-bold text-gray-900 mb-2">{event.year}</div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2 leading-tight">{event.title}</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed mb-3">{event.description}</p>
+                    
+                    {event.imageUrl && (
+                      <div className="mb-3">
+                        <img
+                          src={event.imageUrl}
+                          alt={event.title}
+                          className="w-full h-32 object-cover rounded-lg shadow-sm"
+                        />
+                      </div>
+                    )}
 
-                  {isEditable && (
-                    <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      <Button
-                        onClick={() => onEditEvent?.(event)}
-                        size="sm"
-                        className="bg-white/20 hover:bg-white/30 text-white flex-1"
-                      >
-                        <Edit3 className="w-3 h-3 mr-1" />
-                        Edit
-                      </Button>
-                      <Button
-                        onClick={() => onDeleteEvent?.(event.id)}
-                        size="sm"
-                        className="bg-red-500/20 hover:bg-red-500/30 text-red-200"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  )}
+                    {isEditable && (
+                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 justify-center">
+                        <Button
+                          onClick={() => onEditEvent?.(event)}
+                          size="sm"
+                          className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs"
+                        >
+                          <Edit3 className="w-3 h-3 mr-1" />
+                          Edit
+                        </Button>
+                        <Button
+                          onClick={() => onDeleteEvent?.(event.id)}
+                          size="sm"
+                          className="bg-red-100 hover:bg-red-200 text-red-700 text-xs"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       ) : (
         <div className="text-center py-8">
-          <div className="w-16 h-16 bg-white/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl font-bold text-white/60">•</span>
+          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <span className="text-2xl font-bold text-gray-400">•</span>
           </div>
-          <h4 className="text-lg font-semibold text-white/80 mb-2">No Timeline Events Yet</h4>
-          <p className="text-white/60 mb-4 text-sm">
+          <h4 className="text-lg font-semibold text-gray-600 mb-2">No Timeline Events Yet</h4>
+          <p className="text-gray-500 mb-4 text-sm">
             Share your farm's journey by adding important milestones and achievements.
           </p>
           {isEditable && onAddEvent && (
             <Button
               onClick={onAddEvent}
-              className="bg-white/20 hover:bg-white/30 text-white"
+              className="bg-green-600 hover:bg-green-700 text-white"
               size="sm"
             >
               <Plus className="w-4 h-4 mr-1" />
