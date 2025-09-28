@@ -7,7 +7,8 @@ import {
   Star, 
   MessageCircle,
   Package,
-  Users
+  Users,
+  X
 } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { useMessagesStore } from '@/store/messages';
@@ -39,12 +40,12 @@ export const CustomerDashboard: React.FC = () => {
 
   const categoryOptions = [
     { value: '', label: 'All Categories' },
-    { value: 'vegetables', label: '🥕 Vegetables' },
-    { value: 'fruits', label: '🍎 Fruits' },
-    { value: 'dairy', label: '🥛 Dairy' },
-    { value: 'grains', label: '🌾 Grains' },
-    { value: 'meat', label: '🥩 Meat' },
-    { value: 'other', label: '📦 Other' },
+    { value: 'vegetables', label: 'Vegetables' },
+    { value: 'fruits', label: 'Fruits' },
+    { value: 'dairy', label: 'Dairy' },
+    { value: 'grains', label: 'Grains' },
+    { value: 'meat', label: 'Meat' },
+    { value: 'other', label: 'Other' },
   ];
 
   useEffect(() => {
@@ -145,70 +146,76 @@ export const CustomerDashboard: React.FC = () => {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-ink mb-2">
-          Welcome, {user?.name}! 🚜
+          Welcome, {user?.name}!
         </h1>
         <p className="text-graphite">
           Discover local farms and their fresh produce in your area
         </p>
       </div>
 
-      {/* Search and Filter Bar */}
-      <Card className="mb-8">
-        <CardContent className="p-6">
-          <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search */}
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-graphite w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search farms, products, or locations..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="input pl-12 text-lg"
-                />
-              </div>
-            </div>
+      {/* Search Bar */}
+      <div className="mb-6">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-graphite w-5 h-5" />
+          <input
+            type="text"
+            placeholder="Search farms, products, or locations..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-12 pr-4 py-3 text-lg bg-gray-100 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white transition-colors"
+          />
+        </div>
+      </div>
 
-            {/* Category Filter */}
-            <div className="lg:w-64">
-              <div className="relative">
-                <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-graphite w-5 h-5" />
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="input pl-12 appearance-none"
-                >
-                  {categoryOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Category Buttons */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            {categoryOptions.slice(1).map(category => (
-              <button
-                key={category.value}
-                onClick={() => setSelectedCategory(
-                  selectedCategory === category.value ? '' : category.value
-                )}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                  selectedCategory === category.value
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-gray-100 text-graphite hover:bg-gray-200'
-                }`}
-              >
-                {category.label}
-              </button>
+      {/* Filter Options */}
+      <div className="flex flex-wrap items-center gap-3 mb-8">
+        {/* Category Filter */}
+        <div className="relative">
+          <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-graphite w-4 h-4" />
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="pl-10 pr-8 py-2 bg-white border border-gray-200 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+          >
+            {categoryOptions.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
             ))}
-          </div>
-        </CardContent>
-      </Card>
+          </select>
+        </div>
+
+        {/* Quick Category Buttons */}
+        {categoryOptions.slice(1).map(category => (
+          <button
+            key={category.value}
+            onClick={() => setSelectedCategory(
+              selectedCategory === category.value ? '' : category.value
+            )}
+            className={`px-3 py-2 rounded-lg text-sm transition-colors ${
+              selectedCategory === category.value
+                ? 'bg-primary-500 text-white'
+                : 'bg-white text-graphite hover:bg-gray-50 border border-gray-200'
+            }`}
+          >
+            {category.label}
+          </button>
+        ))}
+
+        {/* Clear Filters Button */}
+        {(searchTerm || selectedCategory) && (
+          <button
+            onClick={() => {
+              setSearchTerm('');
+              setSelectedCategory('');
+            }}
+            className="flex items-center gap-1 px-3 py-2 bg-gray-100 text-graphite hover:bg-gray-200 border border-gray-200 rounded-lg text-sm transition-colors"
+          >
+            <X className="w-4 h-4" />
+            Clear Filters
+          </button>
+        )}
+      </div>
 
       {/* Results Summary */}
       <div className="flex items-center justify-between mb-6">
@@ -256,7 +263,7 @@ export const CustomerDashboard: React.FC = () => {
               : farmerProducts;
             
             return (
-              <Card key={farmer.id} hover className="group overflow-hidden">
+              <Card key={farmer.id} hover className="group overflow-hidden bg-gray-50">
                 {/* Farm Image */}
                 <div className="w-[calc(100%+3rem)] h-56 -ml-6 -mr-6 -mt-6 mb-6 overflow-hidden">
                   <img 

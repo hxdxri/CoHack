@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Leaf, ShoppingCart } from 'lucide-react';
+import { Menu, X, Leaf, ShoppingCart, Home, MapPin, Package, Info } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useAuthStore } from '@/store/auth';
 
@@ -90,30 +90,34 @@ export const ScrollNavbar: React.FC<ScrollNavbarProps> = ({ className = '' }) =>
               </Link>
 
               {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center space-x-8">
+              <div className="hidden md:flex items-center space-x-6">
                 <button
                   onClick={handleHomeClick}
-                  className="text-gray-700 hover:text-primary-500 transition-colors duration-200"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-primary-500 transition-colors duration-200"
                 >
-                  Home
+                  <Home className="w-4 h-4" />
+                  <span>Home</span>
                 </button>
                 <button
                   onClick={handleFindFarmsClick}
-                  className="text-gray-700 hover:text-primary-500 transition-colors duration-200"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-primary-500 transition-colors duration-200"
                 >
-                  Find Farms
+                  <MapPin className="w-4 h-4" />
+                  <span>Find Farms</span>
                 </button>
                 <button
                   onClick={handleProductsClick}
-                  className="text-gray-700 hover:text-primary-500 transition-colors duration-200"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-primary-500 transition-colors duration-200"
                 >
-                  Products
+                  <Package className="w-4 h-4" />
+                  <span>Products</span>
                 </button>
                 <button
                   onClick={handleAboutClick}
-                  className="text-gray-700 hover:text-primary-500 transition-colors duration-200"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-primary-500 transition-colors duration-200"
                 >
-                  About
+                  <Info className="w-4 h-4" />
+                  <span>About</span>
                 </button>
               </div>
 
@@ -154,27 +158,31 @@ export const ScrollNavbar: React.FC<ScrollNavbarProps> = ({ className = '' }) =>
                 <div className="space-y-2">
                   <button
                     onClick={handleHomeClick}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
+                    className="flex items-center space-x-3 w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
                   >
-                    Home
+                    <Home className="w-4 h-4" />
+                    <span>Home</span>
                   </button>
                   <button
                     onClick={handleFindFarmsClick}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
+                    className="flex items-center space-x-3 w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
                   >
-                    Find Farms
+                    <MapPin className="w-4 h-4" />
+                    <span>Find Farms</span>
                   </button>
                   <button
                     onClick={handleProductsClick}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
+                    className="flex items-center space-x-3 w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
                   >
-                    Products
+                    <Package className="w-4 h-4" />
+                    <span>Products</span>
                   </button>
                   <button
                     onClick={handleAboutClick}
-                    className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
+                    className="flex items-center space-x-3 w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
                   >
-                    About
+                    <Info className="w-4 h-4" />
+                    <span>About</span>
                   </button>
                 </div>
 
