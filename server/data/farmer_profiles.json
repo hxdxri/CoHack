@@ -70,5 +70,17 @@
     "totalReviews": 18,
     "createdAt": "2025-09-27T23:35:45.000Z",
     "updatedAt": "2025-09-27T23:35:45.000Z"
+  },
+  {
+    "id": "80967d9c-fa7b-48c0-8e32-d462e12fe01e",
+    "userId": "d14838b4-53d3-42d3-9144-771176426667",
+    "farmName": "Jane & Sons Famrs",
+    "description": "descuprion, is yrjsdnmmbc xwe",
+    "location": "Winnipeg, Manitoba",
+    "farmHistory": "",
+    "averageRating": 0,
+    "totalReviews": 0,
+    "createdAt": "2025-09-28T09:54:35.226Z",
+    "updatedAt": "2025-09-28T09:54:35.226Z"
   }
 ]

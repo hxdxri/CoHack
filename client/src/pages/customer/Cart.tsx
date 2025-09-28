@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   ShoppingCart, 
   Plus, 
@@ -21,6 +21,7 @@ import { useMessagesStore } from '@/store/messages';
 import toast from 'react-hot-toast';
 
 export const Cart: React.FC = () => {
+  const navigate = useNavigate();
   const { 
     items, 
     totalItems, 
@@ -54,10 +55,9 @@ export const Cart: React.FC = () => {
     }
   };
 
-  const handleVendorCheckout = (farmerName: string) => {
-    // This would trigger the checkout process for this specific vendor
-    toast.success(`Proceeding to checkout with ${farmerName}`);
-    // TODO: Implement vendor-specific checkout
+  const handleVendorCheckout = (farmerId: string) => {
+    // Navigate to checkout page with farmer ID
+    navigate(`/customer/checkout?farmerId=${farmerId}`);
   };
 
   const getCategoryIcon = (category: string) => {
@@ -269,7 +269,7 @@ export const Cart: React.FC = () => {
                 </div>
                 
                  <Button
-                   onClick={() => handleVendorCheckout(vendorCart.farmerName)}
+                   onClick={() => handleVendorCheckout(vendorCart.farmerId)}
                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 shadow-lg hover:shadow-xl transition-all duration-200"
                  >
                   <CheckCircle className="w-4 h-4 mr-2" />
