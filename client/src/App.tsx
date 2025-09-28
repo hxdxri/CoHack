@@ -7,8 +7,7 @@ import { LoadingPage } from '@/components/ui/LoadingSpinner';
 
 // Pages
 import { Landing } from '@/pages/Landing';
-import { Login } from '@/pages/auth/Login';
-import { Register } from '@/pages/auth/Register';
+import { Auth } from '@/pages/auth/Auth';
 import { Listing } from '@/pages/Listing';
 
 // Farmer Pages
@@ -31,7 +30,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole 
   const { isAuthenticated, user } = useAuthStore();
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/auth" replace />;
   }
 
   if (requiredRole && user?.role !== requiredRole) {
@@ -48,16 +47,18 @@ const DashboardRedirect: React.FC = () => {
   const { user, isAuthenticated } = useAuthStore();
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/auth" replace />;
   }
 
   const redirectPath = user?.role === 'farmer' ? '/farmer/dashboard' : '/customer/dashboard';
   return <Navigate to={redirectPath} replace />;
 };
 
+// Import Messages component
+import { Messages } from '@/pages/Messages';
+
 // Placeholder components for routes still to be implemented
 const CustomerReviews = () => <div className="p-8"><h1>My Reviews (Coming Soon)</h1></div>;
-const Messages = () => <div className="p-8"><h1>Messages (Coming Soon)</h1></div>;
 
 function App() {
   const { checkAuth, isAuthenticated } = useAuthStore();
@@ -116,15 +117,9 @@ function App() {
             } 
           />
           <Route 
-            path="/login" 
+            path="/auth" 
             element={
-              isAuthenticated ? <DashboardRedirect /> : <Login />
-            } 
-          />
-          <Route 
-            path="/register" 
-            element={
-              isAuthenticated ? <DashboardRedirect /> : <Register />
+              isAuthenticated ? <DashboardRedirect /> : <Auth />
             } 
           />
 
@@ -147,6 +142,7 @@ function App() {
                   <Routes>
                     <Route path="dashboard" element={<FarmerDashboard />} />
                     <Route path="products" element={<FarmerProducts />} />
+                    <Route path="messages" element={<Messages />} />
                     <Route path="profile" element={<FarmerProfile />} />
                   </Routes>
                 </Layout>
@@ -162,6 +158,7 @@ function App() {
                   <Routes>
                     <Route path="dashboard" element={<CustomerDashboard />} />
                     <Route path="farmers" element={<CustomerFarmers />} />
+                    <Route path="messages" element={<Messages />} />
                     <Route path="profile" element={<CustomerProfile />} />
                     <Route path="reviews" element={<CustomerReviews />} />
                   </Routes>
@@ -170,17 +167,6 @@ function App() {
             } 
           />
 
-          {/* Shared Protected Routes */}
-          <Route 
-            path="/messages" 
-            element={
-              <ProtectedRoute>
-                <Layout>
-                  <Messages />
-                </Layout>
-              </ProtectedRoute>
-            } 
-          />
 
           {/* Public Farmer Profile Route */}
           <Route 
