@@ -80,13 +80,13 @@ export const Landing: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link to="/register">
+              <Link to="/auth">
                 <Button variant="secondary" size="lg" className="w-full sm:w-auto">
                   Get Started Today
                 </Button>
               </Link>
               
-              <Link to="/login">
+              <Link to="/auth">
                 <Button 
                   variant="outline" 
                   size="lg" 
@@ -144,7 +144,7 @@ export const Landing: React.FC = () => {
                   </li>
                 </ul>
 
-                <Link to="/register" className="block">
+                <Link to="/auth" className="block">
                   <Button variant="primary" size="lg" className="w-full">
                     Start Selling
                   </Button>
@@ -183,7 +183,7 @@ export const Landing: React.FC = () => {
                   </li>
                 </ul>
 
-                <Link to="/register" className="block">
+                <Link to="/auth" className="block">
                   <Button variant="success" size="lg" className="w-full">
                     Start Shopping
                   </Button>
@@ -263,12 +263,12 @@ export const Landing: React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/register">
+            <Link to="/auth">
               <Button variant="secondary" size="lg">
                 Create Account
               </Button>
             </Link>
-            <Link to="/login">
+            <Link to="/auth">
               <Button 
                 variant="outline" 
                 size="lg"
