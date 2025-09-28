@@ -3,7 +3,7 @@
     "id": "39333f70-4760-45d1-bc00-d72263be6d59",
     "email": "farmer@harvestlink.com",
     "password": "$2a$10$uUTm8df7KMdztLEN96757OF/bZOHzIPAuRTnibvfpyn/tsqUx8tZa",
-    "name": "Sarah Johnson",
+    "name": "Klark Kent",
     "role": "farmer",
     "createdAt": "2025-09-27T22:52:54.671Z",
     "updatedAt": "2025-09-27T22:52:54.671Z"
@@ -57,7 +57,7 @@
     "id": "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
     "email": "customer@harvestlink.com",
     "password": "$2a$10$fPoM3vT7ZXxWQRekCHOWZ.RSb5OSYMA5zfDSgXyAklU/bvoffHi5.",
-    "name": "Mike Chen",
+    "name": "Lois Lane",
     "role": "customer",
     "createdAt": "2025-09-27T22:52:54.775Z",
     "updatedAt": "2025-09-27T22:52:54.775Z"

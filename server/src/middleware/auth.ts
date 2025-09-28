@@ -22,12 +22,14 @@ export const authenticateToken = async (req: AuthRequest, res: Response, next: N
     const user = UserModel.findById(decoded.userId);
     
     if (!user) {
+      console.error('User not found for userId:', decoded.userId);
       return res.status(401).json({ error: 'Invalid token' });
     }
 
     req.user = user;
     next();
   } catch (error) {
+    console.error('JWT verification error:', error);
     return res.status(403).json({ error: 'Invalid or expired token' });
   }
 };

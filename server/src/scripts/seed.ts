@@ -15,7 +15,7 @@ async function seedDatabase() {
     const farmer = await UserModel.create({
       email: 'farmer@harvestlink.com',
       password: 'password123',
-      name: 'Sarah Johnson',
+      name: 'Klark Kent',
       role: 'farmer',
     });
 
@@ -32,7 +32,7 @@ async function seedDatabase() {
     const customer = await UserModel.create({
       email: 'customer@harvestlink.com',
       password: 'password123',
-      name: 'Mike Chen',
+      name: 'Lois Lane',
       role: 'customer',
     });
 

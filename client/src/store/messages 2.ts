@@ -20,14 +20,14 @@ interface MessagesState {
 const mockUsers = [
   {
     id: "664c120a-91aa-4fea-be8c-156b7c1a5305",
-    name: "Sarah Johnson",
+    name: "Klark Kent",
     role: "farmer" as const,
     farmName: "Green Valley Farm",
     location: "Sonoma County, CA"
   },
   {
     id: "f4771795-d367-49b5-a82f-b7d6acc63171",
-    name: "Mike Chen",
+    name: "Lois Lane",
     role: "customer" as const
   },
   {
@@ -52,7 +52,7 @@ const mockUsers = [
 ];
 
 const mockMessages: Message[] = [
-  // Conversation between Mike Chen (customer) and Sarah Johnson (farmer)
+  // Conversation between Lois Lane (customer) and Klark Kent (farmer)
   {
     id: "msg-1",
     fromUserId: "f4771795-d367-49b5-a82f-b7d6acc63171",
@@ -86,7 +86,7 @@ const mockMessages: Message[] = [
     createdAt: "2025-09-27T08:20:00.000Z"
   },
   
-  // Conversation between Mike Chen (customer) and David Martinez (farmer)
+  // Conversation between Lois Lane (customer) and David Martinez (farmer)
   {
     id: "msg-5",
     fromUserId: "f4771795-d367-49b5-a82f-b7d6acc63171",
@@ -112,7 +112,7 @@ const mockMessages: Message[] = [
     createdAt: "2025-09-27T09:15:00.000Z"
   },
 
-  // Conversation between Sarah Johnson (farmer) and Emily Rodriguez (customer)
+  // Conversation between Klark Kent (farmer) and Emily Rodriguez (customer)
   {
     id: "msg-8",
     fromUserId: "customer-2",

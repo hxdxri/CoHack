@@ -88,14 +88,31 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   checkAuth: async () => {
     const token = localStorage.getItem('harvestlink_token');
+    const storedUser = localStorage.getItem('harvestlink_user');
 
     if (!token) {
       set({ isAuthenticated: false, user: null, token: null });
       return;
     }
 
+    // If we have a stored user, use it initially to avoid blocking the UI
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        set({
+          user,
+          token,
+          isAuthenticated: true,
+        });
+      } catch (error) {
+        console.error('Error parsing stored user:', error);
+        localStorage.removeItem('harvestlink_user');
+      }
+    }
+
     try {
       // Try to get current user from API to verify token
+      console.log('Checking auth with token:', token.substring(0, 20) + '...');
       const response = await authAPI.getCurrentUser();
       const { user } = response.data;
 
@@ -105,14 +122,18 @@ export const useAuthStore = create<AuthState>((set) => ({
         isAuthenticated: true,
       });
     } catch (error) {
-      // Token is invalid, clear storage
-      localStorage.removeItem('harvestlink_token');
-      localStorage.removeItem('harvestlink_user');
-      set({
-        user: null,
-        token: null,
-        isAuthenticated: false,
-      });
+      console.error('Auth check failed:', error);
+      // Only clear storage if it's an authentication error, not a connection error
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        localStorage.removeItem('harvestlink_token');
+        localStorage.removeItem('harvestlink_user');
+        set({
+          user: null,
+          token: null,
+          isAuthenticated: false,
+        });
+      }
+      // For connection errors, keep the current state but don't clear storage
     }
   },
 
