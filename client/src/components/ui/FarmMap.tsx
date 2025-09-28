@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, Search, Filter, Navigation, Map } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Input } from './Input';
 import { Button } from './Button';
 import { Card, CardContent } from './Card';
@@ -32,6 +33,7 @@ export const FarmMap: React.FC<FarmMapProps> = ({
   onFarmSelect,
   className = '',
 }) => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredFarms, setFilteredFarms] = useState<FarmLocation[]>(farms);
@@ -337,7 +339,7 @@ export const FarmMap: React.FC<FarmMapProps> = ({
                       size="sm"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleFarmClick(farm);
+                        navigate('/auth');
                       }}
                     >
                       View Details

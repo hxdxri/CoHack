@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import { MapPin, Search, Filter, Navigation } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Input } from './Input';
 import { Button } from './Button';
 import { Card, CardContent } from './Card';
@@ -194,6 +195,7 @@ export const GoogleMaps: React.FC<GoogleMapsProps> = ({
   onFarmSelect,
   className = '',
 }) => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredFarms, setFilteredFarms] = useState<FarmLocation[]>(farms);
@@ -388,7 +390,7 @@ export const GoogleMaps: React.FC<GoogleMapsProps> = ({
                 hover
                 className={`cursor-pointer transition-all duration-300 ${
                   selectedFarm?.id === farm.id 
-                    ? 'bg-green-50 border-green-300 shadow-lg transform scale-105 animate-pulse' 
+                    ? 'bg-primary-50' 
                     : 'hover:bg-gray-50'
                 }`}
                 onClick={() => handleFarmClick(farm)}
@@ -397,11 +399,6 @@ export const GoogleMaps: React.FC<GoogleMapsProps> = ({
                   <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center gap-2">
                       <h3 className="font-semibold text-lg text-ink">{farm.name}</h3>
-                      {selectedFarm?.id === farm.id && (
-                        <span className="text-xs bg-green-200 text-green-800 px-2 py-1 rounded-full font-medium">
-                          Selected
-                        </span>
-                      )}
                     </div>
                     <div className="flex items-center gap-1">
                       <span className="text-yellow-500">★</span>
@@ -447,7 +444,7 @@ export const GoogleMaps: React.FC<GoogleMapsProps> = ({
                       size="sm"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleFarmClick(farm);
+                        navigate('/auth');
                       }}
                     >
                       View Details

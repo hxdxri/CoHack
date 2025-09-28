@@ -20,18 +20,24 @@ export const Landing: React.FC = () => {
   // Handle scroll to show/hide impact section when reaching Why Choose HarvestLink
   useEffect(() => {
     const handleScroll = () => {
+      const farmMapSection = document.querySelector('[data-section="farm-map"]');
       const featuresSection = document.querySelector('[data-section="features"]');
       const footer = document.querySelector('footer');
       
-      if (featuresSection && footer) {
+      if (farmMapSection && featuresSection && footer) {
+        const farmMapRect = farmMapSection.getBoundingClientRect();
         const featuresRect = featuresSection.getBoundingClientRect();
         const footerRect = footer.getBoundingClientRect();
         
-        // Show impact section when Why Choose HarvestLink section is in view and footer hasn't appeared yet
+        // Show impact section only when:
+        // 1. User has scrolled past the map section (map is above viewport)
+        // 2. Why Choose HarvestLink section is in view
+        // 3. Footer hasn't appeared yet
+        const mapPassed = farmMapRect.bottom < 0; // Map section is completely above viewport
         const featuresInView = featuresRect.top < window.innerHeight && featuresRect.bottom > 0;
         const footerNotReached = footerRect.top > window.innerHeight;
         
-        setShowImpact(featuresInView && footerNotReached);
+        setShowImpact(mapPassed && featuresInView && footerNotReached);
       }
     };
 
@@ -341,7 +347,7 @@ export const Landing: React.FC = () => {
                 icon: Truck, 
                 label: 'Miles Saved', 
                 value: '45K', 
-                unit: 'K', 
+                unit: '', 
                 color: 'text-orange-600', 
                 bgColor: 'bg-orange-50'
               },
@@ -357,7 +363,7 @@ export const Landing: React.FC = () => {
                 icon: Globe, 
                 label: 'Water Saved', 
                 value: '12K', 
-                unit: 'K gal', 
+                unit: 'gal', 
                 color: 'text-cyan-600', 
                 bgColor: 'bg-cyan-50'
               },
