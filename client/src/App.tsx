@@ -7,7 +7,10 @@ import { LoadingPage } from '@/components/ui/LoadingSpinner';
 
 // Pages
 import { Landing } from '@/pages/Landing';
+
+import { Listing } from '@/pages/Listing';
 import { Auth } from '@/pages/auth/Auth';
+
 
 // Farmer Pages
 import { FarmerDashboard } from '@/pages/farmer/Dashboard';
