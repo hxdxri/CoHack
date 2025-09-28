@@ -298,27 +298,24 @@ export const FarmerProfile: React.FC = () => {
             )}
           </div>
 
-          {/* Full-width banner photo */}
-          <div className="relative h-96 w-full overflow-hidden shadow-lg mb-8 -mx-6">
-            <img
-              src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-              alt="Farm Banner"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-            <div className="absolute bottom-8 left-8 text-white">
-              <h2 className="text-5xl font-bold mb-3 drop-shadow-lg text-white">Welcome to {profile.farmName}</h2>
-              <p className="text-2xl opacity-95 drop-shadow-md text-white">Discover our story and farming practices</p>
+          {/* Seamless Banner and Story Section */}
+          <div className="relative -mx-6 mb-8">
+            {/* Banner Image */}
+            <div className="relative h-96 w-full overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                alt="Farm Banner"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-8 left-8 text-white">
+                <h2 className="text-5xl font-bold mb-3 drop-shadow-lg text-white">Welcome to {profile.farmName}</h2>
+                <p className="text-2xl opacity-95 drop-shadow-md text-white">Discover our story and farming practices</p>
+              </div>
             </div>
-          </div>
-        </section>
 
-        {/* Main Layout with Sticky Sidebar */}
-        <div className="flex gap-6">
-          {/* Main Content */}
-          <div className="flex-1 max-w-4xl space-y-6">
-            {/* Connected Story Section */}
-            <div className="bg-white rounded-xl shadow-lg mb-8 overflow-hidden">
+            {/* Connected Story Section - Seamlessly attached */}
+            <div className="bg-white rounded-t-xl shadow-lg overflow-hidden">
               <div className="flex flex-col lg:flex-row">
                 {/* Our Story Section */}
                 <div className="bg-gray-50 p-8 flex-1">
@@ -362,6 +359,13 @@ export const FarmerProfile: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Main Layout with Sticky Sidebar */}
+        <div className="flex gap-6">
+          {/* Main Content */}
+          <div className="flex-1 max-w-4xl space-y-6">
 
             {/* Divider */}
             <div className="border-t border-gray-200 my-8"></div>
