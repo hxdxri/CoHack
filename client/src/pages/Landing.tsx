@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Slideshow } from '@/components/ui/Slideshow';
 import { GoogleMaps } from '@/components/ui/GoogleMaps';
+import { ImpactTracker } from '@/components/ui/ImpactTracker';
 import { ScrollNavbar } from '@/components/layout/ScrollNavbar';
 import { Footer } from '@/components/layout/Footer';
 
@@ -274,6 +275,12 @@ export const Landing: React.FC = () => {
         </div>
       </section>
 
+      {/* Impact Tracker Section */}
+      <ImpactTracker />
+
+      {/* Gradient Transition */}
+      <div className="h-8 bg-gradient-to-b from-green-50 to-mist"></div>
+
       {/* Features Section */}
       <section className="py-16 bg-mist">
         <div className="container-custom">
@@ -299,6 +306,9 @@ export const Landing: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Subtle Transition */}
+      <div className="h-6 bg-gradient-to-b from-mist to-bone"></div>
 
       {/* Testimonials Section */}
       <section className="py-16 bg-bone">
@@ -331,6 +341,9 @@ export const Landing: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Fade Transition */}
+      <div className="h-8 bg-gradient-to-b from-bone to-primary-500"></div>
 
       {/* CTA Section */}
       <section className="py-16 bg-primary-500 text-white">
