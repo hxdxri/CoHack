@@ -4,7 +4,7 @@ import { Leaf, Users, ShoppingCart, MessageCircle, Star, Shield, Truck } from 'l
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Slideshow } from '@/components/ui/Slideshow';
-import { FarmMap } from '@/components/ui/FarmMap';
+import { GoogleMaps } from '@/components/ui/GoogleMaps';
 import { ScrollNavbar } from '@/components/layout/ScrollNavbar';
 import { Footer } from '@/components/layout/Footer';
 
@@ -35,7 +35,7 @@ export const Landing: React.FC = () => {
     },
     {
       id: 2,
-      image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      image: '/farmer.jpg',
       title: 'Sell Your Harvest',
       subtitle: 'Direct to Customers',
       description: 'Join our platform and sell your fresh produce directly to customers. Set your own prices and build lasting relationships with your community.',
@@ -69,52 +69,127 @@ export const Landing: React.FC = () => {
     },
   ];
 
-  // Sample farm data for the map
-  const sampleFarms = [
+  // Saskatchewan farm data
+  const saskatchewanFarms = [
     {
       id: '1',
-      name: 'Green Valley Organic Farm',
-      location: 'Green Valley, CA',
-      coordinates: { lat: 37.7749, lng: -122.4194 },
+      name: 'Prairie Gold Organic Farm',
+      location: 'Saskatoon, SK',
+      coordinates: { lat: 52.1579, lng: -106.6702 },
       rating: 4.8,
-      productCount: 24,
-      specialties: ['vegetables', 'fruits', 'herbs'],
+      productCount: 28,
+      specialties: ['wheat', 'canola', 'lentils', 'vegetables'],
+      description: 'Family-owned organic farm specializing in grains and vegetables',
+      established: 1985,
+      size: '2,400 acres',
     },
     {
       id: '2',
-      name: 'Sunrise Dairy Farm',
-      location: 'Sunrise Valley, CA',
-      coordinates: { lat: 37.7849, lng: -122.4094 },
+      name: 'Northern Lights Dairy',
+      location: 'Regina, SK',
+      coordinates: { lat: 50.4452, lng: -104.6189 },
       rating: 4.6,
-      productCount: 12,
-      specialties: ['dairy', 'eggs', 'cheese'],
+      productCount: 15,
+      specialties: ['dairy', 'cheese', 'yogurt', 'eggs'],
+      description: 'Premium dairy products from grass-fed cattle',
+      established: 1992,
+      size: '800 acres',
     },
     {
       id: '3',
-      name: 'Mountain View Produce',
-      location: 'Mountain View, CA',
-      coordinates: { lat: 37.7649, lng: -122.4294 },
+      name: 'Saskatchewan Valley Produce',
+      location: 'Prince Albert, SK',
+      coordinates: { lat: 53.2031, lng: -105.7531 },
       rating: 4.9,
-      productCount: 18,
-      specialties: ['fruits', 'vegetables', 'grains'],
+      productCount: 22,
+      specialties: ['potatoes', 'carrots', 'onions', 'vegetables'],
+      description: 'Leading producer of root vegetables and field crops',
+      established: 1978,
+      size: '3,200 acres',
     },
     {
       id: '4',
-      name: 'Riverside Farm',
-      location: 'Riverside, CA',
-      coordinates: { lat: 37.7549, lng: -122.4394 },
+      name: 'Prairie Breeze Ranch',
+      location: 'Moose Jaw, SK',
+      coordinates: { lat: 50.3901, lng: -105.5355 },
       rating: 4.7,
-      productCount: 15,
-      specialties: ['vegetables', 'herbs', 'flowers'],
+      productCount: 18,
+      specialties: ['beef', 'lamb', 'pork', 'meat'],
+      description: 'Sustainable livestock operation with pasture-raised animals',
+      established: 1995,
+      size: '1,500 acres',
     },
     {
       id: '5',
-      name: 'Golden Gate Ranch',
-      location: 'Golden Gate, CA',
-      coordinates: { lat: 37.7949, lng: -122.3994 },
+      name: 'Sunny Acres Farm',
+      location: 'Swift Current, SK',
+      coordinates: { lat: 50.2857, lng: -107.8012 },
       rating: 4.5,
-      productCount: 8,
-      specialties: ['meat', 'dairy', 'eggs'],
+      productCount: 12,
+      specialties: ['honey', 'berries', 'fruits', 'maple syrup'],
+      description: 'Specialty crops and artisanal products',
+      established: 2001,
+      size: '400 acres',
+    },
+    {
+      id: '6',
+      name: 'Greenfield Organic Gardens',
+      location: 'Yorkton, SK',
+      coordinates: { lat: 51.2136, lng: -102.4618 },
+      rating: 4.8,
+      productCount: 25,
+      specialties: ['vegetables', 'herbs', 'microgreens', 'organic'],
+      description: 'Certified organic vegetable production and greenhouse operations',
+      established: 1989,
+      size: '600 acres',
+    },
+    {
+      id: '7',
+      name: 'Prairie Heritage Grains',
+      location: 'North Battleford, SK',
+      coordinates: { lat: 52.7577, lng: -108.2841 },
+      rating: 4.6,
+      productCount: 20,
+      specialties: ['wheat', 'barley', 'oats', 'quinoa'],
+      description: 'Heritage grain varieties and specialty crops',
+      established: 1983,
+      size: '4,000 acres',
+    },
+    {
+      id: '8',
+      name: 'Crystal Lake Farm',
+      location: 'Estevan, SK',
+      coordinates: { lat: 49.1397, lng: -102.9842 },
+      rating: 4.4,
+      productCount: 16,
+      specialties: ['sunflowers', 'flax', 'canola', 'oilseeds'],
+      description: 'Oilseed production and processing facility',
+      established: 1991,
+      size: '2,800 acres',
+    },
+    {
+      id: '9',
+      name: 'Riverside Market Garden',
+      location: 'Weyburn, SK',
+      coordinates: { lat: 49.6667, lng: -103.8500 },
+      rating: 4.7,
+      productCount: 19,
+      specialties: ['vegetables', 'fruits', 'flowers', 'herbs'],
+      description: 'Diversified market garden with CSA program',
+      established: 2005,
+      size: '150 acres',
+    },
+    {
+      id: '10',
+      name: 'Prairie Wind Farm',
+      location: 'Melfort, SK',
+      coordinates: { lat: 52.8567, lng: -104.6106 },
+      rating: 4.9,
+      productCount: 14,
+      specialties: ['beef', 'bison', 'wild game', 'meat'],
+      description: 'Grass-fed bison and cattle operation',
+      established: 1987,
+      size: '5,200 acres',
     },
   ];
 
@@ -185,15 +260,15 @@ export const Landing: React.FC = () => {
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
-              Discover Local Farms
+              Discover Saskatchewan Farms
             </h2>
             <p className="text-xl text-graphite">
-              Find fresh produce from farms in your area
+              Find fresh produce from farms across Saskatchewan
             </p>
           </div>
           
-          <FarmMap 
-            farms={sampleFarms}
+          <GoogleMaps 
+            farms={saskatchewanFarms}
             onFarmSelect={(farm) => console.log('Selected farm:', farm)}
           />
         </div>

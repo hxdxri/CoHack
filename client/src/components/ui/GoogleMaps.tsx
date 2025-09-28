@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { MapPin, Search, Filter, Navigation, Map } from 'lucide-react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Wrapper, Status } from '@googlemaps/react-wrapper';
+import { MapPin, Search, Filter, Navigation } from 'lucide-react';
 import { Input } from './Input';
 import { Button } from './Button';
 import { Card, CardContent } from './Card';
@@ -21,13 +22,169 @@ interface FarmLocation {
   size?: string;
 }
 
-interface FarmMapProps {
+interface GoogleMapsProps {
   farms: FarmLocation[];
   onFarmSelect?: (farm: FarmLocation) => void;
   className?: string;
 }
 
-export const FarmMap: React.FC<FarmMapProps> = ({
+// Google Maps API key from environment variables
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'YOUR_GOOGLE_MAPS_API_KEY';
+
+const MapComponent: React.FC<{
+  farms: FarmLocation[];
+  onFarmSelect?: (farm: FarmLocation) => void;
+}> = ({ farms, onFarmSelect }) => {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
+  const [selectedFarm, setSelectedFarm] = useState<FarmLocation | null>(null);
+
+  // Initialize map
+  useEffect(() => {
+    if (mapRef.current && !map) {
+      const newMap = new google.maps.Map(mapRef.current, {
+        center: { lat: 52.9399, lng: -106.4509 }, // Saskatchewan center
+        zoom: 6,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        styles: [
+          {
+            featureType: 'poi',
+            elementType: 'labels',
+            stylers: [{ visibility: 'off' }]
+          }
+        ]
+      });
+      setMap(newMap);
+    }
+  }, [map]);
+
+  // Create markers for farms
+  useEffect(() => {
+    if (map && farms.length > 0) {
+      // Clear existing markers
+      markers.forEach(marker => marker.setMap(null));
+
+      const newMarkers = farms.map(farm => {
+        const marker = new google.maps.Marker({
+          position: { lat: farm.coordinates.lat, lng: farm.coordinates.lng },
+          map: map,
+          title: farm.name,
+          icon: {
+            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+              <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="12" fill="#1A7F5A" stroke="white" stroke-width="2"/>
+                <path d="M16 8l-2 8h4l-2-8z" fill="white"/>
+              </svg>
+            `),
+            scaledSize: new google.maps.Size(32, 32),
+            anchor: new google.maps.Point(16, 16)
+          }
+        });
+
+        // Add click listener
+        marker.addListener('click', () => {
+          setSelectedFarm(farm);
+          onFarmSelect?.(farm);
+        });
+
+        return marker;
+      });
+
+      setMarkers(newMarkers);
+    }
+  }, [map, farms, onFarmSelect]);
+
+  return (
+    <div className="relative">
+      <div ref={mapRef} className="w-full h-96 rounded-lg" />
+      
+      {/* Map Controls Overlay */}
+      <div className="absolute top-4 left-4 bg-white bg-opacity-90 rounded-lg p-3 shadow-lg">
+        <div className="flex items-center space-x-2 text-sm text-gray-700">
+          <MapPin className="w-4 h-4" />
+          <span>{farms.length} farms found</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const LoadingComponent: React.FC = () => (
+  <div className="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+    <div className="text-center text-gray-500">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500 mx-auto mb-4"></div>
+      <p>Loading map...</p>
+    </div>
+  </div>
+);
+
+const ErrorComponent: React.FC<{ status: Status }> = ({ status }) => (
+  <div className="w-full h-96 bg-gradient-to-br from-green-100 to-green-200 rounded-lg border-2 border-green-300 relative overflow-hidden">
+    {/* Saskatchewan Map Background */}
+    <div 
+      className="absolute inset-0 bg-cover bg-center"
+      style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='400' height='300' viewBox='0 0 400 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 20 0 L 0 0 0 20' fill='none' stroke='%23e5e7eb' stroke-width='0.5'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='400' height='300' fill='%23f0fdf4'/%3E%3Crect width='400' height='300' fill='url(%23grid)'/%3E%3Ctext x='200' y='150' text-anchor='middle' font-family='Arial' font-size='24' fill='%23374151'%3ESaskatchewan%3C/text%3E%3C/svg%3E")`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="absolute inset-0 bg-green-50 bg-opacity-30" />
+    </div>
+    
+    {/* Interactive Farm Markers */}
+    <div className="absolute inset-0">
+      {/* Sample farm markers positioned across Saskatchewan */}
+      {[
+        { x: 25, y: 35, name: 'Prairie Gold' },
+        { x: 45, y: 60, name: 'Northern Lights' },
+        { x: 35, y: 25, name: 'Valley Produce' },
+        { x: 40, y: 55, name: 'Prairie Breeze' },
+        { x: 30, y: 65, name: 'Sunny Acres' },
+        { x: 55, y: 45, name: 'Greenfield' },
+        { x: 20, y: 30, name: 'Heritage Grains' },
+        { x: 60, y: 70, name: 'Crystal Lake' },
+        { x: 50, y: 65, name: 'Riverside' },
+        { x: 30, y: 20, name: 'Prairie Wind' },
+      ].map((marker, index) => (
+        <div
+          key={index}
+          className="absolute w-6 h-6 bg-primary-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-transform duration-200"
+          style={{
+            left: `${marker.x}%`,
+            top: `${marker.y}%`,
+          }}
+          title={marker.name}
+        >
+          <MapPin className="w-3 h-3 text-white" />
+        </div>
+      ))}
+    </div>
+
+    {/* Map Legend */}
+    <div className="absolute top-4 left-4 bg-white bg-opacity-90 rounded-lg p-3 shadow-lg">
+      <div className="flex items-center space-x-2 text-sm text-gray-700">
+        <MapPin className="w-4 h-4" />
+        <span>10 farms found</span>
+      </div>
+    </div>
+
+    {/* API Key Setup Instructions */}
+    <div className="absolute bottom-4 left-4 right-4 bg-white bg-opacity-95 rounded-lg p-4 shadow-lg">
+      <div className="text-center">
+        <p className="text-sm font-medium text-gray-700 mb-2">Google Maps API Key Required</p>
+        <div className="text-xs text-gray-600 space-y-1">
+          <p>1. Get API key from <a href="https://console.cloud.google.com/google/maps-apis" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">Google Cloud Console</a></p>
+          <p>2. Add to .env file: VITE_GOOGLE_MAPS_API_KEY=your_key_here</p>
+          <p>3. Restart development server</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+export const GoogleMaps: React.FC<GoogleMapsProps> = ({
   farms,
   onFarmSelect,
   className = '',
@@ -35,11 +192,7 @@ export const FarmMap: React.FC<FarmMapProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredFarms, setFilteredFarms] = useState<FarmLocation[]>(farms);
-  const [selectedFarm, setSelectedFarm] = useState<FarmLocation | null>(null);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
-  const [mapCenter, setMapCenter] = useState({ lat: 52.9399, lng: -106.4509 }); // Saskatchewan center
-  const [mapZoom, setMapZoom] = useState(6);
-  const mapRef = useRef<HTMLDivElement>(null);
 
   const categories = [
     { value: 'all', label: 'All Farms' },
@@ -128,8 +281,18 @@ export const FarmMap: React.FC<FarmMapProps> = ({
   }, [searchTerm, selectedCategory, farms, userLocation]);
 
   const handleFarmClick = (farm: FarmLocation) => {
-    setSelectedFarm(farm);
     onFarmSelect?.(farm);
+  };
+
+  const render = (status: Status) => {
+    switch (status) {
+      case Status.LOADING:
+        return <LoadingComponent />;
+      case Status.FAILURE:
+        return <ErrorComponent status={status} />;
+      case Status.SUCCESS:
+        return <MapComponent farms={filteredFarms} onFarmSelect={handleFarmClick} />;
+    }
   };
 
   return (
@@ -179,98 +342,8 @@ export const FarmMap: React.FC<FarmMapProps> = ({
 
       {/* Map and Farm List */}
       <div className="grid lg:grid-cols-2 gap-6">
-        {/* Saskatchewan Map */}
-        <div className="relative">
-          <div
-            ref={mapRef}
-            className="w-full h-96 bg-gradient-to-br from-green-100 to-green-200 rounded-lg border-2 border-green-300 relative overflow-hidden"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='400' height='300' viewBox='0 0 400 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 20 0 L 0 0 0 20' fill='none' stroke='%23e5e7eb' stroke-width='0.5'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='400' height='300' fill='%23f0fdf4'/%3E%3Crect width='400' height='300' fill='url(%23grid)'/%3E%3Ctext x='200' y='150' text-anchor='middle' font-family='Arial' font-size='24' fill='%23374151'%3ESaskatchewan%3C/text%3E%3C/svg%3E")`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
-            {/* Map overlay with province outline */}
-            <div className="absolute inset-0 bg-green-50 bg-opacity-30" />
-            
-            {/* Interactive Farm Markers */}
-            <div className="absolute inset-0">
-              {filteredFarms.map((farm, index) => {
-                // Convert lat/lng to pixel coordinates for Saskatchewan
-                const saskBounds = {
-                  north: 60.0,
-                  south: 49.0,
-                  east: -101.0,
-                  west: -110.0
-                };
-                
-                const x = ((farm.coordinates.lng - saskBounds.west) / (saskBounds.east - saskBounds.west)) * 100;
-                const y = ((saskBounds.north - farm.coordinates.lat) / (saskBounds.north - saskBounds.south)) * 100;
-                
-                return (
-                  <button
-                    key={farm.id}
-                    onClick={() => handleFarmClick(farm)}
-                    className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 hover:scale-110 ${
-                      selectedFarm?.id === farm.id 
-                        ? 'z-20' 
-                        : 'z-10'
-                    }`}
-                    style={{
-                      left: `${Math.max(5, Math.min(95, x))}%`,
-                      top: `${Math.max(5, Math.min(95, y))}%`,
-                    }}
-                    title={`${farm.name} - ${farm.location}`}
-                  >
-                    <div className={`w-6 h-6 rounded-full border-2 border-white shadow-lg flex items-center justify-center ${
-                      selectedFarm?.id === farm.id
-                        ? 'bg-primary-600 scale-125'
-                        : 'bg-primary-500 hover:bg-primary-600'
-                    }`}>
-                      <MapPin className="w-3 h-3 text-white" />
-                    </div>
-                    
-                    {/* Farm name tooltip */}
-                    <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity duration-200 ${
-                      selectedFarm?.id === farm.id ? 'opacity-100' : ''
-                    }`}>
-                      {farm.name}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Map Legend */}
-            <div className="absolute top-4 left-4 bg-white bg-opacity-90 rounded-lg p-3 shadow-lg">
-              <div className="flex items-center space-x-2 text-sm text-gray-700">
-                <Map className="w-4 h-4" />
-                <span>Saskatchewan Farms</span>
-              </div>
-              <div className="mt-2 text-xs text-gray-600">
-                {filteredFarms.length} farm{filteredFarms.length !== 1 ? 's' : ''} found
-              </div>
-            </div>
-
-            {/* Zoom Controls */}
-            <div className="absolute top-4 right-4 flex flex-col space-y-1">
-              <button
-                onClick={() => setMapZoom(prev => Math.min(10, prev + 1))}
-                className="w-8 h-8 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-t-lg flex items-center justify-center text-gray-700 shadow-lg"
-                title="Zoom In"
-              >
-                +
-              </button>
-              <button
-                onClick={() => setMapZoom(prev => Math.max(4, prev - 1))}
-                className="w-8 h-8 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-b-lg flex items-center justify-center text-gray-700 shadow-lg"
-                title="Zoom Out"
-              >
-                −
-              </button>
-            </div>
-          </div>
-        </div>
+        {/* Google Map */}
+        <Wrapper apiKey={GOOGLE_MAPS_API_KEY} render={render} />
 
         {/* Farm List */}
         <div className="space-y-4 max-h-96 overflow-y-auto">
@@ -285,9 +358,7 @@ export const FarmMap: React.FC<FarmMapProps> = ({
               <Card
                 key={farm.id}
                 hover
-                className={`cursor-pointer transition-all duration-200 ${
-                  selectedFarm?.id === farm.id ? 'ring-2 ring-primary-500' : ''
-                }`}
+                className="cursor-pointer transition-all duration-200"
                 onClick={() => handleFarmClick(farm)}
               >
                 <CardContent className="p-4">
