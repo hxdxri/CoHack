@@ -274,49 +274,43 @@ export const FarmerProfile: React.FC = () => {
           <div className="flex-1 max-w-4xl space-y-6">
             {/* Hero Section with Story */}
             <section className="relative bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-                {/* Story Content */}
-                <div className="space-y-6">
-                  {/* Our Story Section */}
-                  <div className="animate-fade-in">
-                    <RichTextEditor
-                      title="Our Story"
-                      content={profile.ourStoryRich || profile.ourStory || ''}
-                      onChange={(content) => setTempContent(content)}
-                      onSave={() => saveContent('ourStory')}
-                      onCancel={cancelEditing}
-                      isEditing={editingSection === 'ourStory'}
-                      placeholder="Share your farm's story, values, and what makes you unique..."
-                    />
-                  </div>
+              <div className="space-y-6">
+                {/* Our Story Section */}
+                <div className="animate-fade-in">
+                  <RichTextEditor
+                    title="Our Story"
+                    content={profile.ourStoryRich || profile.ourStory || ''}
+                    onChange={(content) => setTempContent(content)}
+                    onSave={() => saveContent('ourStory')}
+                    onCancel={cancelEditing}
+                    isEditing={editingSection === 'ourStory'}
+                    placeholder="Share your farm's story, values, and what makes you unique..."
+                  />
+                </div>
 
-                  {/* About Our Farm Section */}
-                  <div className="animate-fade-in">
-                    <RichTextEditor
-                      title="About Our Farm"
-                      content={profile.aboutOurFarmRich || profile.aboutOurFarm || profile.description || ''}
-                      onChange={(content) => setTempContent(content)}
-                      onSave={() => saveContent('aboutOurFarm')}
-                      onCancel={cancelEditing}
-                      isEditing={editingSection === 'aboutOurFarm'}
-                      placeholder="Describe your farm, practices, and what you grow..."
+                {/* About Our Farm Section with Wrapped Portrait */}
+                <div className="animate-fade-in">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">About Our Farm</h3>
+                  <div className="prose prose-lg max-w-none">
+                    {profile.farmerPhoto && (
+                      <div className="float-right ml-6 mb-4">
+                        <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:scale-105 w-48 h-64">
+                          <img
+                            src={profile.farmerPhoto}
+                            alt="Farmer"
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        </div>
+                      </div>
+                    )}
+                    <div 
+                      dangerouslySetInnerHTML={{ 
+                        __html: profile.aboutOurFarmRich || profile.aboutOurFarm || profile.description || `<p class="text-gray-500 italic">Describe your farm, practices, and what you grow...</p>` 
+                      }}
                     />
                   </div>
                 </div>
-
-                {/* Farmer Photo - Hero Image */}
-                {profile.farmerPhoto && (
-                  <div className="relative">
-                    <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:scale-105">
-                      <img
-                        src={profile.farmerPhoto}
-                        alt="Farmer"
-                        className="w-full h-64 lg:h-80 object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                    </div>
-                  </div>
-                )}
               </div>
             </section>
 

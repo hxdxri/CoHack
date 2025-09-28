@@ -128,14 +128,9 @@ export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
                 className="flex-shrink-0 relative group"
               >
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/15 transition-all duration-300 group-hover:scale-105 w-64">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-white/60">{getTimelineIcon(event.type)}</span>
-                      <span className="text-xl font-bold">{event.year}</span>
-                    </div>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getTimelineColor(event.type)}`}>
-                      {event.type.replace('_', ' ').toUpperCase()}
-                    </span>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-sm text-white/60">{getTimelineIcon(event.type)}</span>
+                    <span className="text-xl font-bold">{event.year}</span>
                   </div>
                   
                   <h4 className="text-lg font-bold text-white mb-2 line-clamp-2">{event.title}</h4>
