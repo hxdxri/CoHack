@@ -50,7 +50,7 @@ export const ImpactTracker: React.FC = () => {
       icon: Truck,
       label: 'Miles Saved',
       value: 0,
-      unit: 'K',
+      unit: '',
       color: 'text-orange-600',
       bgColor: 'bg-orange-50'
     },
@@ -68,7 +68,7 @@ export const ImpactTracker: React.FC = () => {
       icon: Globe,
       label: 'Water Saved',
       value: 0,
-      unit: 'K gal',
+      unit: 'gal',
       color: 'text-cyan-600',
       bgColor: 'bg-cyan-50'
     },

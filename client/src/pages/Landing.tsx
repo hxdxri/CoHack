@@ -347,7 +347,7 @@ export const Landing: React.FC = () => {
                 icon: Truck, 
                 label: 'Miles Saved', 
                 value: '45K', 
-                unit: 'K', 
+                unit: '', 
                 color: 'text-orange-600', 
                 bgColor: 'bg-orange-50'
               },
@@ -363,7 +363,7 @@ export const Landing: React.FC = () => {
                 icon: Globe, 
                 label: 'Water Saved', 
                 value: '12K', 
-                unit: 'K gal', 
+                unit: 'gal', 
                 color: 'text-cyan-600', 
                 bgColor: 'bg-cyan-50'
               },
