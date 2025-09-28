@@ -342,9 +342,6 @@ export const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Fade Transition */}
-      <div className="h-8 bg-gradient-to-b from-bone to-primary-500"></div>
-
       {/* CTA Section */}
       <section className="py-16 bg-primary-500 text-white">
         <div className="container-custom text-center">
