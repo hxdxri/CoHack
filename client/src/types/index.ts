@@ -146,6 +146,16 @@ export interface CartItem {
   farmerName: string;
 }
 
+export interface VendorCart {
+  farmerId: string;
+  farmerName: string;
+  farmerLocation?: string;
+  farmerImage?: string;
+  items: CartItem[];
+  subtotal: number;
+  itemCount: number;
+}
+
 export interface ReviewFormData {
   rating: number;
   comment: string;

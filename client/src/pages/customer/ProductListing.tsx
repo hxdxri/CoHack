@@ -47,6 +47,11 @@ export const ProductListing: React.FC = () => {
     }
   }, [productId]);
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fetchProductDetails = async () => {
     try {
       setIsLoading(true);
