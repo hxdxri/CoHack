@@ -87,11 +87,6 @@ export const FarmerProfile: React.FC = () => {
     }
   };
 
-  const startEditing = (section: string, content: string) => {
-    setEditingSection(section);
-    setTempContent(content);
-  };
-
   const cancelEditing = () => {
     setEditingSection(null);
     setTempContent('');
@@ -288,7 +283,6 @@ export const FarmerProfile: React.FC = () => {
                       title="Our Story"
                       content={profile.ourStoryRich || profile.ourStory || ''}
                       onChange={(content) => setTempContent(content)}
-                      onEdit={() => startEditing('ourStory', profile.ourStoryRich || profile.ourStory || '')}
                       onSave={() => saveContent('ourStory')}
                       onCancel={cancelEditing}
                       isEditing={editingSection === 'ourStory'}
@@ -302,7 +296,6 @@ export const FarmerProfile: React.FC = () => {
                       title="About Our Farm"
                       content={profile.aboutOurFarmRich || profile.aboutOurFarm || profile.description || ''}
                       onChange={(content) => setTempContent(content)}
-                      onEdit={() => startEditing('aboutOurFarm', profile.aboutOurFarmRich || profile.aboutOurFarm || profile.description || '')}
                       onSave={() => saveContent('aboutOurFarm')}
                       onCancel={cancelEditing}
                       isEditing={editingSection === 'aboutOurFarm'}
@@ -335,9 +328,7 @@ export const FarmerProfile: React.FC = () => {
               ...(profile.farmerPhoto ? [{ id: 'farmer', url: profile.farmerPhoto, caption: 'Farmer Portrait', type: 'farmer' }] : [])
             ]}
             title="Farm Photos"
-            isEditable={isOwnProfile}
-            onEdit={() => setIsEditModalOpen(true)}
-            onAddPhoto={() => setIsEditModalOpen(true)}
+            isEditable={false}
           />
 
             {/* Video Introduction Section */}
@@ -346,13 +337,7 @@ export const FarmerProfile: React.FC = () => {
               <VideoEmbed
                 videoUrl={profile.introVideoUrl}
                 title="Farm Introduction Video"
-                isEditable={isOwnProfile}
-                onEdit={() => setIsEditModalOpen(true)}
-                onRemove={() => {
-                  if (profile) {
-                    setProfile({ ...profile, introVideoUrl: undefined });
-                  }
-                }}
+                isEditable={false}
               />
             </section>
           )}
@@ -361,18 +346,7 @@ export const FarmerProfile: React.FC = () => {
             {profile.timeline && profile.timeline.length > 0 && (
             <HorizontalFarmTimeline
               timeline={profile.timeline}
-              isEditable={isOwnProfile}
-              onEdit={() => setIsEditModalOpen(true)}
-              onAddEvent={() => setIsEditModalOpen(true)}
-                onEditEvent={() => setIsEditModalOpen(true)}
-              onDeleteEvent={(eventId) => {
-                if (profile) {
-                  setProfile({
-                    ...profile,
-                    timeline: profile.timeline?.filter(e => e.id !== eventId) || []
-                  });
-                }
-              }}
+              isEditable={false}
             />
           )}
 
@@ -534,15 +508,13 @@ export const FarmerProfile: React.FC = () => {
                 farmSize={profile.farmSize}
                 specialties={profile.specialties}
                 location={profile.location}
-                isEditable={isOwnProfile}
-                onEdit={() => setIsEditModalOpen(true)}
+                isEditable={false}
               />
 
               {/* Farming Practices */}
               <FarmingPractices
                 practices={profile.farmingPractices || []}
-                isEditable={isOwnProfile}
-                onEdit={() => setIsEditModalOpen(true)}
+                isEditable={false}
                 onTogglePractice={(practiceId) => {
                   if (profile) {
                     const updatedPractices = profile.farmingPractices?.map(p => 

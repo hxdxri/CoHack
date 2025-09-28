@@ -15,16 +15,16 @@ interface HorizontalFarmTimelineProps {
 
 const getTimelineIcon = (type: FarmTimelineEvent['type']) => {
   const iconMap = {
-    founding: '🌱',
-    expansion: '🚜',
-    achievement: '🏆',
-    milestone: '⭐',
-    award: '🏅',
-    certification: '📜',
-    partnership: '🤝',
-    innovation: '💡'
+    founding: '•',
+    expansion: '•',
+    achievement: '•',
+    milestone: '•',
+    award: '•',
+    certification: '•',
+    partnership: '•',
+    innovation: '•'
   };
-  return iconMap[type] || '📅';
+  return iconMap[type] || '•';
 };
 
 const getTimelineColor = (type: FarmTimelineEvent['type']) => {
@@ -130,8 +130,8 @@ export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/15 transition-all duration-300 group-hover:scale-105 w-64">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">{getTimelineIcon(event.type)}</span>
-                      <span className="text-2xl font-bold">{event.year}</span>
+                      <span className="text-sm text-white/60">{getTimelineIcon(event.type)}</span>
+                      <span className="text-xl font-bold">{event.year}</span>
                     </div>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getTimelineColor(event.type)}`}>
                       {event.type.replace('_', ' ').toUpperCase()}
@@ -178,7 +178,7 @@ export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
       ) : (
         <div className="text-center py-8">
           <div className="w-16 h-16 bg-white/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">📅</span>
+            <span className="text-2xl font-bold text-white/60">•</span>
           </div>
           <h4 className="text-lg font-semibold text-white/80 mb-2">No Timeline Events Yet</h4>
           <p className="text-white/60 mb-4 text-sm">
