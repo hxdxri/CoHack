@@ -59,49 +59,44 @@ export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
   };
 
   return (
-    <div className={`bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl ${className}`}>
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold text-gray-900">Farm History Timeline</h3>
-        {isEditable && (
-          <div className="flex gap-2">
-            <Button
-              onClick={onAddEvent}
-              className="bg-green-600 hover:bg-green-700 text-white"
-              size="sm"
-            >
-              <Plus className="w-4 h-4 mr-1" />
-              Add Event
-            </Button>
-            <Button
-              onClick={onEdit}
-              variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50"
-              size="sm"
-            >
-              <Edit3 className="w-4 h-4 mr-1" />
-              Edit
-            </Button>
-          </div>
-        )}
-      </div>
+    <div className={`${className}`}>
+      {isEditable && (
+        <div className="flex justify-end gap-2 mb-4">
+          <Button
+            onClick={onAddEvent}
+            className="bg-green-600 hover:bg-green-700 text-white"
+            size="sm"
+          >
+            <Plus className="w-4 h-4 mr-1" />
+            Add Event
+          </Button>
+          <Button
+            onClick={onEdit}
+            variant="outline"
+            className="border-gray-300 text-gray-700 hover:bg-gray-50"
+            size="sm"
+          >
+            <Edit3 className="w-4 h-4 mr-1" />
+            Edit
+          </Button>
+        </div>
+      )}
 
       {sortedTimeline.length > 0 ? (
         <div className="relative">
           {/* Scroll buttons */}
-          <Button
+          <button
             onClick={scrollLeft}
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg border border-gray-200 text-gray-700"
-            size="sm"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200"
           >
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
-          <Button
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button
             onClick={scrollRight}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg border border-gray-200 text-gray-700"
-            size="sm"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200"
           >
-            <ChevronRight className="w-4 h-4" />
-          </Button>
+            <ChevronRight className="w-6 h-6" />
+          </button>
 
           {/* Timeline container */}
           <div
@@ -167,7 +162,6 @@ export const HorizontalFarmTimeline: React.FC<HorizontalFarmTimelineProps> = ({
           <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
             <span className="text-2xl font-bold text-gray-400">•</span>
           </div>
-          <h4 className="text-lg font-semibold text-gray-600 mb-2">No Timeline Events Yet</h4>
           <p className="text-gray-500 mb-4 text-sm">
             Share your farm's journey by adding important milestones and achievements.
           </p>

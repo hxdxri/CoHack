@@ -50,53 +50,48 @@ export const HorizontalPhotoGallery: React.FC<HorizontalPhotoGalleryProps> = ({
   }
 
   return (
-    <div className={`bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl ${className}`}>
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold text-gray-900">{title}</h3>
-        {isEditable && (
-          <div className="flex gap-2">
-            {onAddPhoto && (
-              <Button
-                onClick={onAddPhoto}
-                size="sm"
-                className="bg-green-600 hover:bg-green-700 text-white"
-              >
-                <Plus className="w-4 h-4 mr-1" />
-                Add Photo
-              </Button>
-            )}
-            {onEdit && (
-              <Button
-                onClick={onEdit}
-                variant="outline"
-                size="sm"
-                className="flex items-center"
-              >
-                <Edit3 className="w-4 h-4 mr-1" />
-                Edit
-              </Button>
-            )}
-          </div>
-        )}
-      </div>
+    <div className={`${className}`}>
+      {isEditable && (
+        <div className="flex justify-end gap-2 mb-4">
+          {onAddPhoto && (
+            <Button
+              onClick={onAddPhoto}
+              size="sm"
+              className="bg-green-600 hover:bg-green-700 text-white"
+            >
+              <Plus className="w-4 h-4 mr-1" />
+              Add Photo
+            </Button>
+          )}
+          {onEdit && (
+            <Button
+              onClick={onEdit}
+              variant="outline"
+              size="sm"
+              className="flex items-center"
+            >
+              <Edit3 className="w-4 h-4 mr-1" />
+              Edit
+            </Button>
+          )}
+        </div>
+      )}
 
       {photos.length > 0 ? (
         <div className="relative">
           {/* Scroll buttons */}
-          <Button
+          <button
             onClick={scrollLeft}
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg"
-            size="sm"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200"
           >
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
-          <Button
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button
             onClick={scrollRight}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg"
-            size="sm"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors duration-200"
           >
-            <ChevronRight className="w-4 h-4" />
-          </Button>
+            <ChevronRight className="w-6 h-6" />
+          </button>
 
           {/* Photo container */}
           <div
@@ -109,7 +104,7 @@ export const HorizontalPhotoGallery: React.FC<HorizontalPhotoGalleryProps> = ({
                 key={photo.id}
                 className="flex-shrink-0 relative group"
               >
-                <div className="relative w-48 h-32 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div className="relative w-48 h-32 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img
                     src={photo.url}
                     alt={photo.caption || `Photo ${index + 1}`}
