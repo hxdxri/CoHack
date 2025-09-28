@@ -3,14 +3,121 @@ import { Link } from 'react-router-dom';
 import { Leaf, Users, ShoppingCart, MessageCircle, Star, Shield, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
+import { Slideshow } from '@/components/ui/Slideshow';
+import { FarmMap } from '@/components/ui/FarmMap';
+import { ScrollNavbar } from '@/components/layout/ScrollNavbar';
+import { Footer } from '@/components/layout/Footer';
 
 /**
  * Landing Page
  * 
- * Main landing page with hero section, features, and call-to-action.
- * Provides options for both farmers and customers to get started.
+ * New homepage with automatic slideshow, farm map, scroll-triggered navigation, and footer.
  */
 export const Landing: React.FC = () => {
+  // Sample slideshow data
+  const slideshowData = [
+    {
+      id: 1,
+      image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      title: 'Fresh from Farm to Table',
+      subtitle: 'Connect with Local Farmers',
+      description: 'Discover the freshest produce from trusted farmers in your community. Support local agriculture while enjoying the best quality food.',
+      primaryButton: {
+        text: 'Start Shopping',
+        link: '/auth?role=customer',
+        variant: 'primary' as const,
+      },
+      secondaryButton: {
+        text: 'Learn More',
+        link: '/about',
+        variant: 'outline' as const,
+      },
+    },
+    {
+      id: 2,
+      image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      title: 'Sell Your Harvest',
+      subtitle: 'Direct to Customers',
+      description: 'Join our platform and sell your fresh produce directly to customers. Set your own prices and build lasting relationships with your community.',
+      primaryButton: {
+        text: 'Start Selling',
+        link: '/auth?role=farmer',
+        variant: 'success' as const,
+      },
+      secondaryButton: {
+        text: 'View Success Stories',
+        link: '/success-stories',
+        variant: 'outline' as const,
+      },
+    },
+    {
+      id: 3,
+      image: 'https://images.unsplash.com/photo-1464207687429-7505649dae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      title: 'Sustainable Future',
+      subtitle: 'Building Better Food Systems',
+      description: 'Together, we\'re creating a more sustainable and equitable food system that benefits farmers, customers, and the environment.',
+      primaryButton: {
+        text: 'Join Our Mission',
+        link: '/auth',
+        variant: 'secondary' as const,
+      },
+      secondaryButton: {
+        text: 'Our Impact',
+        link: '/impact',
+        variant: 'outline' as const,
+      },
+    },
+  ];
+
+  // Sample farm data for the map
+  const sampleFarms = [
+    {
+      id: '1',
+      name: 'Green Valley Organic Farm',
+      location: 'Green Valley, CA',
+      coordinates: { lat: 37.7749, lng: -122.4194 },
+      rating: 4.8,
+      productCount: 24,
+      specialties: ['vegetables', 'fruits', 'herbs'],
+    },
+    {
+      id: '2',
+      name: 'Sunrise Dairy Farm',
+      location: 'Sunrise Valley, CA',
+      coordinates: { lat: 37.7849, lng: -122.4094 },
+      rating: 4.6,
+      productCount: 12,
+      specialties: ['dairy', 'eggs', 'cheese'],
+    },
+    {
+      id: '3',
+      name: 'Mountain View Produce',
+      location: 'Mountain View, CA',
+      coordinates: { lat: 37.7649, lng: -122.4294 },
+      rating: 4.9,
+      productCount: 18,
+      specialties: ['fruits', 'vegetables', 'grains'],
+    },
+    {
+      id: '4',
+      name: 'Riverside Farm',
+      location: 'Riverside, CA',
+      coordinates: { lat: 37.7549, lng: -122.4394 },
+      rating: 4.7,
+      productCount: 15,
+      specialties: ['vegetables', 'herbs', 'flowers'],
+    },
+    {
+      id: '5',
+      name: 'Golden Gate Ranch',
+      location: 'Golden Gate, CA',
+      coordinates: { lat: 37.7949, lng: -122.3994 },
+      rating: 4.5,
+      productCount: 8,
+      specialties: ['meat', 'dairy', 'eggs'],
+    },
+  ];
+
   const features = [
     {
       icon: Users,
@@ -61,141 +168,39 @@ export const Landing: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-primary text-white py-20">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center">
-                <Leaf className="w-10 h-10 text-white" />
-              </div>
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Fresh from Farm to Table
-            </h1>
-            
-            <p className="text-xl md:text-2xl mb-8 text-green-100">
-              Connect directly with local farmers and enjoy the freshest produce while supporting your community
-            </p>
+      {/* Scroll-triggered Navigation */}
+      <ScrollNavbar />
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link to="/auth">
-                <Button variant="secondary" size="lg" className="w-full sm:w-auto">
-                  Get Started Today
-                </Button>
-              </Link>
-              
-              <Link to="/auth">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-primary-500"
-                >
-                  Sign In
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Automatic Slideshow */}
+      <Slideshow 
+        slides={slideshowData}
+        autoPlay={true}
+        autoPlayInterval={6000}
+        showControls={true}
+        showIndicators={true}
+      />
 
-      {/* Role Selection Section */}
-      <section className="py-16 bg-mist">
+      {/* Farm Map Section */}
+      <section className="py-16 bg-bone">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
-              Choose Your Path
+              Discover Local Farms
             </h2>
             <p className="text-xl text-graphite">
-              Whether you're growing or buying, HarvestLink connects you to fresh, local produce
+              Find fresh produce from farms in your area
             </p>
           </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Farmer Card */}
-            <Card hover className="text-center">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Leaf className="w-8 h-8 text-primary-500" />
-                </div>
-                
-                <h3 className="text-2xl font-bold text-ink mb-4">I'm a Farmer</h3>
-                <p className="text-graphite mb-6">
-                  Sell your fresh produce directly to customers, set your own prices, and build lasting relationships with your community.
-                </p>
-                
-                <ul className="text-left space-y-2 mb-8 text-graphite">
-                  <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                    <span>Create product listings</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                    <span>Manage your farm profile</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                    <span>Chat with customers</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                    <span>Build your reputation</span>
-                  </li>
-                </ul>
-
-                <Link to="/auth" className="block">
-                  <Button variant="primary" size="lg" className="w-full">
-                    Start Selling
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-
-            {/* Customer Card */}
-            <Card hover className="text-center">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-accent-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <ShoppingCart className="w-8 h-8 text-accent-500" />
-                </div>
-                
-                <h3 className="text-2xl font-bold text-ink mb-4">I'm a Customer</h3>
-                <p className="text-graphite mb-6">
-                  Discover fresh, local produce from trusted farmers in your area. Support your community while enjoying the best quality food.
-                </p>
-                
-                <ul className="text-left space-y-2 mb-8 text-graphite">
-                  <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
-                    <span>Browse local farms</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
-                    <span>View product details</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
-                    <span>Chat with farmers</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
-                    <span>Leave reviews</span>
-                  </li>
-                </ul>
-
-                <Link to="/auth" className="block">
-                  <Button variant="success" size="lg" className="w-full">
-                    Start Shopping
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          </div>
+          
+          <FarmMap 
+            farms={sampleFarms}
+            onFarmSelect={(farm) => console.log('Selected farm:', farm)}
+          />
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-bone">
+      <section className="py-16 bg-mist">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
@@ -221,7 +226,7 @@ export const Landing: React.FC = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-mist">
+      <section className="py-16 bg-bone">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
@@ -280,6 +285,9 @@ export const Landing: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
