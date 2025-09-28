@@ -19,51 +19,35 @@ interface MessagesState {
 // Mock data - in a real app this would come from an API
 const mockUsers = [
   {
-    id: "39333f70-4760-45d1-bc00-d72263be6d59",
+    id: "664c120a-91aa-4fea-be8c-156b7c1a5305",
     name: "Sarah Johnson",
     role: "farmer" as const,
-    farmName: "Green Valley Organic Farm",
-    location: "Sonoma County, California"
+    farmName: "Green Valley Farm",
+    location: "Sonoma County, CA"
   },
   {
-    id: "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
-    name: "Michael Thompson",
-    role: "farmer" as const,
-    farmName: "Sunrise Meadows Dairy",
-    location: "Vermont, New England"
-  },
-  {
-    id: "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
-    name: "David Rodriguez",
-    role: "farmer" as const,
-    farmName: "Mountain View Orchard",
-    location: "Colorado, Rocky Mountains"
-  },
-  {
-    id: "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
-    name: "Linda Chen",
-    role: "farmer" as const,
-    farmName: "Heritage Berry Farm",
-    location: "Oregon, Pacific Northwest"
-  },
-  {
-    id: "0c1d2e3f-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
-    name: "Robert Wilson",
-    role: "farmer" as const,
-    farmName: "Golden Fields Wheat Farm",
-    location: "Kansas, Great Plains"
-  },
-  {
-    id: "1d2e3f4a-7b8c-9d0e-1f2a-3b4c5d6e7f8a",
-    name: "Maria Garcia",
-    role: "farmer" as const,
-    farmName: "Coastal Greenhouse",
-    location: "California, Central Coast"
-  },
-  {
-    id: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    id: "f4771795-d367-49b5-a82f-b7d6acc63171",
     name: "Mike Chen",
     role: "customer" as const
+  },
+  {
+    id: "farmer-2",
+    name: "David Martinez",
+    role: "farmer" as const,
+    farmName: "Sunrise Organic Farm",
+    location: "Napa Valley, CA"
+  },
+  {
+    id: "customer-2",
+    name: "Emily Rodriguez",
+    role: "customer" as const
+  },
+  {
+    id: "farmer-3",
+    name: "Lisa Thompson",
+    role: "farmer" as const,
+    farmName: "Mountain View Ranch",
+    location: "Mendocino County, CA"
   }
 ];
 
@@ -71,84 +55,84 @@ const mockMessages: Message[] = [
   // Conversation between Mike Chen (customer) and Sarah Johnson (farmer)
   {
     id: "msg-1",
-    fromUserId: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    toUserId: "39333f70-4760-45d1-bc00-d72263be6d59",
+    fromUserId: "f4771795-d367-49b5-a82f-b7d6acc63171",
+    toUserId: "664c120a-91aa-4fea-be8c-156b7c1a5305",
     content: "Hi Sarah! I'm interested in your heirloom tomatoes. Do you have any available for pickup this weekend?",
     isRead: true,
     createdAt: "2025-09-26T10:30:00.000Z"
   },
   {
     id: "msg-2",
-    fromUserId: "39333f70-4760-45d1-bc00-d72263be6d59",
-    toUserId: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    fromUserId: "664c120a-91aa-4fea-be8c-156b7c1a5305",
+    toUserId: "f4771795-d367-49b5-a82f-b7d6acc63171",
     content: "Hi Mike! Yes, I have plenty of heirloom tomatoes available. You can come by Saturday morning between 9-11 AM. The farm is located at 123 Green Valley Road.",
     isRead: true,
     createdAt: "2025-09-26T11:15:00.000Z"
   },
   {
     id: "msg-3",
-    fromUserId: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    toUserId: "39333f70-4760-45d1-bc00-d72263be6d59",
+    fromUserId: "f4771795-d367-49b5-a82f-b7d6acc63171",
+    toUserId: "664c120a-91aa-4fea-be8c-156b7c1a5305",
     content: "Perfect! I'll be there around 10 AM. Should I bring cash or do you accept cards?",
     isRead: true,
     createdAt: "2025-09-26T11:45:00.000Z"
   },
   {
     id: "msg-4",
-    fromUserId: "39333f70-4760-45d1-bc00-d72263be6d59",
-    toUserId: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    fromUserId: "664c120a-91aa-4fea-be8c-156b7c1a5305",
+    toUserId: "f4771795-d367-49b5-a82f-b7d6acc63171",
     content: "Both cash and cards work fine! Looking forward to seeing you. Feel free to walk around the farm and see our other produce too.",
     isRead: false,
     createdAt: "2025-09-27T08:20:00.000Z"
   },
   
-  // Conversation between Mike Chen (customer) and David Rodriguez (farmer)
+  // Conversation between Mike Chen (customer) and David Martinez (farmer)
   {
     id: "msg-5",
-    fromUserId: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    toUserId: "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
+    fromUserId: "f4771795-d367-49b5-a82f-b7d6acc63171",
+    toUserId: "farmer-2",
     content: "Hello David! I saw your listing for organic strawberries. Are they still available?",
     isRead: true,
     createdAt: "2025-09-25T14:20:00.000Z"
   },
   {
     id: "msg-6",
-    fromUserId: "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
-    toUserId: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
+    fromUserId: "farmer-2",
+    toUserId: "f4771795-d367-49b5-a82f-b7d6acc63171",
     content: "Hi Mike! Yes, we have fresh strawberries picked this morning. They're $8 per basket. Would you like to reserve some?",
     isRead: true,
     createdAt: "2025-09-25T15:30:00.000Z"
   },
   {
     id: "msg-7",
-    fromUserId: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    toUserId: "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
+    fromUserId: "f4771795-d367-49b5-a82f-b7d6acc63171",
+    toUserId: "farmer-2",
     content: "I'd like to reserve 3 baskets please. When would be a good time to pick them up?",
     isRead: false,
     createdAt: "2025-09-27T09:15:00.000Z"
   },
 
-  // Conversation between Sarah Johnson (farmer) and another customer
+  // Conversation between Sarah Johnson (farmer) and Emily Rodriguez (customer)
   {
     id: "msg-8",
-    fromUserId: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    toUserId: "39333f70-4760-45d1-bc00-d72263be6d59",
+    fromUserId: "customer-2",
+    toUserId: "664c120a-91aa-4fea-be8c-156b7c1a5305",
     content: "Hi Sarah! I'm planning a dinner party and would love to get some fresh vegetables from your farm. What do you have available?",
     isRead: true,
     createdAt: "2025-09-24T16:45:00.000Z"
   },
   {
     id: "msg-9",
-    fromUserId: "39333f70-4760-45d1-bc00-d72263be6d59",
-    toUserId: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    content: "Hi! That sounds wonderful! We have fresh lettuce, carrots, bell peppers, zucchini, and herbs. I can put together a dinner party bundle for you. When is your party?",
+    fromUserId: "664c120a-91aa-4fea-be8c-156b7c1a5305",
+    toUserId: "customer-2",
+    content: "Hi Emily! That sounds wonderful! We have fresh lettuce, carrots, bell peppers, zucchini, and herbs. I can put together a dinner party bundle for you. When is your party?",
     isRead: true,
     createdAt: "2025-09-24T17:20:00.000Z"
   },
   {
     id: "msg-10",
-    fromUserId: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
-    toUserId: "39333f70-4760-45d1-bc00-d72263be6d59",
+    fromUserId: "customer-2",
+    toUserId: "664c120a-91aa-4fea-be8c-156b7c1a5305",
     content: "The party is this Saturday evening. A bundle sounds perfect! How much would that be?",
     isRead: false,
     createdAt: "2025-09-27T12:30:00.000Z"
@@ -279,54 +263,22 @@ export const useMessagesStore = create<MessagesState>((set, get) => ({
       }
     }));
 
-    // Check if conversation exists, if not create a new one
-    set(state => {
-      const existingConversation = state.conversations.find(conv => conv.partnerId === partnerId);
-      
-      if (existingConversation) {
-        // Update existing conversation
-        return {
-          conversations: state.conversations.map(conv => 
-            conv.partnerId === partnerId 
-              ? {
-                  ...conv,
-                  lastMessage: {
-                    content: newMessage.content,
-                    createdAt: newMessage.createdAt,
-                    fromMe: true
-                  },
-                  messageCount: conv.messageCount + 1
-                }
-              : conv
-          )
-        };
-      } else {
-        // Create new conversation
-        const partner = mockUsers.find(u => u.id === partnerId);
-        if (!partner) return state;
-
-        const newConversation: Conversation = {
-          partnerId,
-          partnerName: partner.name,
-          partnerRole: partner.role,
-          farmerProfile: partner.role === 'farmer' ? {
-            farmName: partner.farmName!,
-            location: partner.location!
-          } : undefined,
-          unreadCount: 0,
-          messageCount: 1,
-          lastMessage: {
-            content: newMessage.content,
-            createdAt: newMessage.createdAt,
-            fromMe: true
-          }
-        };
-
-        return {
-          conversations: [newConversation, ...state.conversations]
-        };
-      }
-    });
+    // Update conversation last message
+    set(state => ({
+      conversations: state.conversations.map(conv => 
+        conv.partnerId === partnerId 
+          ? {
+              ...conv,
+              lastMessage: {
+                content: newMessage.content,
+                createdAt: newMessage.createdAt,
+                fromMe: true
+              },
+              messageCount: conv.messageCount + 1
+            }
+          : conv
+      )
+    }));
   },
 
   setActiveConversation: (partnerId: string | null) => {

@@ -7,11 +7,13 @@ import { Card, CardContent, CardFooter } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { LoadingPage } from '@/components/ui/LoadingSpinner';
+import { useMessagesStore } from '@/store/messages';
 import toast from 'react-hot-toast';
 
 export const Listing: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { sendMessage, loadConversations } = useMessagesStore();
   const [product, setProduct] = useState<Product | null>(null);
   const [reviews, setReviews] = useState<ReviewWithCustomer[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,6 +34,9 @@ export const Listing: React.FC = () => {
           const rev = await reviewsAPI.getByFarmerId(farmerId);
           setReviews(rev.data);
         }
+        
+        // Load conversations for contact functionality
+        loadConversations();
       } catch (e: any) {
         setError(e?.response?.data?.error || 'Failed to load listing');
       } finally {
@@ -42,9 +47,41 @@ export const Listing: React.FC = () => {
     load();
   }, [id]);
 
-  const handleContact = () => {
-    toast.success('Opening messages...');
-    navigate('/messages');
+  const handleContact = async () => {
+    if (!product?.farmerId) return;
+    
+    try {
+      const { conversations, setActiveConversation, loadMessages } = useMessagesStore.getState();
+      
+      // Check if conversation already exists with this farmer
+      const existingConversation = conversations.find(conv => conv.partnerId === product.farmerId);
+      
+      if (existingConversation) {
+        // Conversation exists, navigate to messages and set it as active
+        setActiveConversation(product.farmerId);
+        await loadMessages(product.farmerId);
+        toast.success(`Opening conversation with ${product.farmerName || 'farmer'}`);
+        navigate('/customer/messages');
+      } else {
+        // No conversation exists, create a new one
+        await sendMessage(product.farmerId, {
+          content: `Hi! I'm interested in your ${product.name}. Could you tell me more about it?`
+        });
+        
+        // Reload conversations to include the new one
+        await loadConversations();
+        
+        // Set the new conversation as active and load its messages
+        setActiveConversation(product.farmerId);
+        await loadMessages(product.farmerId);
+        
+        toast.success(`Started new conversation with ${product.farmerName || 'farmer'}`);
+        navigate('/customer/messages');
+      }
+    } catch (error) {
+      console.error('Error handling farmer contact:', error);
+      toast.error('Failed to contact farmer');
+    }
   };
 
   const handleAddToCart = () => {

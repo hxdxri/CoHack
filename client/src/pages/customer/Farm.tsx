@@ -29,7 +29,7 @@ import toast from 'react-hot-toast';
 export const Farm: React.FC = () => {
   const { farmerId } = useParams<{ farmerId: string }>();
   const navigate = useNavigate();
-  const { sendMessage } = useMessagesStore();
+  const { sendMessage, loadConversations } = useMessagesStore();
   const [farmer, setFarmer] = useState<FarmerProfile | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -37,6 +37,7 @@ export const Farm: React.FC = () => {
   useEffect(() => {
     if (farmerId) {
       fetchFarmData();
+      loadConversations();
     }
   }, [farmerId]);
 
@@ -64,16 +65,36 @@ export const Farm: React.FC = () => {
     if (!farmer) return;
     
     try {
-      // Create a new conversation by sending an initial message
-      await sendMessage(farmer.userId, {
-        content: `Hi ${farmer.name}! I'm interested in learning more about your farm and products.`
-      });
+      const { conversations, setActiveConversation, loadMessages } = useMessagesStore.getState();
       
-      toast.success(`Started conversation with ${farmer.farmName}`);
-      navigate('/customer/messages');
+      // Check if conversation already exists with this farmer
+      const existingConversation = conversations.find(conv => conv.partnerId === farmer.userId);
+      
+      if (existingConversation) {
+        // Conversation exists, navigate to messages and set it as active
+        setActiveConversation(farmer.userId);
+        await loadMessages(farmer.userId);
+        toast.success(`Opening conversation with ${farmer.farmName}`);
+        navigate('/customer/messages');
+      } else {
+        // No conversation exists, create a new one
+        await sendMessage(farmer.userId, {
+          content: `Hi ${farmer.name}! I'm interested in learning more about your farm and products.`
+        });
+        
+        // Reload conversations to include the new one
+        await loadConversations();
+        
+        // Set the new conversation as active and load its messages
+        setActiveConversation(farmer.userId);
+        await loadMessages(farmer.userId);
+        
+        toast.success(`Started new conversation with ${farmer.farmName}`);
+        navigate('/customer/messages');
+      }
     } catch (error) {
-      console.error('Error starting conversation:', error);
-      toast.error('Failed to start conversation');
+      console.error('Error handling farmer contact:', error);
+      toast.error('Failed to contact farmer');
     }
   };
 

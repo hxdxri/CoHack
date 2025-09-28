@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Package, 
   Calendar, 
@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { useAuthStore } from '@/store/auth';
+import { useMessagesStore } from '@/store/messages';
 import toast from 'react-hot-toast';
 
 // Mock order data - in a real app this would come from an API
@@ -146,12 +147,15 @@ const mockOrders: Order[] = [
  */
 export const PastOrders: React.FC = () => {
   const { user } = useAuthStore();
+  const { sendMessage, loadConversations } = useMessagesStore();
+  const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState<string>('all');
 
   useEffect(() => {
     fetchOrders();
+    loadConversations();
   }, []);
 
   const fetchOrders = async () => {
@@ -255,9 +259,39 @@ export const PastOrders: React.FC = () => {
     toast.success(`Reordering from ${order.farmName}...`);
   };
 
-  const handleContactFarmer = (farmerId: string, farmerName: string) => {
-    // In a real app, this would open messages with the farmer
-    toast.success(`Opening chat with ${farmerName}`);
+  const handleContactFarmer = async (farmerId: string, farmerName: string) => {
+    try {
+      const { conversations, setActiveConversation, loadMessages } = useMessagesStore.getState();
+      
+      // Check if conversation already exists with this farmer
+      const existingConversation = conversations.find(conv => conv.partnerId === farmerId);
+      
+      if (existingConversation) {
+        // Conversation exists, navigate to messages and set it as active
+        setActiveConversation(farmerId);
+        await loadMessages(farmerId);
+        toast.success(`Opening conversation with ${farmerName}`);
+        navigate('/customer/messages');
+      } else {
+        // No conversation exists, create a new one
+        await sendMessage(farmerId, {
+          content: `Hi! I have a question about my recent order from your farm.`
+        });
+        
+        // Reload conversations to include the new one
+        await loadConversations();
+        
+        // Set the new conversation as active and load its messages
+        setActiveConversation(farmerId);
+        await loadMessages(farmerId);
+        
+        toast.success(`Started new conversation with ${farmerName}`);
+        navigate('/customer/messages');
+      }
+    } catch (error) {
+      console.error('Error handling farmer contact:', error);
+      toast.error('Failed to contact farmer');
+    }
   };
 
   const handleRateOrder = (orderId: string) => {
