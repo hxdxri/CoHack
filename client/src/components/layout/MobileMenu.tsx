@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { X, MessageCircle, User, LogOut } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
+import { CartIcon } from '@/components/ui/CartIcon';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -139,6 +140,17 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                   <MessageCircle className="w-4 h-4" />
                   <span>Messages</span>
                 </Link>
+                
+                {user?.role === 'customer' && (
+                  <Link
+                    to="/customer/cart"
+                    onClick={handleLinkClick}
+                    className="flex items-center space-x-2 px-3 py-2 text-ink hover:bg-primary-50 hover:text-primary-500 rounded-md transition-colors duration-200"
+                  >
+                    <CartIcon className="w-4 h-4" />
+                    <span>Cart</span>
+                  </Link>
+                )}
               </nav>
 
               {/* Bottom Actions */}

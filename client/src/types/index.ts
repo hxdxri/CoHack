@@ -137,6 +137,15 @@ export interface FarmerProfileFormData {
   farmHistory: string;
 }
 
+export interface CartItem {
+  id: string;
+  productId: string;
+  product: Product;
+  quantity: number;
+  farmerId: string;
+  farmerName: string;
+}
+
 export interface ReviewFormData {
   rating: number;
   comment: string;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { 
   MapPin, 
   Star, 
@@ -245,9 +245,14 @@ export const Farm: React.FC = () => {
                     <div className="flex items-center">
                       <span className="text-2xl mr-3">{getCategoryIcon(product.category)}</span>
                       <div>
-                        <h3 className="text-lg font-bold text-ink group-hover:text-primary-500 transition-colors">
-                          {product.name}
-                        </h3>
+                        <Link 
+                          to={`/customer/product/${product.id}`}
+                          className="block"
+                        >
+                          <h3 className="text-lg font-bold text-ink group-hover:text-primary-500 transition-colors cursor-pointer">
+                            {product.name}
+                          </h3>
+                        </Link>
                         <p className="text-sm text-graphite capitalize">
                           {product.category}
                         </p>

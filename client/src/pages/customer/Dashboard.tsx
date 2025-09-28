@@ -281,7 +281,12 @@ export const CustomerDashboard: React.FC = () => {
                             <div className="flex items-center">
                               <span className="text-lg mr-2">{getCategoryIcon(product.category)}</span>
                               <div>
-                                <span className="text-sm font-medium text-ink">{product.name}</span>
+                                <Link 
+                                  to={`/customer/product/${product.id}`}
+                                  className="text-sm font-medium text-ink hover:text-primary-500 transition-colors cursor-pointer"
+                                >
+                                  {product.name}
+                                </Link>
                                 <div className="text-xs text-graphite">
                                   {product.quantity} {product.unit}s available
                                 </div>
