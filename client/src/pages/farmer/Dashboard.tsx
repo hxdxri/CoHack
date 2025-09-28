@@ -16,7 +16,7 @@ import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { productsAPI, farmersAPI, messagesAPI } from '@/lib/api';
-import { Product, FarmerProfile } from '@/types';
+import { Product, FarmerProfile, Order } from '@/types';
 
 /**
  * Farmer Dashboard
@@ -29,6 +29,7 @@ export const FarmerDashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [farmerProfile, setFarmerProfile] = useState<FarmerProfile | null>(null);
   const [unreadMessages, setUnreadMessages] = useState(0);
+  const [recentOrders, setRecentOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -46,6 +47,11 @@ export const FarmerDashboard: React.FC = () => {
         setProducts(productsRes.data);
         setFarmerProfile(profileRes.data);
         setUnreadMessages(messagesRes.data.count);
+
+        // Fetch recent orders from localStorage (in real app, this would be an API call)
+        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+        const farmerOrders = orders.filter((order: Order) => order.farmerId === user?.id);
+        setRecentOrders(farmerOrders.slice(0, 5)); // Show last 5 orders
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
       } finally {
@@ -174,6 +180,72 @@ export const FarmerDashboard: React.FC = () => {
                       <div className="flex items-center space-x-2">
                         <span className="text-sm text-graphite">
                           {product.quantity} {product.unit}s left
+                        </span>
+                        <button className="p-1 text-graphite hover:text-primary-500 transition-colors">
+                          <MoreVertical className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Recent Orders */}
+          <Card className="mt-6">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold text-ink">Recent Orders</h2>
+                <Link to="/farmer/orders">
+                  <Button variant="outline" size="sm">
+                    View All
+                  </Button>
+                </Link>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {recentOrders.length === 0 ? (
+                <div className="text-center py-8">
+                  <Package className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-graphite mb-2">No orders yet</h3>
+                  <p className="text-graphite">Orders will appear here once customers start purchasing your products.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {recentOrders.map((order) => (
+                    <div key={order.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                          <Package className="w-6 h-6 text-green-600" />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-ink">{order.customerName}</h4>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <Badge 
+                              variant={
+                                order.status === 'pending' ? 'warning' :
+                                order.status === 'confirmed' ? 'info' :
+                                order.status === 'preparing' ? 'primary' :
+                                order.status === 'ready' ? 'success' :
+                                order.status === 'out_for_delivery' ? 'info' :
+                                order.status === 'delivered' ? 'success' : 'gray'
+                              }
+                            >
+                              {order.status.replace('_', ' ').toUpperCase()}
+                            </Badge>
+                            <span className="text-sm text-graphite">
+                              ${order.totalAmount.toFixed(2)}
+                            </span>
+                          </div>
+                          <p className="text-sm text-graphite mt-1">
+                            {order.items.length} item{order.items.length !== 1 ? 's' : ''} • {new Date(order.orderDate).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm text-graphite">
+                          Order #{order.id.slice(-6)}
                         </span>
                         <button className="p-1 text-graphite hover:text-primary-500 transition-colors">
                           <MoreVertical className="w-4 h-4" />
