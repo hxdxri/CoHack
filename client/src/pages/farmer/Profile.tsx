@@ -305,43 +305,45 @@ export const FarmerProfile: React.FC = () => {
         <div className="flex gap-6">
           {/* Main Content */}
           <div className="flex-1 max-w-4xl space-y-6">
-            {/* Two-Column Story Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-              {/* Our Story Card */}
-              <div className="bg-mist rounded-xl p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
-                    <Building className="w-6 h-6 text-primary-600" />
+            {/* Connected Story Section */}
+            <div className="bg-white rounded-xl p-8 shadow-lg mb-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Our Story Section */}
+                <div>
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                      <Building className="w-6 h-6 text-primary-600" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-ink">Our Story</h2>
                   </div>
-                  <h2 className="text-2xl font-bold text-ink">Our Story</h2>
+                  <div className="prose prose-lg max-w-none text-graphite">
+                    <RichTextEditor
+                      title=""
+                      content={profile.ourStoryRich || profile.ourStory || ''}
+                      onChange={(content) => setTempContent(content)}
+                      onSave={() => saveContent('ourStory')}
+                      onCancel={cancelEditing}
+                      isEditing={editingSection === 'ourStory'}
+                      placeholder="Share your farm's story, values, and what makes you unique..."
+                    />
+                  </div>
                 </div>
-                <div className="prose prose-lg max-w-none text-graphite">
-                  <RichTextEditor
-                    title=""
-                    content={profile.ourStoryRich || profile.ourStory || ''}
-                    onChange={(content) => setTempContent(content)}
-                    onSave={() => saveContent('ourStory')}
-                    onCancel={cancelEditing}
-                    isEditing={editingSection === 'ourStory'}
-                    placeholder="Share your farm's story, values, and what makes you unique..."
-                  />
-                </div>
-              </div>
 
-              {/* About Our Farm Card */}
-              <div className="bg-bone rounded-xl p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
-                    <Package className="w-6 h-6 text-primary-600" />
+                {/* About Our Farm Section */}
+                <div>
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                      <Package className="w-6 h-6 text-primary-600" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-ink">About Our Farm</h2>
                   </div>
-                  <h2 className="text-2xl font-bold text-ink">About Our Farm</h2>
-                </div>
-                <div className="prose prose-lg max-w-none text-graphite">
-                  <div 
-                    dangerouslySetInnerHTML={{ 
-                      __html: profile.aboutOurFarmRich || profile.aboutOurFarm || profile.description || `<p class="text-graphite italic">Describe your farm, practices, and what you grow...</p>` 
-                    }}
-                  />
+                  <div className="prose prose-lg max-w-none text-graphite">
+                    <div 
+                      dangerouslySetInnerHTML={{ 
+                        __html: profile.aboutOurFarmRich || profile.aboutOurFarm || profile.description || `<p class="text-graphite italic">Describe your farm, practices, and what you grow...</p>` 
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -426,7 +428,7 @@ export const FarmerProfile: React.FC = () => {
 
             {/* Farm Timeline Section */}
             {profile.timeline && profile.timeline.length > 0 && (
-              <div className="bg-white rounded-xl p-8 shadow-lg mb-8">
+              <div className="mb-8">
                 <div className="flex items-center mb-8">
                   <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
                     <Clock className="w-6 h-6 text-primary-600" />
