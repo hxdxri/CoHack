@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Header } from './Header';
 import { MobileMenu } from './MobileMenu';
+import { Footer } from './Footer';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -29,13 +30,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-mist bg-farm-pattern-subtle">
+    <div className="min-h-screen bg-mist bg-farm-pattern-subtle flex flex-col">
       <Header onMenuToggle={handleMenuToggle} />
       <MobileMenu isOpen={isMobileMenuOpen} onClose={handleMenuClose} />
       
-      <main className="relative">
+      <main className="relative flex-1">
         {children}
       </main>
+      
+      <Footer />
     </div>
   );
 };

@@ -24,6 +24,7 @@ import { Farm } from '@/pages/customer/Farm';
 import { PastOrders } from '@/pages/customer/PastOrders';
 import { ProductListing } from '@/pages/customer/ProductListing';
 import { Cart } from '@/pages/customer/Cart';
+import { Checkout } from '@/pages/customer/Checkout';
 
 // Protected Route Component
 interface ProtectedRouteProps {
@@ -158,6 +159,7 @@ function App() {
                     <Route path="farm/:farmerId" element={<Farm />} />
                     <Route path="product/:productId" element={<ProductListing />} />
                     <Route path="cart" element={<Cart />} />
+                    <Route path="checkout" element={<Checkout />} />
                     <Route path="messages" element={<Messages />} />
                     <Route path="profile" element={<CustomerProfile />} />
                     <Route path="orders" element={<PastOrders />} />
