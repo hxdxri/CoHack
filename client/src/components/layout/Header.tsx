@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Leaf, MessageCircle, User, LogOut, Menu } from 'lucide-react';
+import { Leaf, MessageCircle, User, LogOut, Menu, ShoppingCart, Package, History, LayoutDashboard } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
+import { useCartStore } from '@/store/cart';
 import { Button } from '@/components/ui/Button';
-import { CartIcon } from '@/components/ui/CartIcon';
 
 interface HeaderProps {
   onMenuToggle?: () => void;
@@ -20,6 +20,7 @@ interface HeaderProps {
  */
 export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
   const { user, logout, isAuthenticated } = useAuthStore();
+  const { totalItems } = useCartStore();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -55,34 +56,48 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
 
           {/* Navigation Links - Desktop */}
           {isAuthenticated && (
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-6">
               {user?.role === 'farmer' ? (
                 <>
-                  <Link to="/farmer/dashboard" className="nav-link">
-                    Dashboard
+                  <Link to="/farmer/dashboard" className="nav-link flex items-center space-x-2">
+                    <LayoutDashboard className="w-4 h-4" />
+                    <span>Dashboard</span>
                   </Link>
-                  <Link to="/farmer/products" className="nav-link">
-                    Products
+                  <Link to="/farmer/products" className="nav-link flex items-center space-x-2">
+                    <Package className="w-4 h-4" />
+                    <span>Products</span>
                   </Link>
                 </>
               ) : (
                 <>
-                  <Link to="/customer/dashboard" className="nav-link">
-                    Browse
+                  <Link to="/customer/dashboard" className="nav-link flex items-center space-x-2">
+                    <Package className="w-4 h-4" />
+                    <span>Browse</span>
                   </Link>
-                  <Link to="/customer/orders" className="nav-link">
-                    Past Orders
+                  <Link to="/customer/orders" className="nav-link flex items-center space-x-2">
+                    <History className="w-4 h-4" />
+                    <span>Past Orders</span>
                   </Link>
                 </>
               )}
               <Link 
                 to={user?.role === 'farmer' ? '/farmer/messages' : '/customer/messages'} 
-                className="nav-link flex items-center space-x-1"
+                className="nav-link flex items-center space-x-2"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>Messages</span>
               </Link>
-              {user?.role === 'customer' && <CartIcon />}
+              {user?.role === 'customer' && (
+                <Link to="/customer/cart" className="nav-link flex items-center space-x-2 relative">
+                  <ShoppingCart className="w-4 h-4" />
+                  <span>Cart</span>
+                  {totalItems > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-primary-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                      {totalItems > 99 ? '99+' : totalItems}
+                    </span>
+                  )}
+                </Link>
+              )}
             </nav>
           )}
 
