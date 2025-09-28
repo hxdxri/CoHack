@@ -13,6 +13,8 @@ import { EditProfileModal } from '@/components/profile/EditProfileModal';
 import { PhotoGallery } from '@/components/ui/PhotoGallery';
 import { FarmTimeline } from '@/components/ui/FarmTimeline';
 import { EnhancedFarmTimeline } from '@/components/ui/EnhancedFarmTimeline';
+import { HorizontalPhotoGallery } from '@/components/ui/HorizontalPhotoGallery';
+import { HorizontalFarmTimeline } from '@/components/ui/HorizontalFarmTimeline';
 import { FarmingPractices } from '@/components/ui/FarmingPractices';
 import { FarmerBio } from '@/components/ui/FarmerBio';
 import { RichTextEditor } from '@/components/ui/RichTextEditor';
@@ -178,11 +180,11 @@ export const FarmerProfile: React.FC = () => {
 
   return (
     <ProfileLayout>
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         {/* Cover Photo Section */}
         {profile.coverPhoto && (
-          <section className="mb-8 relative">
-            <div className="relative h-64 lg:h-80 rounded-2xl overflow-hidden shadow-lg">
+          <section className="mb-6 relative">
+            <div className="relative h-48 lg:h-56 rounded-xl overflow-hidden shadow-lg">
               <img
                 src={profile.coverPhoto}
                 alt="Farm Cover"
@@ -206,37 +208,37 @@ export const FarmerProfile: React.FC = () => {
         )}
 
         {/* Header Section */}
-        <section className="mb-8 transition-all duration-300">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-            <div className="flex items-center space-x-6">
-              {/* Larger Farmer Portrait */}
+        <section className="mb-6 transition-all duration-300">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <div className="flex items-center space-x-4">
+              {/* Farmer Portrait */}
               <div className="relative">
                 {profile.farmerPhoto ? (
                   <img
                     src={profile.farmerPhoto}
                     alt={profile.name}
-                    className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
+                    className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md"
                   />
                 ) : (
-                  <div className="w-24 h-24 bg-gradient-primary rounded-full flex items-center justify-center shadow-lg">
-                    <Building className="w-12 h-12 text-white" />
+                  <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center shadow-md">
+                    <Building className="w-8 h-8 text-white" />
                   </div>
                 )}
                 {isOwnProfile && (
                   <Button
                     onClick={() => setIsEditModalOpen(true)}
-                    className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-blue-600 hover:bg-blue-700 text-white p-0"
+                    className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-blue-600 hover:bg-blue-700 text-white p-0"
                     size="sm"
                   >
-                    <Upload className="w-4 h-4" />
+                    <Upload className="w-3 h-3" />
                   </Button>
                 )}
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">{profile.farmName}</h1>
-                <p className="text-lg text-gray-600">by {profile.name}</p>
+                <h1 className="text-2xl font-bold text-gray-900">{profile.farmName}</h1>
+                <p className="text-base text-gray-600">by {profile.name}</p>
                 {profile.yearsFarming && (
-                  <p className="text-sm text-gray-500">{profile.yearsFarming} years farming</p>
+                  <p className="text-xs text-gray-500">{profile.yearsFarming} years farming</p>
                 )}
               </div>
             </div>
@@ -245,6 +247,7 @@ export const FarmerProfile: React.FC = () => {
                 onClick={() => setIsEditModalOpen(true)} 
                 variant="outline"
                 className="flex items-center transition-all duration-200 hover:scale-105"
+                size="sm"
               >
                 <Settings className="w-4 h-4 mr-2" />
                 Edit Profile
@@ -252,34 +255,34 @@ export const FarmerProfile: React.FC = () => {
             )}
           </div>
           
-          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
             <div className="flex items-center">
-              <MapPin className="w-4 h-4 mr-2" />
+              <MapPin className="w-4 h-4 mr-1" />
               {profile.location}
             </div>
             <div className="flex items-center">
-              <Package className="w-4 h-4 mr-2" />
+              <Package className="w-4 h-4 mr-1" />
               {profile.productCount} Products
             </div>
             <div className="flex items-center">
               {renderStarRating(profile.averageRating)}
-              <span className="ml-2">({profile.totalReviews} reviews)</span>
+              <span className="ml-1">({profile.totalReviews} reviews)</span>
             </div>
             {profile.farmSize && (
               <div className="flex items-center">
-                <Building className="w-4 h-4 mr-2" />
+                <Building className="w-4 h-4 mr-1" />
                 {profile.farmSize} acres
               </div>
             )}
           </div>
         </section>
 
-        <div className="space-y-8 lg:space-y-12">
+        <div className="space-y-6">
           {/* Hero Section with Story */}
-          <section className="relative bg-white rounded-2xl shadow-lg p-8 lg:p-12 transition-all duration-300 hover:shadow-xl">
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 lg:gap-12 items-start">
-              {/* Story Content - Takes 2/3 of width */}
-              <div className="xl:col-span-2 space-y-8">
+          <section className="relative bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              {/* Story Content */}
+              <div className="space-y-6">
                 {/* Our Story Section */}
                 <div className="animate-fade-in">
                   <RichTextEditor
@@ -309,14 +312,14 @@ export const FarmerProfile: React.FC = () => {
                 </div>
               </div>
 
-              {/* Farmer Photo - Hero Image - Takes 1/3 of width */}
+              {/* Farmer Photo - Hero Image */}
               {profile.farmerPhoto && (
-                <div className="relative xl:col-span-1">
-                  <div className="relative overflow-hidden rounded-2xl shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="relative">
+                  <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:scale-105">
                     <img
                       src={profile.farmerPhoto}
                       alt="Farmer"
-                      className="w-full h-[400px] lg:h-[500px] object-cover"
+                      className="w-full h-64 lg:h-80 object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                   </div>
@@ -326,15 +329,17 @@ export const FarmerProfile: React.FC = () => {
           </section>
 
           {/* Photo Gallery Section */}
-          <section className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 lg:p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
-            <PhotoGallery
-              farmPhotos={profile.farmPhotos}
-              farmerPhoto={profile.farmerPhoto}
-              workPhotos={profile.workPhotos}
-              isEditable={isOwnProfile}
-              onEdit={() => setIsEditModalOpen(true)}
-            />
-          </section>
+          <HorizontalPhotoGallery
+            photos={[
+              ...(profile.farmPhotos || []).map(photo => ({ ...photo, type: 'farm' })),
+              ...(profile.workPhotos || []).map(photo => ({ ...photo, type: 'work' })),
+              ...(profile.farmerPhoto ? [{ id: 'farmer', url: profile.farmerPhoto, caption: 'Farmer Portrait', type: 'farmer' }] : [])
+            ]}
+            title="Farm Photos"
+            isEditable={isOwnProfile}
+            onEdit={() => setIsEditModalOpen(true)}
+            onAddPhoto={() => setIsEditModalOpen(true)}
+          />
 
           {/* Video Introduction Section */}
           {profile.introVideoUrl && (
@@ -355,76 +360,73 @@ export const FarmerProfile: React.FC = () => {
 
           {/* Farm Timeline Section */}
           {profile.timeline && profile.timeline.length > 0 && (
-            <section className="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-6 lg:p-8 text-white shadow-xl transition-all duration-300 hover:shadow-2xl">
-              <EnhancedFarmTimeline
-                timeline={profile.timeline}
-                isEditable={isOwnProfile}
-                onEdit={() => setIsEditModalOpen(true)}
-                onAddEvent={() => setIsEditModalOpen(true)}
-                onEditEvent={(event) => setIsEditModalOpen(true)}
-                onDeleteEvent={(eventId) => {
-                  if (profile) {
-                    setProfile({
-                      ...profile,
-                      timeline: profile.timeline?.filter(e => e.id !== eventId) || []
-                    });
-                  }
-                }}
-              />
-            </section>
+            <HorizontalFarmTimeline
+              timeline={profile.timeline}
+              isEditable={isOwnProfile}
+              onEdit={() => setIsEditModalOpen(true)}
+              onAddEvent={() => setIsEditModalOpen(true)}
+              onEditEvent={(event) => setIsEditModalOpen(true)}
+              onDeleteEvent={(eventId) => {
+                if (profile) {
+                  setProfile({
+                    ...profile,
+                    timeline: profile.timeline?.filter(e => e.id !== eventId) || []
+                  });
+                }
+              }}
+            />
           )}
 
           {/* Call to Action for Enhanced Profile */}
           {isOwnProfile && (!profile.ourStory || !profile.aboutOurFarm || !profile.farmerPhoto || !profile.farmPhotos?.length || !profile.timeline?.length) && (
-            <section className="bg-gradient-to-r from-primary-50 to-green-50 border border-primary-200 rounded-2xl p-6 lg:p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+            <section className="bg-gradient-to-r from-primary-50 to-green-50 border border-primary-200 rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
               <div className="text-center">
-                <div className="flex justify-center mb-6">
-                  <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
-                    <Camera className="w-8 h-8 text-primary-600" />
+                <div className="flex justify-center mb-4">
+                  <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <Camera className="w-6 h-6 text-primary-600" />
                   </div>
                 </div>
-                <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">Complete Your Farm Profile</h3>
-                <p className="text-gray-600 mb-6 max-w-2xl mx-auto text-base leading-relaxed">
-                  Share your story, add photos of your farm and work, and create a timeline of your farm's journey. 
-                  This helps customers connect with you and builds trust in your products.
+                <h3 className="text-lg font-bold text-gray-900 mb-3">Complete Your Farm Profile</h3>
+                <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                  Share your story, add photos, and create a timeline to help customers connect with your farm.
                 </p>
-                <div className="flex flex-wrap justify-center gap-3 mb-6">
+                <div className="flex flex-wrap justify-center gap-2 mb-4">
                   {!profile.ourStory && (
-                    <span className="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 transition-all duration-200 hover:bg-yellow-200">
-                      <FileText className="w-4 h-4 mr-2" />
-                      Add Your Story
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      <FileText className="w-3 h-3 mr-1" />
+                      Add Story
                     </span>
                   )}
                   {!profile.aboutOurFarm && (
-                    <span className="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 transition-all duration-200 hover:bg-yellow-200">
-                      <Building className="w-4 h-4 mr-2" />
-                      Describe Your Farm
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      <Building className="w-3 h-3 mr-1" />
+                      Describe Farm
                     </span>
                   )}
                   {!profile.farmerPhoto && (
-                    <span className="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 transition-all duration-200 hover:bg-yellow-200">
-                      <Camera className="w-4 h-4 mr-2" />
-                      Add Your Photo
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      <Camera className="w-3 h-3 mr-1" />
+                      Add Photo
                     </span>
                   )}
                   {!profile.farmPhotos?.length && (
-                    <span className="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 transition-all duration-200 hover:bg-yellow-200">
-                      <Camera className="w-4 h-4 mr-2" />
-                      Add Farm Photos
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      <Camera className="w-3 h-3 mr-1" />
+                      Add Photos
                     </span>
                   )}
                   {!profile.timeline?.length && (
-                    <span className="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 transition-all duration-200 hover:bg-yellow-200">
-                      <History className="w-4 h-4 mr-2" />
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      <History className="w-3 h-3 mr-1" />
                       Create Timeline
                     </span>
                   )}
                 </div>
                 <Button
                   onClick={() => setIsEditModalOpen(true)}
-                  className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 text-base font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+                  className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 text-sm font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
                 >
-                  <Settings className="w-5 h-5 mr-2" />
+                  <Settings className="w-4 h-4 mr-1" />
                   Complete Profile
                 </Button>
               </div>
@@ -432,38 +434,39 @@ export const FarmerProfile: React.FC = () => {
           )}
 
           {/* Products and Reviews Section */}
-          <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
-            {/* Products - Takes 3/4 of width */}
-            <div className="xl:col-span-3">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {/* Products - Takes 2/3 of width */}
+            <div className="lg:col-span-2">
               {profile.products && profile.products.length > 0 && (
-                <section className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
-                  <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 flex items-center">
-                      <Package className="w-8 h-8 mr-3" />
+                <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-lg font-bold text-gray-900 flex items-center">
+                      <Package className="w-5 h-5 mr-2" />
                       Our Products
                     </h2>
                     <Button
                       variant="outline"
                       onClick={() => navigate('/farmer/products')}
-                      className="px-6 py-3 rounded-xl text-base font-medium transition-all duration-200 hover:scale-105"
+                      className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105"
+                      size="sm"
                     >
                       Manage Products
                     </Button>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {profile.products.slice(0, 6).map((product) => (
-                      <div key={product.id} className="border border-gray-200 rounded-xl p-6 bg-gray-50/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                        <div className="flex justify-between items-start mb-4">
-                          <h3 className="font-bold text-gray-900 text-lg">{product.name}</h3>
-                          <Badge variant="primary" className="px-3 py-1 text-sm">{product.category}</Badge>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {profile.products.slice(0, 4).map((product) => (
+                      <div key={product.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                        <div className="flex justify-between items-start mb-3">
+                          <h3 className="font-bold text-gray-900 text-base">{product.name}</h3>
+                          <Badge variant="primary" className="px-2 py-1 text-xs">{product.category}</Badge>
                         </div>
-                        <p className="text-gray-600 mb-4 leading-relaxed text-base">{product.description}</p>
+                        <p className="text-gray-600 mb-3 leading-relaxed text-sm line-clamp-2">{product.description}</p>
                         <div className="flex justify-between items-center">
-                          <span className="text-2xl font-bold text-primary-600">
+                          <span className="text-lg font-bold text-primary-600">
                             ${product.price}/{product.unit}
                           </span>
-                          <span className="text-sm text-gray-500 font-medium">
-                            {product.quantity} {product.unit} available
+                          <span className="text-xs text-gray-500 font-medium">
+                            {product.quantity} {product.unit}
                           </span>
                         </div>
                       </div>
@@ -473,8 +476,8 @@ export const FarmerProfile: React.FC = () => {
               )}
             </div>
 
-            {/* Sidebar - Takes 1/4 of width */}
-            <div className="space-y-6">
+            {/* Sidebar - Takes 1/3 of width */}
+            <div className="space-y-4">
               {/* Farmer Bio */}
               <FarmerBio
                 farmerName={profile.name}
@@ -594,29 +597,29 @@ export const FarmerProfile: React.FC = () => {
 
           {/* Customer Reviews Section */}
           {profile.reviews && profile.reviews.length > 0 && (
-            <section className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
-              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-8 flex items-center">
-                <Star className="w-8 h-8 mr-3" />
+            <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+              <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                <Star className="w-5 h-5 mr-2" />
                 Customer Reviews
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {profile.reviews.map((review) => (
-                  <div key={review.id} className="border border-gray-200 rounded-xl p-6 bg-gray-50/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-start justify-between mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {profile.reviews.slice(0, 4).map((review) => (
+                  <div key={review.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-start justify-between mb-3">
                       <div>
-                        <div className="flex items-center mb-2">
-                          <span className="font-bold text-gray-900 text-lg mr-3">
+                        <div className="flex items-center mb-1">
+                          <span className="font-bold text-gray-900 text-sm mr-2">
                             {review.customerName}
                           </span>
                           {renderStarRating(review.rating)}
                         </div>
-                        <span className="text-sm text-gray-500 font-medium">
+                        <span className="text-xs text-gray-500 font-medium">
                           {formatDate(review.createdAt)}
                         </span>
                       </div>
                     </div>
                     {review.comment && (
-                      <p className="text-gray-700 leading-relaxed bg-white rounded-lg p-4 text-base">
+                      <p className="text-gray-700 leading-relaxed bg-white rounded p-3 text-sm line-clamp-3">
                         {review.comment}
                       </p>
                     )}
@@ -628,12 +631,12 @@ export const FarmerProfile: React.FC = () => {
 
           {/* No Reviews Message */}
           {(!profile.reviews || profile.reviews.length === 0) && (
-            <section className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg text-center transition-all duration-300 hover:shadow-xl">
-              <div className="text-gray-400 mb-6">
-                <Star className="w-16 h-16 mx-auto" />
+            <section className="bg-white rounded-xl p-4 shadow-lg text-center transition-all duration-300 hover:shadow-xl">
+              <div className="text-gray-400 mb-4">
+                <Star className="w-12 h-12 mx-auto" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">No Reviews Yet</h3>
-              <p className="text-gray-600 text-base max-w-2xl mx-auto leading-relaxed">
+              <h3 className="text-lg font-bold text-gray-900 mb-2">No Reviews Yet</h3>
+              <p className="text-gray-600 text-sm max-w-2xl mx-auto leading-relaxed">
                 {isOwnProfile 
                   ? "You haven't received any reviews yet. Keep providing great products and service!"
                   : "This farmer hasn't received any reviews yet. Be the first to leave a review!"

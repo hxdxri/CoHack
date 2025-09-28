@@ -52,11 +52,11 @@ export const FarmingPractices: React.FC<FarmingPracticesProps> = ({
   const inactivePractices = practices.filter(p => !p.isActive);
 
   return (
-    <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-bold text-gray-900 flex items-center">
-          <Leaf className="w-6 h-6 mr-3 text-green-600" />
-          Farming Practices & Values
+    <div className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-bold text-gray-900 flex items-center">
+          <Leaf className="w-5 h-5 mr-2 text-green-600" />
+          Farming Practices
         </h3>
         {isEditable && (
           <Button

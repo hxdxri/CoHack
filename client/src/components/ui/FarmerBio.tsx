@@ -26,10 +26,10 @@ export const FarmerBio: React.FC<FarmerBioProps> = ({
   onEdit
 }) => {
   return (
-    <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-bold text-gray-900 flex items-center">
-          <User className="w-6 h-6 mr-3 text-blue-600" />
+    <div className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-bold text-gray-900 flex items-center">
+          <User className="w-5 h-5 mr-2 text-blue-600" />
           About the Farmer
         </h3>
         {isEditable && (
@@ -45,11 +45,11 @@ export const FarmerBio: React.FC<FarmerBioProps> = ({
         )}
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         {/* Farmer Name and Basic Info */}
         <div>
-          <h4 className="text-xl font-semibold text-gray-900 mb-3">{farmerName}</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+          <h4 className="text-base font-semibold text-gray-900 mb-2">{farmerName}</h4>
+          <div className="grid grid-cols-1 gap-2 text-xs text-gray-600">
             {yearsFarming && (
               <div className="flex items-center">
                 <Calendar className="w-4 h-4 mr-2" />
@@ -74,13 +74,13 @@ export const FarmerBio: React.FC<FarmerBioProps> = ({
         {/* Bio */}
         {farmerBio ? (
           <div>
-            <h5 className="font-semibold text-gray-900 mb-2">Bio</h5>
-            <p className="text-gray-700 leading-relaxed">{farmerBio}</p>
+            <h5 className="font-semibold text-gray-900 mb-2 text-sm">Bio</h5>
+            <p className="text-gray-700 leading-relaxed text-sm line-clamp-3">{farmerBio}</p>
           </div>
         ) : isEditable ? (
-          <div className="text-center py-6 border-2 border-dashed border-gray-200 rounded-lg">
-            <User className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-            <p className="text-gray-500 text-sm mb-3">No bio added yet</p>
+          <div className="text-center py-4 border-2 border-dashed border-gray-200 rounded-lg">
+            <User className="w-6 h-6 text-gray-300 mx-auto mb-2" />
+            <p className="text-gray-500 text-xs mb-2">No bio added yet</p>
             <Button
               onClick={onEdit}
               variant="outline"
