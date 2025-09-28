@@ -8,13 +8,22 @@ import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { ProfileLayout } from '@/components/profile/ProfileLayout';
+import { EditProfileModal } from '@/components/profile/EditProfileModal';
+import { User as UserIcon, Mail, Calendar, Star, MessageCircle, ShoppingBag, Settings } from 'lucide-react';
 
 export const CustomerProfile: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
+  const { user, updateUser } = useAuthStore();
   const [reviews, setReviews] = useState<ReviewWithFarmer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(user);
+
+  useEffect(() => {
+    setCurrentUser(user);
+  }, [user]);
 
   useEffect(() => {
     const fetchCustomerData = async () => {
@@ -41,6 +50,11 @@ export const CustomerProfile: React.FC = () => {
       setLoading(false);
     }
   }, [user]);
+
+  const handleProfileUpdated = (updatedUser: User) => {
+    setCurrentUser(updatedUser);
+    updateUser(updatedUser);
+  };
 
   const renderStarRating = (rating: number) => {
     return (
@@ -100,92 +114,111 @@ export const CustomerProfile: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-bone">
+      <ProfileLayout>
         <LoadingSpinner message="Loading your profile..." />
-      </div>
+      </ProfileLayout>
     );
   }
 
-  if (error || !user) {
+  if (error || !currentUser) {
     return (
-      <div className="min-h-screen bg-bone flex items-center justify-center">
-        <Card className="max-w-md w-full mx-4">
-          <CardContent className="text-center">
-            <div className="text-red-500 mb-4">
-              <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Profile Not Available</h3>
-            <p className="text-gray-600 mb-4">{error || 'Your profile could not be loaded.'}</p>
-            <Button onClick={() => navigate('/customer/dashboard')} variant="outline">
-              Go to Dashboard
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+      <ProfileLayout>
+        <div className="flex items-center justify-center min-h-screen">
+          <Card className="max-w-md w-full mx-4">
+            <CardContent className="text-center">
+              <div className="text-red-500 mb-4">
+                <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Profile Not Available</h3>
+              <p className="text-gray-600 mb-4">{error || 'Your profile could not be loaded.'}</p>
+              <Button onClick={() => navigate('/customer/dashboard')} variant="outline">
+                Go to Dashboard
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </ProfileLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-bone">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <ProfileLayout>
+      <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
-              <p className="text-lg text-gray-600">Welcome back, {user.name}!</p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+            <div className="flex items-center space-x-4">
+              <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center">
+                <UserIcon className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">{currentUser.name}</h1>
+                <p className="text-lg text-gray-600">Customer Profile</p>
+              </div>
             </div>
-            <Button onClick={() => navigate('/customer/profile/edit')} variant="outline">
+            <Button 
+              onClick={() => setIsEditModalOpen(true)} 
+              variant="outline"
+              className="flex items-center"
+            >
+              <Settings className="w-4 h-4 mr-2" />
               Edit Profile
             </Button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-3 space-y-6">
             {/* Account Information */}
-            <Card>
-              <CardHeader>
-                <h2 className="text-xl font-semibold text-gray-900">Account Information</h2>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Full Name
-                    </label>
-                    <p className="text-gray-900">{user.name}</p>
+            <Card className="bg-white/80 backdrop-blur-sm">
+              <CardContent className="p-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                  <UserIcon className="w-5 h-5 mr-2" />
+                  Account Information
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <div className="flex items-center text-gray-600">
+                      <UserIcon className="w-4 h-4 mr-2" />
+                      <span className="text-sm font-medium">Full Name</span>
+                    </div>
+                    <p className="text-gray-900 font-medium">{currentUser.name}</p>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Email Address
-                    </label>
-                    <p className="text-gray-900">{user.email}</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-gray-600">
+                      <Mail className="w-4 h-4 mr-2" />
+                      <span className="text-sm font-medium">Email Address</span>
+                    </div>
+                    <p className="text-gray-900 font-medium">{currentUser.email}</p>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Account Type
-                    </label>
-                    <Badge variant="primary" className="capitalize">{user.role}</Badge>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-gray-600">
+                      <span className="text-sm font-medium">Account Type</span>
+                    </div>
+                    <Badge variant="primary" className="capitalize">{currentUser.role}</Badge>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Member Since
-                    </label>
-                    <p className="text-gray-900">{formatDate(user.createdAt)}</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-gray-600">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      <span className="text-sm font-medium">Member Since</span>
+                    </div>
+                    <p className="text-gray-900 font-medium">{formatDate(currentUser.createdAt)}</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* My Reviews */}
-            <Card>
+            <Card className="bg-white/80 backdrop-blur-sm">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-gray-900">My Reviews</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                    <Star className="w-5 h-5 mr-2" />
+                    My Reviews
+                  </h2>
                   <Button
                     variant="outline"
                     size="sm"
@@ -197,10 +230,10 @@ export const CustomerProfile: React.FC = () => {
               </CardHeader>
               <CardContent>
                 {reviews.length > 0 ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {reviews.map((review) => (
-                      <div key={review.id} className="border border-gray-200 rounded-lg p-6">
-                        <div className="flex items-start justify-between mb-4">
+                      <div key={review.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50/50">
+                        <div className="flex items-start justify-between mb-3">
                           <div className="flex-1">
                             <div className="flex items-center mb-2">
                               <h3 className="font-semibold text-gray-900 mr-3">
@@ -234,7 +267,7 @@ export const CustomerProfile: React.FC = () => {
                           </div>
                         </div>
                         {review.comment && (
-                          <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="bg-white rounded-lg p-3">
                             <p className="text-gray-700 leading-relaxed">{review.comment}</p>
                           </div>
                         )}
@@ -244,9 +277,7 @@ export const CustomerProfile: React.FC = () => {
                 ) : (
                   <div className="text-center py-12">
                     <div className="text-gray-400 mb-4">
-                      <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                      </svg>
+                      <Star className="w-12 h-12 mx-auto" />
                     </div>
                     <h3 className="text-lg font-medium text-gray-900 mb-2">No Reviews Yet</h3>
                     <p className="text-gray-600 mb-4">
@@ -264,14 +295,14 @@ export const CustomerProfile: React.FC = () => {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Profile Stats */}
-            <Card>
+            <Card className="bg-white/80 backdrop-blur-sm">
               <CardHeader>
                 <h3 className="text-lg font-semibold text-gray-900">Profile Statistics</h3>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Total Reviews</span>
-                  <span className="font-semibold">{reviews.length}</span>
+                  <span className="font-semibold text-lg">{reviews.length}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Average Rating Given</span>
@@ -287,17 +318,11 @@ export const CustomerProfile: React.FC = () => {
                   <span className="text-gray-600">Account Status</span>
                   <Badge variant="success">Active</Badge>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Member Since</span>
-                  <span className="font-semibold">
-                    {formatDate(user.createdAt)}
-                  </span>
-                </div>
               </CardContent>
             </Card>
 
             {/* Quick Actions */}
-            <Card>
+            <Card className="bg-white/80 backdrop-blur-sm">
               <CardHeader>
                 <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
               </CardHeader>
@@ -305,68 +330,40 @@ export const CustomerProfile: React.FC = () => {
                 <Button 
                   className="w-full justify-start" 
                   variant="outline"
-                  onClick={() => navigate('/customer/farmers')}
+                  onClick={() => navigate('/customer/dashboard')}
                 >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                  Browse Farmers
+                  <ShoppingBag className="w-4 h-4 mr-2" />
+                  Browse Products
                 </Button>
                 <Button 
                   className="w-full justify-start" 
                   variant="outline"
                   onClick={() => navigate('/messages')}
                 >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
+                  <MessageCircle className="w-4 h-4 mr-2" />
                   Messages
                 </Button>
                 <Button 
                   className="w-full justify-start" 
                   variant="outline"
-                  onClick={() => navigate('/customer/dashboard')}
+                  onClick={() => navigate('/customer/orders')}
                 >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5a2 2 0 012-2h4a2 2 0 012 2v3H8V5z" />
-                  </svg>
-                  Dashboard
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Account Settings */}
-            <Card>
-              <CardHeader>
-                <h3 className="text-lg font-semibold text-gray-900">Account Settings</h3>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button 
-                  className="w-full justify-start" 
-                  variant="outline"
-                  onClick={() => navigate('/customer/profile/edit')}
-                >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                  </svg>
-                  Edit Profile
-                </Button>
-                <Button 
-                  className="w-full justify-start" 
-                  variant="outline"
-                  onClick={() => navigate('/customer/profile/security')}
-                >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                  Security Settings
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Past Orders
                 </Button>
               </CardContent>
             </Card>
           </div>
         </div>
+
+        {/* Edit Profile Modal */}
+        <EditProfileModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          user={currentUser}
+          onProfileUpdated={handleProfileUpdated}
+        />
       </div>
-    </div>
+    </ProfileLayout>
   );
 };

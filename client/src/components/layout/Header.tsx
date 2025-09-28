@@ -64,17 +64,11 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                   <Link to="/farmer/products" className="nav-link">
                     Products
                   </Link>
-                  <Link to="/farmer/profile" className="nav-link">
-                    Profile
-                  </Link>
                 </>
               ) : (
                 <>
                   <Link to="/customer/dashboard" className="nav-link">
                     Browse
-                  </Link>
-                  <Link to="/customer/profile" className="nav-link">
-                    Profile
                   </Link>
                   <Link to="/customer/orders" className="nav-link">
                     Past Orders

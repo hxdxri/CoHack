@@ -18,6 +18,9 @@ import { farmersAPI, productsAPI } from '@/lib/api';
 import { FarmerProfile, Product } from '@/types';
 import toast from 'react-hot-toast';
 
+// Farm images array
+const farmImages = ['/farm1.jpg', '/farm2.avif', '/farm3.jpg', '/farm4.jpg'];
+
 /**
  * Customer Dashboard
  * 
@@ -253,7 +256,20 @@ export const CustomerDashboard: React.FC = () => {
               : farmerProducts;
             
             return (
-              <Card key={farmer.id} hover className="group">
+              <Card key={farmer.id} hover className="group overflow-hidden">
+                {/* Farm Image */}
+                <div className="w-[calc(100%+3rem)] h-56 -ml-6 -mr-6 -mt-6 mb-6 overflow-hidden">
+                  <img 
+                    src={farmImages[farmer.id.charCodeAt(0) % 4]}
+                    alt={`${farmer.farmName} farm`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      console.log('Image failed to load:', target.src);
+                      console.log('Farmer ID:', farmer.id, 'Image index:', farmer.id.charCodeAt(0) % 4);
+                    }}
+                  />
+                </div>
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
