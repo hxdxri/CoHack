@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Leaf, Users, ShoppingCart, MessageCircle, Star, Shield, Truck } from 'lucide-react';
+import { Leaf, Users, ShoppingCart, MessageCircle, Star, Shield, Truck, Heart, Globe, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Slideshow } from '@/components/ui/Slideshow';
@@ -15,6 +15,32 @@ import { Footer } from '@/components/layout/Footer';
  * New homepage with automatic slideshow, farm map, scroll-triggered navigation, and footer.
  */
 export const Landing: React.FC = () => {
+  const [showImpact, setShowImpact] = useState(false);
+
+  // Handle scroll to show/hide impact section when reaching Why Choose HarvestLink
+  useEffect(() => {
+    const handleScroll = () => {
+      const featuresSection = document.querySelector('[data-section="features"]');
+      const footer = document.querySelector('footer');
+      
+      if (featuresSection && footer) {
+        const featuresRect = featuresSection.getBoundingClientRect();
+        const footerRect = footer.getBoundingClientRect();
+        
+        // Show impact section when Why Choose HarvestLink section is in view and footer hasn't appeared yet
+        const featuresInView = featuresRect.top < window.innerHeight && featuresRect.bottom > 0;
+        const footerNotReached = footerRect.top > window.innerHeight;
+        
+        setShowImpact(featuresInView && footerNotReached);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    // Initial check
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Sample slideshow data
   const slideshowData = [
     {
@@ -275,14 +301,119 @@ export const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Impact Tracker Section */}
-      <ImpactTracker />
+      {/* Persistent Our Impact Section - Floating Overlay */}
+      <div className={`fixed top-1/2 right-8 transform -translate-y-1/2 z-50 hidden lg:block transition-all duration-500 ${showImpact ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`}>
+        <div className="w-80 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 p-6">
+          <div className="text-center mb-6">
+            <div className="flex items-center justify-center mb-3">
+              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center mr-3">
+                <Leaf className="w-5 h-5 text-primary-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-ink">
+                Our Impact
+              </h2>
+            </div>
+            <p className="text-sm text-graphite">
+              Building a sustainable future together
+            </p>
+          </div>
 
-      {/* Gradient Transition */}
-      <div className="h-8 bg-gradient-to-b from-green-50 to-mist"></div>
+          {/* Impact Stats - Vertically Stacked with Original Icons */}
+          <div className="space-y-4">
+            {[
+              { 
+                icon: Leaf, 
+                label: 'CO₂ Saved', 
+                value: '2.5K', 
+                unit: 'tons', 
+                color: 'text-green-600', 
+                bgColor: 'bg-green-50'
+              },
+              { 
+                icon: Users, 
+                label: 'Customers', 
+                value: '15K', 
+                unit: '', 
+                color: 'text-blue-600', 
+                bgColor: 'bg-blue-50'
+              },
+              { 
+                icon: Truck, 
+                label: 'Miles Saved', 
+                value: '45K', 
+                unit: 'K', 
+                color: 'text-orange-600', 
+                bgColor: 'bg-orange-50'
+              },
+              { 
+                icon: Heart, 
+                label: 'Animals', 
+                value: '2.1K', 
+                unit: '', 
+                color: 'text-pink-600', 
+                bgColor: 'bg-pink-50'
+              },
+              { 
+                icon: Globe, 
+                label: 'Water Saved', 
+                value: '12K', 
+                unit: 'K gal', 
+                color: 'text-cyan-600', 
+                bgColor: 'bg-cyan-50'
+              },
+              { 
+                icon: Shield, 
+                label: 'Farms', 
+                value: '500+', 
+                unit: '', 
+                color: 'text-purple-600', 
+                bgColor: 'bg-purple-50'
+              }
+            ].map((stat, index) => (
+              <div 
+                key={index}
+                className={`group flex items-center space-x-3 p-3 ${stat.bgColor} rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-md`}
+                style={{ 
+                  transform: `translateX(${index * 5}px)`,
+                  zIndex: 6 - index
+                }}
+              >
+                <div className={`w-10 h-10 ${stat.bgColor} rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center">
+                    <span className={`text-lg font-bold ${stat.color} group-hover:text-primary-600 transition-colors duration-300`}>
+                      {stat.value}
+                    </span>
+                    {stat.unit && (
+                      <span className="text-xs text-graphite ml-1">
+                        {stat.unit}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-xs font-semibold text-ink truncate">
+                    {stat.label}
+                  </h3>
+                </div>
+              </div>
+            ))}
+          </div>
 
-      {/* Features Section */}
-      <section className="py-16 bg-mist">
+          {/* Live indicator */}
+          <div className="mt-4 flex items-center justify-center">
+            <div className="inline-flex items-center px-3 py-1 bg-primary-50 rounded-full">
+              <TrendingUp className="w-3 h-3 text-primary-600 mr-1" />
+              <span className="text-xs text-graphite font-medium">
+                Live Updates
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Why Choose HarvestLink Section */}
+      <section className="py-16 bg-mist" data-section="features">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
@@ -295,11 +426,19 @@ export const Landing: React.FC = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="text-center">
-                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <div 
+                key={index} 
+                className="group text-center p-6 bg-white/60 backdrop-blur-sm rounded-xl transition-all duration-300 hover:bg-white/80 hover:scale-105 hover:shadow-lg"
+                style={{ 
+                  transform: `translateX(${index * -5}px)`,
+                  zIndex: 6 - index,
+                  transitionDelay: `${index * 100}ms`
+                }}
+              >
+                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                   <feature.icon className="w-6 h-6 text-primary-500" />
                 </div>
-                <h3 className="text-xl font-semibold text-ink mb-2">{feature.title}</h3>
+                <h3 className="text-xl font-semibold text-ink mb-2 group-hover:text-primary-600 transition-colors duration-300">{feature.title}</h3>
                 <p className="text-graphite">{feature.description}</p>
               </div>
             ))}
@@ -310,18 +449,29 @@ export const Landing: React.FC = () => {
       {/* Subtle Transition */}
       <div className="h-6 bg-gradient-to-b from-mist to-bone"></div>
 
-      {/* Testimonials Section */}
+      {/* Community Reviews Section */}
       <section className="py-16 bg-bone">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
               What Our Community Says
             </h2>
+            <p className="text-xl text-graphite">
+              Real stories from farmers and customers who love HarvestLink
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {testimonials.map((testimonial, index) => (
-              <Card key={index}>
+              <Card 
+                key={index}
+                className="group transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                style={{ 
+                  transform: `translateX(${index * -8}px)`,
+                  zIndex: 2 - index,
+                  transitionDelay: `${index * 150}ms`
+                }}
+              >
                 <CardContent className="p-6">
                   <div className="flex items-center mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
@@ -343,7 +493,7 @@ export const Landing: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-primary-500 text-white">
+      <section className="py-16 bg-primary-500 text-white" data-section="cta">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready to Get Started?
