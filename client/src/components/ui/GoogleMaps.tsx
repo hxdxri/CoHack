@@ -34,11 +34,11 @@ const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'YOUR_GO
 const MapComponent: React.FC<{
   farms: FarmLocation[];
   onFarmSelect?: (farm: FarmLocation) => void;
-}> = ({ farms, onFarmSelect }) => {
+  selectedFarm?: FarmLocation | null;
+}> = ({ farms, onFarmSelect, selectedFarm }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
-  const [selectedFarm, setSelectedFarm] = useState<FarmLocation | null>(null);
 
   // Initialize map
   useEffect(() => {
@@ -66,25 +66,30 @@ const MapComponent: React.FC<{
       markers.forEach(marker => marker.setMap(null));
 
       const newMarkers = farms.map(farm => {
+        const isSelected = selectedFarm?.id === farm.id;
         const marker = new google.maps.Marker({
           position: { lat: farm.coordinates.lat, lng: farm.coordinates.lng },
           map: map,
           title: farm.name,
           icon: {
             url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-              <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="16" cy="16" r="12" fill="#1A7F5A" stroke="white" stroke-width="2"/>
-                <path d="M16 8l-2 8h4l-2-8z" fill="white"/>
+              <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="${isSelected ? '#DC2626' : '#1A7F5A'}" stroke="white" stroke-width="2"/>
+                <g transform="translate(6, 6)">
+                  <!-- Minimalist farm icon -->
+                  <path d="M2 4h8v6H2V4z" fill="white" stroke="${isSelected ? '#DC2626' : '#1A7F5A'}" stroke-width="0.5"/>
+                  <path d="M0 4l6-2 6 2v1H0V4z" fill="white"/>
+                  <circle cx="6" cy="7" r="1" fill="${isSelected ? '#DC2626' : '#1A7F5A'}"/>
+                </g>
               </svg>
             `),
-            scaledSize: new google.maps.Size(32, 32),
-            anchor: new google.maps.Point(16, 16)
+            scaledSize: new google.maps.Size(24, 24),
+            anchor: new google.maps.Point(12, 12)
           }
         });
 
         // Add click listener
         marker.addListener('click', () => {
-          setSelectedFarm(farm);
           onFarmSelect?.(farm);
         });
 
@@ -193,6 +198,8 @@ export const GoogleMaps: React.FC<GoogleMapsProps> = ({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredFarms, setFilteredFarms] = useState<FarmLocation[]>(farms);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [selectedFarm, setSelectedFarm] = useState<FarmLocation | null>(null);
+  const farmCardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const categories = [
     { value: 'all', label: 'All Farms' },
@@ -281,7 +288,27 @@ export const GoogleMaps: React.FC<GoogleMapsProps> = ({
   }, [searchTerm, selectedCategory, farms, userLocation]);
 
   const handleFarmClick = (farm: FarmLocation) => {
+    setSelectedFarm(farm);
     onFarmSelect?.(farm);
+    
+    // Move the selected farm to the top of the list
+    const updatedFarms = [
+      farm,
+      ...filteredFarms.filter(f => f.id !== farm.id)
+    ];
+    setFilteredFarms(updatedFarms);
+    
+    // Scroll the farm card to the top and highlight it
+    setTimeout(() => {
+      const farmCardElement = farmCardRefs.current[farm.id];
+      if (farmCardElement) {
+        farmCardElement.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+          inline: 'nearest'
+        });
+      }
+    }, 100);
   };
 
   const render = (status: Status) => {
@@ -291,7 +318,7 @@ export const GoogleMaps: React.FC<GoogleMapsProps> = ({
       case Status.FAILURE:
         return <ErrorComponent status={status} />;
       case Status.SUCCESS:
-        return <MapComponent farms={filteredFarms} onFarmSelect={handleFarmClick} />;
+        return <MapComponent farms={filteredFarms} onFarmSelect={handleFarmClick} selectedFarm={selectedFarm} />;
     }
   };
 
@@ -357,13 +384,25 @@ export const GoogleMaps: React.FC<GoogleMapsProps> = ({
             filteredFarms.map((farm) => (
               <Card
                 key={farm.id}
+                ref={(el) => (farmCardRefs.current[farm.id] = el)}
                 hover
-                className="cursor-pointer transition-all duration-200"
+                className={`cursor-pointer transition-all duration-300 ${
+                  selectedFarm?.id === farm.id 
+                    ? 'bg-green-50 border-green-300 shadow-lg transform scale-105 animate-pulse' 
+                    : 'hover:bg-gray-50'
+                }`}
                 onClick={() => handleFarmClick(farm)}
               >
                 <CardContent className="p-4">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-lg text-ink">{farm.name}</h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-semibold text-lg text-ink">{farm.name}</h3>
+                      {selectedFarm?.id === farm.id && (
+                        <span className="text-xs bg-green-200 text-green-800 px-2 py-1 rounded-full font-medium">
+                          Selected
+                        </span>
+                      )}
+                    </div>
                     <div className="flex items-center gap-1">
                       <span className="text-yellow-500">★</span>
                       <span className="text-sm text-gray-600">{farm.rating.toFixed(1)}</span>

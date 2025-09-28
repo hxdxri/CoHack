@@ -10,6 +10,7 @@ import {
   Users
 } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
+import { useMessagesStore } from '@/store/messages';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/Card';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
@@ -25,6 +26,7 @@ import toast from 'react-hot-toast';
  */
 export const CustomerDashboard: React.FC = () => {
   const { user } = useAuthStore();
+  const { sendMessage } = useMessagesStore();
   const [farmers, setFarmers] = useState<FarmerProfile[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,10 +67,20 @@ export const CustomerDashboard: React.FC = () => {
     }
   };
 
-  const handleContactFarmer = (farmerName: string) => {
-    // Navigate to messages with pre-filled farmer info
-    toast.success(`Opening chat with ${farmerName}`);
-    // In a real app, this would navigate to messages with the farmer pre-selected
+  const handleContactFarmer = async (farmer: FarmerProfile) => {
+    try {
+      // Create a new conversation by sending an initial message
+      await sendMessage(farmer.userId, {
+        content: `Hi ${farmer.name}! I'm interested in learning more about your farm and products.`
+      });
+      
+      toast.success(`Started conversation with ${farmer.farmName}`);
+      // Navigate to messages page
+      window.location.href = '/customer/messages';
+    } catch (error) {
+      console.error('Error starting conversation:', error);
+      toast.error('Failed to start conversation');
+    }
   };
 
 
@@ -181,14 +193,6 @@ export const CustomerDashboard: React.FC = () => {
           {searchTerm && ` for "${searchTerm}"`}
           {selectedCategory && ` with ${categoryOptions.find(c => c.value === selectedCategory)?.label}`}
         </p>
-        <div className="flex gap-2">
-          <Link to="/customer/farmers">
-            <Button variant="outline" size="sm">
-              <Users className="w-4 h-4 mr-2" />
-              All Farmers
-            </Button>
-          </Link>
-        </div>
       </div>
 
       {/* Farms Grid */}
@@ -216,11 +220,6 @@ export const CustomerDashboard: React.FC = () => {
               >
                 Clear Filters
               </Button>
-              <Link to="/customer/farmers">
-                <Button variant="primary">
-                  Browse All Farmers
-                </Button>
-              </Link>
             </div>
           </CardContent>
         </Card>
@@ -237,9 +236,14 @@ export const CustomerDashboard: React.FC = () => {
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-ink group-hover:text-primary-500 transition-colors mb-1">
-                        {farmer.farmName}
-                      </h3>
+                      <Link 
+                        to={`/customer/farm/${farmer.userId}`}
+                        className="block"
+                      >
+                        <h3 className="text-xl font-bold text-ink group-hover:text-primary-500 transition-colors mb-1 cursor-pointer">
+                          {farmer.farmName}
+                        </h3>
+                      </Link>
                       <p className="text-graphite font-medium">{farmer.name}</p>
                     </div>
                     {farmer.averageRating > 0 && (
@@ -323,7 +327,7 @@ export const CustomerDashboard: React.FC = () => {
 
                 <CardFooter className="flex gap-2">
                   <Button
-                    onClick={() => handleContactFarmer(farmer.name || 'Farmer')}
+                    onClick={() => handleContactFarmer(farmer)}
                     variant="outline"
                     size="sm"
                     className="flex-1"
@@ -332,21 +336,12 @@ export const CustomerDashboard: React.FC = () => {
                     Contact
                   </Button>
                   <Link 
-                    to={`/farmer-profile/${farmer.userId}`}
-                    className="flex-1"
-                  >
-                    <Button variant="outline" size="sm" className="w-full">
-                      <Users className="w-4 h-4 mr-1" />
-                      Profile
-                    </Button>
-                  </Link>
-                  <Link 
-                    to={`/customer/dashboard?farmer=${farmer.userId}`}
+                    to={`/customer/farm/${farmer.userId}`}
                     className="flex-1"
                   >
                     <Button variant="primary" size="sm" className="w-full">
                       <Package className="w-4 h-4 mr-1" />
-                      Products
+                      View Farm
                     </Button>
                   </Link>
                 </CardFooter>
@@ -366,12 +361,9 @@ export const CustomerDashboard: React.FC = () => {
             <p className="text-graphite mb-4">
               Discover more farmers in your area and build relationships with local producers
             </p>
-            <Link to="/customer/farmers">
-              <Button variant="primary">
-                <Users className="w-4 h-4 mr-2" />
-                Explore All Farmers
-              </Button>
-            </Link>
+            <p className="text-graphite text-sm">
+              Click on any farm name above to learn more about their products and story
+            </p>
           </CardContent>
         </Card>
       )}
