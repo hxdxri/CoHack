@@ -73,21 +73,18 @@ const MapComponent: React.FC<{
           title: farm.name,
           icon: {
             url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-              <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="16" cy="16" r="14" fill="${isSelected ? '#DC2626' : '#1A7F5A'}" stroke="white" stroke-width="2"/>
+              <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="${isSelected ? '#DC2626' : '#1A7F5A'}" stroke="white" stroke-width="2"/>
                 <g transform="translate(6, 6)">
-                  <!-- Farm barn icon -->
-                  <path d="M2 6h16v10H2V6z" fill="white"/>
-                  <path d="M0 6l10-4 10 4v2H0V6z" fill="white"/>
-                  <rect x="7" y="9" width="6" height="5" fill="${isSelected ? '#DC2626' : '#1A7F5A'}"/>
-                  <circle cx="10" cy="11.5" r="1" fill="white"/>
-                  <path d="M3 6h2v2H3V6z" fill="white"/>
-                  <path d="M15 6h2v2h-2V6z" fill="white"/>
+                  <!-- Minimalist farm icon -->
+                  <path d="M2 4h8v6H2V4z" fill="white" stroke="${isSelected ? '#DC2626' : '#1A7F5A'}" stroke-width="0.5"/>
+                  <path d="M0 4l6-2 6 2v1H0V4z" fill="white"/>
+                  <circle cx="6" cy="7" r="1" fill="${isSelected ? '#DC2626' : '#1A7F5A'}"/>
                 </g>
               </svg>
             `),
-            scaledSize: new google.maps.Size(32, 32),
-            anchor: new google.maps.Point(16, 16)
+            scaledSize: new google.maps.Size(24, 24),
+            anchor: new google.maps.Point(12, 12)
           }
         });
 
