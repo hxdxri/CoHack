@@ -23,6 +23,62 @@ export interface FarmerProfile {
   reviews?: ReviewWithCustomer[];
   products?: Product[];
   productCount?: number;
+  // Enhanced profile fields
+  farmPhotos?: FarmPhoto[];
+  farmerPhoto?: string;
+  workPhotos?: WorkPhoto[];
+  timeline?: FarmTimelineEvent[];
+  ourStory?: string;
+  aboutOurFarm?: string;
+  // New hero section fields
+  coverPhoto?: string;
+  farmerBio?: string;
+  farmerInterests?: string[];
+  // Rich content fields
+  aboutOurFarmRich?: string; // Rich text content
+  ourStoryRich?: string; // Rich text content
+  // Sustainability and values
+  farmingPractices?: FarmingPractice[];
+  // Media integration
+  introVideoUrl?: string;
+  // Additional farmer details
+  yearsFarming?: number;
+  farmSize?: string;
+  specialties?: string[];
+}
+
+export interface FarmPhoto {
+  id: string;
+  url: string;
+  caption?: string;
+  type: 'farm' | 'landscape' | 'animals' | 'crops' | 'equipment';
+  createdAt: string;
+}
+
+export interface WorkPhoto {
+  id: string;
+  url: string;
+  caption?: string;
+  type: 'harvesting' | 'planting' | 'processing' | 'packaging' | 'delivery';
+  createdAt: string;
+}
+
+export interface FarmTimelineEvent {
+  id: string;
+  year: number;
+  title: string;
+  description: string;
+  imageUrl?: string;
+  type: 'founding' | 'expansion' | 'achievement' | 'milestone' | 'award' | 'certification' | 'partnership' | 'innovation';
+  icon?: string; // Emoji or icon identifier
+}
+
+export interface FarmingPractice {
+  id: string;
+  name: string;
+  description?: string;
+  category: 'sustainability' | 'organic' | 'animal_welfare' | 'environmental' | 'social';
+  isActive: boolean;
 }
 
 export interface Product {
@@ -135,6 +191,23 @@ export interface FarmerProfileFormData {
   description: string;
   location: string;
   farmHistory: string;
+  ourStory?: string;
+  aboutOurFarm?: string;
+  farmerPhoto?: string;
+  farmPhotos?: FarmPhoto[];
+  workPhotos?: WorkPhoto[];
+  timeline?: FarmTimelineEvent[];
+  // New enhanced fields
+  coverPhoto?: string;
+  farmerBio?: string;
+  farmerInterests?: string[];
+  aboutOurFarmRich?: string;
+  ourStoryRich?: string;
+  farmingPractices?: FarmingPractice[];
+  introVideoUrl?: string;
+  yearsFarming?: number;
+  farmSize?: string;
+  specialties?: string[];
 }
 
 export interface CartItem {
