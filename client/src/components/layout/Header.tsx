@@ -67,6 +67,9 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                     <Package className="w-4 h-4" />
                     <span>Products</span>
                   </Link>
+                  <Link to="/farmer/orders" className="nav-link">
+                    Orders
+                  </Link>
                 </>
               ) : (
                 <>
@@ -84,8 +87,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                 to={user?.role === 'farmer' ? '/farmer/messages' : '/customer/messages'} 
                 className="nav-link flex items-center space-x-2"
               >
-                <MessageCircle className="w-4 h-4" />
-                <span>Messages</span>
+                Messages
               </Link>
               {user?.role === 'customer' && (
                 <Link to="/customer/cart" className="nav-link flex items-center space-x-2 relative">

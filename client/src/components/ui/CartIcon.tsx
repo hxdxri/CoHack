@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Store } from 'lucide-react';
 import { useCartStore } from '@/store/cart';
 
 interface CartIconProps {
@@ -8,7 +8,8 @@ interface CartIconProps {
 }
 
 export const CartIcon: React.FC<CartIconProps> = ({ className = '' }) => {
-  const { totalItems } = useCartStore();
+  const { totalItems, getVendorCarts } = useCartStore();
+  const vendorCarts = getVendorCarts();
 
   return (
     <Link 
@@ -17,9 +18,11 @@ export const CartIcon: React.FC<CartIconProps> = ({ className = '' }) => {
     >
       <ShoppingCart className="w-6 h-6" />
       {totalItems > 0 && (
-        <span className="absolute -top-1 -right-1 bg-primary-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-          {totalItems > 99 ? '99+' : totalItems}
-        </span>
+        <div className="absolute -top-1 -right-1">
+          <span className="bg-primary-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+            {totalItems > 99 ? '99+' : totalItems}
+          </span>
+        </div>
       )}
     </Link>
   );
