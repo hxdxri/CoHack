@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { farmersAPI, reviewsAPI } from '@/lib/api';
+import { farmersAPI } from '@/lib/api';
 import { FarmerProfile as FarmerProfileType, ReviewWithCustomer, User } from '@/types';
 import { useAuthStore } from '@/store/auth';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/Card';
+import { Card, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { ProfileLayout } from '@/components/profile/ProfileLayout';
 import { EditProfileModal } from '@/components/profile/EditProfileModal';
-import { User as UserIcon, Mail, Calendar, Star, MessageCircle, Package, MapPin, Building, FileText, Settings } from 'lucide-react';
+import { HorizontalPhotoGallery } from '@/components/ui/HorizontalPhotoGallery';
+import { HorizontalFarmTimeline } from '@/components/ui/HorizontalFarmTimeline';
+import { FarmingPractices } from '@/components/ui/FarmingPractices';
+import { FarmerBio } from '@/components/ui/FarmerBio';
+import { RichTextEditor } from '@/components/ui/RichTextEditor';
+import { VideoEmbed } from '@/components/ui/VideoEmbed';
+import { User as UserIcon, Mail, Star, MessageCircle, Package, MapPin, Building, FileText, Settings, Camera, History, Upload } from 'lucide-react';
 
 interface FarmerProfileWithDetails extends FarmerProfileType {
   name: string;
@@ -23,12 +29,14 @@ interface FarmerProfileWithDetails extends FarmerProfileType {
 export const FarmerProfile: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
-  const { user, updateUser } = useAuthStore();
+  const { user } = useAuthStore();
   const [profile, setProfile] = useState<FarmerProfileWithDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(user);
+  const [editingSection, setEditingSection] = useState<string | null>(null);
+  const [tempContent, setTempContent] = useState<string>('');
 
   // Determine if this is the current user's profile or viewing another farmer
   const isOwnProfile = !id || id === user?.id;
@@ -59,7 +67,7 @@ export const FarmerProfile: React.FC = () => {
           response = await farmersAPI.getById(farmerId);
         }
 
-        setProfile(response.data);
+        setProfile(response.data as FarmerProfileWithDetails);
       } catch (err: any) {
         console.error('Error fetching farmer profile:', err);
         setError(err.response?.data?.error || 'Failed to load farmer profile');
@@ -74,10 +82,30 @@ export const FarmerProfile: React.FC = () => {
 
   const handleProfileUpdated = (updatedUser: User, updatedFarmerProfile?: FarmerProfileType) => {
     setCurrentUser(updatedUser);
-    updateUser(updatedUser);
     if (updatedFarmerProfile && isOwnProfile) {
       setProfile(prev => prev ? { ...prev, ...updatedFarmerProfile } : null);
     }
+  };
+
+  const cancelEditing = () => {
+    setEditingSection(null);
+    setTempContent('');
+  };
+
+  const saveContent = async (section: string) => {
+    // Here you would typically make an API call to save the content
+    // For now, we'll just update the local state
+    if (profile) {
+      const updatedProfile = { ...profile };
+      if (section === 'ourStory') {
+        updatedProfile.ourStoryRich = tempContent;
+      } else if (section === 'aboutOurFarm') {
+        updatedProfile.aboutOurFarmRich = tempContent;
+      }
+      setProfile(updatedProfile);
+    }
+    setEditingSection(null);
+    setTempContent('');
   };
 
   const renderStarRating = (rating: number) => {
@@ -113,7 +141,7 @@ export const FarmerProfile: React.FC = () => {
   if (loading) {
     return (
       <ProfileLayout>
-        <LoadingSpinner message="Loading farmer profile..." />
+        <LoadingSpinner />
       </ProfileLayout>
     );
   }
@@ -143,24 +171,74 @@ export const FarmerProfile: React.FC = () => {
 
   return (
     <ProfileLayout>
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        {/* Cover Photo Section */}
+        {profile.coverPhoto && (
+          <section className="mb-6 relative">
+            <div className="relative h-48 lg:h-56 rounded-xl overflow-hidden shadow-lg">
+              <img
+                src={profile.coverPhoto}
+                alt="Farm Cover"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              {isOwnProfile && (
+                <div className="absolute top-4 right-4">
+                  <Button
+                    onClick={() => setIsEditModalOpen(true)}
+                    className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm"
+                    size="sm"
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    Change Cover
+                  </Button>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* Header Section */}
-        <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <section className="mb-6 transition-all duration-300">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center">
-                <Building className="w-8 h-8 text-white" />
+              {/* Farmer Portrait */}
+              <div className="relative">
+                {profile.farmerPhoto ? (
+                  <img
+                    src={profile.farmerPhoto}
+                    alt={profile.name}
+                    className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md"
+                  />
+                ) : (
+                  <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center shadow-md">
+                    <Building className="w-8 h-8 text-white" />
+                  </div>
+                )}
+                {isOwnProfile && (
+                  <Button
+                    onClick={() => setIsEditModalOpen(true)}
+                    className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-blue-600 hover:bg-blue-700 text-white p-0"
+                    size="sm"
+                  >
+                    <Upload className="w-3 h-3" />
+                  </Button>
+                )}
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">{profile.farmName}</h1>
-                <p className="text-lg text-gray-600">by {profile.name}</p>
+                <h1 className="text-2xl font-bold text-gray-900">{profile.farmName}</h1>
+                <p className="text-base text-gray-600">by {profile.name}</p>
+                {profile.yearsFarming && (
+                  <p className="text-xs text-gray-500">{profile.yearsFarming} years farming</p>
+                )}
               </div>
             </div>
             {isOwnProfile && (
               <Button 
                 onClick={() => setIsEditModalOpen(true)} 
                 variant="outline"
-                className="flex items-center"
+                className="flex items-center transition-all duration-200 hover:scale-105"
+                size="sm"
               >
                 <Settings className="w-4 h-4 mr-2" />
                 Edit Profile
@@ -168,245 +246,366 @@ export const FarmerProfile: React.FC = () => {
             )}
           </div>
           
-          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
             <div className="flex items-center">
-              <MapPin className="w-4 h-4 mr-2" />
+              <MapPin className="w-4 h-4 mr-1" />
               {profile.location}
             </div>
             <div className="flex items-center">
-              <Package className="w-4 h-4 mr-2" />
+              <Package className="w-4 h-4 mr-1" />
               {profile.productCount} Products
             </div>
             <div className="flex items-center">
               {renderStarRating(profile.averageRating)}
-              <span className="ml-2">({profile.totalReviews} reviews)</span>
+              <span className="ml-1">({profile.totalReviews} reviews)</span>
             </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-3 space-y-6">
-            {/* Farm Description */}
-            <Card className="bg-white/80 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                  <FileText className="w-5 h-5 mr-2" />
-                  About Our Farm
-                </h2>
-                <p className="text-gray-700 leading-relaxed">{profile.description}</p>
-              </CardContent>
-            </Card>
-
-            {/* Farm History */}
-            {profile.farmHistory && (
-              <Card className="bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                    <Building className="w-5 h-5 mr-2" />
-                    Our Story
-                  </h2>
-                  <p className="text-gray-700 leading-relaxed">{profile.farmHistory}</p>
-                </CardContent>
-              </Card>
+            {profile.farmSize && (
+              <div className="flex items-center">
+                <Building className="w-4 h-4 mr-1" />
+                {profile.farmSize} acres
+              </div>
             )}
+          </div>
+        </section>
 
-            {/* Recent Products */}
-            {profile.products && profile.products.length > 0 && (
-              <Card className="bg-white/80 backdrop-blur-sm">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                      <Package className="w-5 h-5 mr-2" />
-                      Our Products
-                    </h2>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => navigate('/farmer/products')}
-                    >
-                      Manage Products
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {profile.products.slice(0, 4).map((product) => (
-                      <div key={product.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50/50">
-                        <div className="flex justify-between items-start mb-2">
-                          <h3 className="font-medium text-gray-900">{product.name}</h3>
-                          <Badge variant="primary">{product.category}</Badge>
-                        </div>
-                        <p className="text-sm text-gray-600 mb-2">{product.description}</p>
-                        <div className="flex justify-between items-center">
-                          <span className="text-lg font-semibold text-primary-600">
-                            ${product.price}/{product.unit}
-                          </span>
-                          <span className="text-sm text-gray-500">
-                            {product.quantity} {product.unit} available
-                          </span>
+        {/* Main Layout with Sticky Sidebar */}
+        <div className="flex gap-6">
+          {/* Main Content */}
+          <div className="flex-1 max-w-4xl space-y-6">
+            {/* Hero Section with Story */}
+            <section className="relative bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+              <div className="space-y-6">
+                {/* Our Story Section */}
+                <div className="animate-fade-in">
+                  <RichTextEditor
+                    title="Our Story"
+                    content={profile.ourStoryRich || profile.ourStory || ''}
+                    onChange={(content) => setTempContent(content)}
+                    onSave={() => saveContent('ourStory')}
+                    onCancel={cancelEditing}
+                    isEditing={editingSection === 'ourStory'}
+                    placeholder="Share your farm's story, values, and what makes you unique..."
+                  />
+                </div>
+
+                {/* About Our Farm Section with Wrapped Portrait */}
+                <div className="animate-fade-in">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">About Our Farm</h3>
+                  <div className="prose prose-lg max-w-none">
+                    {profile.farmerPhoto && (
+                      <div className="float-right ml-6 mb-4">
+                        <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:scale-105 w-48 h-64">
+                          <img
+                            src={profile.farmerPhoto}
+                            alt="Farmer"
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                         </div>
                       </div>
-                    ))}
+                    )}
+                    <div 
+                      dangerouslySetInnerHTML={{ 
+                        __html: profile.aboutOurFarmRich || profile.aboutOurFarm || profile.description || `<p class="text-gray-500 italic">Describe your farm, practices, and what you grow...</p>` 
+                      }}
+                    />
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
+            </section>
+
+            {/* Photo Gallery Section */}
+            <HorizontalPhotoGallery
+            photos={[
+              ...(profile.farmPhotos || []).map(photo => ({ ...photo, type: 'farm' })),
+              ...(profile.workPhotos || []).map(photo => ({ ...photo, type: 'work' })),
+              ...(profile.farmerPhoto ? [{ id: 'farmer', url: profile.farmerPhoto, caption: 'Farmer Portrait', type: 'farmer' }] : [])
+            ]}
+            title="Farm Photos"
+            isEditable={false}
+          />
+
+            {/* Video Introduction Section */}
+            {profile.introVideoUrl && (
+              <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+              <VideoEmbed
+                videoUrl={profile.introVideoUrl}
+                title="Farm Introduction Video"
+                isEditable={false}
+              />
+            </section>
+          )}
+
+            {/* Farm Timeline Section */}
+            {profile.timeline && profile.timeline.length > 0 && (
+            <HorizontalFarmTimeline
+              timeline={profile.timeline}
+              isEditable={false}
+            />
+          )}
+
+            {/* Call to Action for Enhanced Profile */}
+            {isOwnProfile && (!profile.ourStory || !profile.aboutOurFarm || !profile.farmerPhoto || !profile.farmPhotos?.length || !profile.timeline?.length) && (
+            <section className="bg-gradient-to-r from-primary-50 to-green-50 border border-primary-200 rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+              <div className="text-center">
+                <div className="flex justify-center mb-4">
+                  <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <Camera className="w-6 h-6 text-primary-600" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">Complete Your Farm Profile</h3>
+                <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                  Share your story, add photos, and create a timeline to help customers connect with your farm.
+                </p>
+                <div className="flex flex-wrap justify-center gap-2 mb-4">
+                  {!profile.ourStory && (
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      <FileText className="w-3 h-3 mr-1" />
+                      Add Story
+                    </span>
+                  )}
+                  {!profile.aboutOurFarm && (
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      <Building className="w-3 h-3 mr-1" />
+                      Describe Farm
+                    </span>
+                  )}
+                  {!profile.farmerPhoto && (
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      <Camera className="w-3 h-3 mr-1" />
+                      Add Photo
+                    </span>
+                  )}
+                  {!profile.farmPhotos?.length && (
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      <Camera className="w-3 h-3 mr-1" />
+                      Add Photos
+                    </span>
+                  )}
+                  {!profile.timeline?.length && (
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      <History className="w-3 h-3 mr-1" />
+                      Create Timeline
+                    </span>
+                  )}
+                </div>
+                <Button
+                  onClick={() => setIsEditModalOpen(true)}
+                  className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 text-sm font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+                >
+                  <Settings className="w-4 h-4 mr-1" />
+                  Complete Profile
+                </Button>
+              </div>
+            </section>
+          )}
+
+            {/* Products Section */}
+            {profile.products && profile.products.length > 0 && (
+              <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-bold text-gray-900 flex items-center">
+                    <Package className="w-5 h-5 mr-2" />
+                    Our Products
+                  </h2>
+                  <Button
+                    variant="outline"
+                    onClick={() => navigate('/farmer/products')}
+                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105"
+                    size="sm"
+                  >
+                    Manage Products
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {profile.products.slice(0, 6).map((product) => (
+                    <div key={product.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-bold text-gray-900 text-base">{product.name}</h3>
+                        <Badge variant="primary" className="px-2 py-1 text-xs">{product.category}</Badge>
+                      </div>
+                      <p className="text-gray-600 mb-3 leading-relaxed text-sm line-clamp-2">{product.description}</p>
+                      <div className="flex justify-between items-center">
+                        <span className="text-lg font-bold text-primary-600">
+                          ${product.price}/{product.unit}
+                        </span>
+                        <span className="text-xs text-gray-500 font-medium">
+                          {product.quantity} {product.unit}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
             )}
 
             {/* Customer Reviews Section */}
             {profile.reviews && profile.reviews.length > 0 && (
-              <Card className="bg-white/80 backdrop-blur-sm">
-                <CardHeader>
-                  <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                    <Star className="w-5 h-5 mr-2" />
-                    Customer Reviews
-                  </h2>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {profile.reviews.map((review) => (
-                      <div key={review.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50/50">
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <div className="flex items-center mb-1">
-                              <span className="font-medium text-gray-900 mr-3">
-                                {review.customerName}
-                              </span>
-                              {renderStarRating(review.rating)}
-                            </div>
-                            <span className="text-sm text-gray-500">
-                              {formatDate(review.createdAt)}
+              <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <Star className="w-5 h-5 mr-2" />
+                  Customer Reviews
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {profile.reviews.slice(0, 4).map((review) => (
+                    <div key={review.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <div className="flex items-center mb-1">
+                            <span className="font-bold text-gray-900 text-sm mr-2">
+                              {review.customerName}
                             </span>
+                            {renderStarRating(review.rating)}
                           </div>
+                          <span className="text-xs text-gray-500 font-medium">
+                            {formatDate(review.createdAt)}
+                          </span>
                         </div>
-                        {review.comment && (
-                          <p className="text-gray-700 leading-relaxed bg-white rounded-lg p-3">
-                            {review.comment}
-                          </p>
-                        )}
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                      {review.comment && (
+                        <p className="text-gray-700 leading-relaxed bg-white rounded p-3 text-sm line-clamp-3">
+                          {review.comment}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </section>
             )}
 
             {/* No Reviews Message */}
             {(!profile.reviews || profile.reviews.length === 0) && (
-              <Card className="bg-white/80 backdrop-blur-sm">
-                <CardContent className="text-center py-12">
-                  <div className="text-gray-400 mb-4">
-                    <Star className="w-12 h-12 mx-auto" />
-                  </div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No Reviews Yet</h3>
-                  <p className="text-gray-600">
-                    {isOwnProfile 
-                      ? "You haven't received any reviews yet. Keep providing great products and service!"
-                      : "This farmer hasn't received any reviews yet. Be the first to leave a review!"
-                    }
-                  </p>
-                </CardContent>
-              </Card>
+              <section className="bg-white rounded-xl p-4 shadow-lg text-center transition-all duration-300 hover:shadow-xl">
+                <div className="text-gray-400 mb-4">
+                  <Star className="w-12 h-12 mx-auto" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">No Reviews Yet</h3>
+                <p className="text-gray-600 text-sm max-w-2xl mx-auto leading-relaxed">
+                  {isOwnProfile 
+                    ? "You haven't received any reviews yet. Keep providing great products and service!"
+                    : "This farmer hasn't received any reviews yet. Be the first to leave a review!"
+                  }
+                </p>
+              </section>
             )}
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Farm Stats */}
-            <Card className="bg-white/80 backdrop-blur-sm">
-              <CardHeader>
-                <h3 className="text-lg font-semibold text-gray-900">Farm Statistics</h3>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Total Products</span>
-                  <span className="font-semibold text-lg">{profile.productCount}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Average Rating</span>
-                  <div className="flex items-center">
-                    {renderStarRating(profile.averageRating)}
+          {/* Sticky Sidebar */}
+          <div className="hidden lg:block w-80 flex-shrink-0">
+            <div className="sticky top-6 space-y-4">
+              {/* Farmer Bio */}
+              <FarmerBio
+                farmerName={profile.name}
+                farmerBio={profile.farmerBio}
+                farmerInterests={profile.farmerInterests}
+                yearsFarming={profile.yearsFarming}
+                farmSize={profile.farmSize}
+                specialties={profile.specialties}
+                location={profile.location}
+                isEditable={false}
+              />
+
+              {/* Farming Practices */}
+              <FarmingPractices
+                practices={profile.farmingPractices || []}
+                isEditable={false}
+                onTogglePractice={(practiceId) => {
+                  if (profile) {
+                    const updatedPractices = profile.farmingPractices?.map(p => 
+                      p.id === practiceId ? { ...p, isActive: !p.isActive } : p
+                    ) || [];
+                    setProfile({ ...profile, farmingPractices: updatedPractices });
+                  }
+                }}
+              />
+
+              {/* Farm Stats */}
+              <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Farm Statistics</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600 font-medium text-sm">Total Products</span>
+                    <span className="font-bold text-xl text-gray-900">{profile.productCount}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600 font-medium text-sm">Average Rating</span>
+                    <div className="flex items-center">
+                      {renderStarRating(profile.averageRating)}
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600 font-medium text-sm">Total Reviews</span>
+                    <span className="font-bold text-xl text-gray-900">{profile.totalReviews}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-gray-600 font-medium text-sm">Member Since</span>
+                    <span className="font-semibold text-gray-900 text-sm">
+                      {formatDate(profile.createdAt)}
+                    </span>
                   </div>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Total Reviews</span>
-                  <span className="font-semibold text-lg">{profile.totalReviews}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Member Since</span>
-                  <span className="font-semibold">
-                    {formatDate(profile.createdAt)}
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
+              </section>
 
-            {/* Contact Information */}
-            <Card className="bg-white/80 backdrop-blur-sm">
-              <CardHeader>
-                <h3 className="text-lg font-semibold text-gray-900">Contact Information</h3>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center">
-                  <UserIcon className="w-4 h-4 mr-3 text-gray-400" />
-                  <span className="text-gray-700">{profile.name}</span>
+              {/* Contact Information */}
+              <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Contact Information</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center">
+                    <UserIcon className="w-4 h-4 mr-2 text-gray-400" />
+                    <span className="text-gray-700 font-medium text-sm">{profile.name}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Mail className="w-4 h-4 mr-2 text-gray-400" />
+                    <span className="text-gray-700 font-medium text-sm">{profile.email}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <MapPin className="w-4 h-4 mr-2 text-gray-400" />
+                    <span className="text-gray-700 font-medium text-sm">{profile.location}</span>
+                  </div>
                 </div>
-                <div className="flex items-center">
-                  <Mail className="w-4 h-4 mr-3 text-gray-400" />
-                  <span className="text-gray-700">{profile.email}</span>
-                </div>
-                <div className="flex items-center">
-                  <MapPin className="w-4 h-4 mr-3 text-gray-400" />
-                  <span className="text-gray-700">{profile.location}</span>
-                </div>
-              </CardContent>
-              {!isOwnProfile && (
-                <CardFooter>
-                  <Button 
-                    className="w-full"
-                    onClick={() => navigate(`/messages?user=${farmerId}`)}
-                  >
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Send Message
-                  </Button>
-                </CardFooter>
+                {!isOwnProfile && (
+                  <div className="mt-4">
+                    <Button 
+                      className="w-full bg-black hover:bg-gray-800 text-white py-2 rounded-lg font-medium text-sm transition-all duration-200 hover:scale-105"
+                      onClick={() => navigate(`/messages?user=${farmerId}`)}
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Send Message
+                    </Button>
+                  </div>
+                )}
+              </section>
+
+              {/* Quick Actions - Only for own profile */}
+              {isOwnProfile && (
+                <section className="bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h3>
+                  <div className="space-y-2">
+                    <Button 
+                      className="w-full justify-start bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-lg font-medium text-sm transition-all duration-200 hover:scale-105" 
+                      onClick={() => navigate('/farmer/products')}
+                    >
+                      <Package className="w-4 h-4 mr-2" />
+                      Manage Products
+                    </Button>
+                    <Button 
+                      className="w-full justify-start bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-lg font-medium text-sm transition-all duration-200 hover:scale-105" 
+                      onClick={() => navigate('/farmer/dashboard')}
+                    >
+                      <Building className="w-4 h-4 mr-2" />
+                      Dashboard
+                    </Button>
+                    <Button 
+                      className="w-full justify-start bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-lg font-medium text-sm transition-all duration-200 hover:scale-105" 
+                      onClick={() => navigate('/messages')}
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Messages
+                    </Button>
+                  </div>
+                </section>
               )}
-            </Card>
-
-            {/* Quick Actions - Only for own profile */}
-            {isOwnProfile && (
-              <Card className="bg-white/80 backdrop-blur-sm">
-                <CardHeader>
-                  <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Button 
-                    className="w-full justify-start" 
-                    variant="outline"
-                    onClick={() => navigate('/farmer/products')}
-                  >
-                    <Package className="w-4 h-4 mr-2" />
-                    Manage Products
-                  </Button>
-                  <Button 
-                    className="w-full justify-start" 
-                    variant="outline"
-                    onClick={() => navigate('/farmer/dashboard')}
-                  >
-                    <Building className="w-4 h-4 mr-2" />
-                    Dashboard
-                  </Button>
-                  <Button 
-                    className="w-full justify-start" 
-                    variant="outline"
-                    onClick={() => navigate('/messages')}
-                  >
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Messages
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
+            </div>
           </div>
         </div>
 
@@ -415,7 +614,7 @@ export const FarmerProfile: React.FC = () => {
           <EditProfileModal
             isOpen={isEditModalOpen}
             onClose={() => setIsEditModalOpen(false)}
-            user={currentUser || user}
+            user={currentUser || user!}
             farmerProfile={profile}
             onProfileUpdated={handleProfileUpdated}
           />

@@ -21,6 +21,38 @@ export interface FarmerProfile {
   totalReviews: number;
   createdAt: string;
   updatedAt: string;
+  // New fields for enhanced profile
+  farmPhotos?: FarmPhoto[];
+  farmerPhoto?: string;
+  workPhotos?: WorkPhoto[];
+  timeline?: FarmTimelineEvent[];
+  ourStory?: string;
+  aboutOurFarm?: string;
+}
+
+export interface FarmPhoto {
+  id: string;
+  url: string;
+  caption?: string;
+  type: 'farm' | 'landscape' | 'animals' | 'crops' | 'equipment';
+  createdAt: string;
+}
+
+export interface WorkPhoto {
+  id: string;
+  url: string;
+  caption?: string;
+  type: 'harvesting' | 'planting' | 'processing' | 'packaging' | 'delivery';
+  createdAt: string;
+}
+
+export interface FarmTimelineEvent {
+  id: string;
+  year: number;
+  title: string;
+  description: string;
+  imageUrl?: string;
+  type: 'founding' | 'expansion' | 'achievement' | 'milestone' | 'award';
 }
 
 export interface Product {
