@@ -56,8 +56,8 @@ const mockOrders: Order[] = [
     id: 'ORD-002',
     farmerId: 'farmer-1',
     customerId: 'customer-2',
-    customerName: 'Michael Chen',
-    customerEmail: 'michael.chen@email.com',
+    customerName: 'Lois Lane',
+    customerEmail: 'lois.lane@email.com',
     customerPhone: '+1 (555) 987-6543',
     items: [
       {
