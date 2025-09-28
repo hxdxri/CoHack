@@ -69,8 +69,8 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
         email: formData.email,
       };
 
-      const userResponse = await authAPI.getCurrentUser();
-      const updatedUser = { ...userResponse.data.user, ...userUpdateData };
+      const userResponse = await authAPI.updateUser(userUpdateData);
+      const updatedUser = userResponse.data.user;
 
       let updatedFarmerProfile = farmerProfile;
 
