@@ -37,6 +37,13 @@ export const Messages: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Load messages when activeConversation changes
+  useEffect(() => {
+    if (activeConversation) {
+      loadMessages(activeConversation);
+    }
+  }, [activeConversation, loadMessages]);
+
   const handleSelectConversation = async (partnerId: string) => {
     setActiveConversation(partnerId);
     await loadMessages(partnerId);

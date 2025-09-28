@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Search, 
   Filter, 
@@ -26,7 +26,8 @@ import toast from 'react-hot-toast';
  */
 export const CustomerDashboard: React.FC = () => {
   const { user } = useAuthStore();
-  const { sendMessage } = useMessagesStore();
+  const { sendMessage, loadConversations } = useMessagesStore();
+  const navigate = useNavigate();
   const [farmers, setFarmers] = useState<FarmerProfile[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +46,7 @@ export const CustomerDashboard: React.FC = () => {
 
   useEffect(() => {
     fetchFarmersAndProducts();
+    loadConversations();
   }, []);
 
   const fetchFarmersAndProducts = async () => {
@@ -69,17 +71,36 @@ export const CustomerDashboard: React.FC = () => {
 
   const handleContactFarmer = async (farmer: FarmerProfile) => {
     try {
-      // Create a new conversation by sending an initial message
-      await sendMessage(farmer.userId, {
-        content: `Hi ${farmer.name}! I'm interested in learning more about your farm and products.`
-      });
+      const { conversations, setActiveConversation, loadMessages } = useMessagesStore.getState();
       
-      toast.success(`Started conversation with ${farmer.farmName}`);
-      // Navigate to messages page
-      window.location.href = '/customer/messages';
+      // Check if conversation already exists with this farmer
+      const existingConversation = conversations.find(conv => conv.partnerId === farmer.userId);
+      
+      if (existingConversation) {
+        // Conversation exists, navigate to messages and set it as active
+        setActiveConversation(farmer.userId);
+        await loadMessages(farmer.userId);
+        toast.success(`Opening conversation with ${farmer.farmName}`);
+        navigate('/customer/messages');
+      } else {
+        // No conversation exists, create a new one
+        await sendMessage(farmer.userId, {
+          content: `Hi ${farmer.name}! I'm interested in learning more about your farm and products.`
+        });
+        
+        // Reload conversations to include the new one
+        await loadConversations();
+        
+        // Set the new conversation as active and load its messages
+        setActiveConversation(farmer.userId);
+        await loadMessages(farmer.userId);
+        
+        toast.success(`Started new conversation with ${farmer.farmName}`);
+        navigate('/customer/messages');
+      }
     } catch (error) {
-      console.error('Error starting conversation:', error);
-      toast.error('Failed to start conversation');
+      console.error('Error handling farmer contact:', error);
+      toast.error('Failed to contact farmer');
     }
   };
 
