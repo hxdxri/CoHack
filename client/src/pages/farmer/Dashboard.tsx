@@ -213,7 +213,7 @@ export const FarmerDashboard: React.FC = () => {
                   Edit Farm Profile
                 </Button>
               </Link>
-              <Link to="/messages" className="block">
+              <Link to="/farmer/messages" className="block">
                 <Button variant="outline" className="w-full justify-start">
                   <MessageCircle className="w-4 h-4 mr-2" />
                   View Messages
