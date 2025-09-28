@@ -48,7 +48,7 @@ const mockOrders: Order[] = [
     status: 'out_for_delivery',
     orderDate: '2025-01-15T10:30:00.000Z',
     deliveryDate: '2025-01-15T16:00:00.000Z',
-    deliveryAddress: '123 Main St, Apt 4B, San Francisco, CA 94102',
+    deliveryAddress: '123 Main St, Apt 4B, Saskatoon, SK S7K 1A1',
     notes: 'Please ring doorbell twice. Leave at door if no answer.',
     deliveryPin: '1234'
   },
@@ -75,7 +75,7 @@ const mockOrders: Order[] = [
     status: 'preparing',
     orderDate: '2025-01-15T14:20:00.000Z',
     deliveryDate: '2025-01-16T10:00:00.000Z',
-    deliveryAddress: '456 Oak Avenue, Berkeley, CA 94704',
+    deliveryAddress: '456 Oak Avenue, Regina, SK S4P 1A1',
     notes: 'Customer prefers morning delivery',
     deliveryPin: '5678'
   },
@@ -138,7 +138,7 @@ const mockOrders: Order[] = [
     status: 'delivered',
     orderDate: '2025-01-14T09:15:00.000Z',
     deliveryDate: '2025-01-14T15:30:00.000Z',
-    deliveryAddress: '789 Pine Street, Oakland, CA 94601',
+    deliveryAddress: '789 Pine Street, Prince Albert, SK S6V 1B1',
     notes: 'Delivered successfully',
     deliveryPin: '2468',
     rating: 5,

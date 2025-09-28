@@ -23,42 +23,42 @@ const mockUsers = [
     name: "Sarah Johnson",
     role: "farmer" as const,
     farmName: "Green Valley Organic Farm",
-    location: "Sonoma County, California"
+    location: "Saskatoon, Saskatchewan"
   },
   {
     id: "7f8e9d2a-3c4b-5e6f-7a8b-9c0d1e2f3a4b",
     name: "Michael Thompson",
     role: "farmer" as const,
     farmName: "Sunrise Meadows Dairy",
-    location: "Vermont, New England"
+    location: "Regina, Saskatchewan"
   },
   {
     id: "8a9b0c1d-4e5f-6a7b-8c9d-0e1f2a3b4c5d",
     name: "David Rodriguez",
     role: "farmer" as const,
     farmName: "Mountain View Orchard",
-    location: "Colorado, Rocky Mountains"
+    location: "Prince Albert, Saskatchewan"
   },
   {
     id: "9b0c1d2e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
     name: "Linda Chen",
     role: "farmer" as const,
     farmName: "Heritage Berry Farm",
-    location: "Oregon, Pacific Northwest"
+    location: "Moose Jaw, Saskatchewan"
   },
   {
     id: "0c1d2e3f-6a7b-8c9d-0e1f-2a3b4c5d6e7f",
     name: "Robert Wilson",
     role: "farmer" as const,
     farmName: "Golden Fields Wheat Farm",
-    location: "Kansas, Great Plains"
+    location: "North Battleford, Saskatchewan"
   },
   {
     id: "1d2e3f4a-7b8c-9d0e-1f2a-3b4c5d6e7f8a",
     name: "Maria Garcia",
     role: "farmer" as const,
     farmName: "Coastal Greenhouse",
-    location: "California, Central Coast"
+    location: "Swift Current, Saskatchewan"
   },
   {
     id: "96d1a1a0-fdbf-47a8-a72f-5df362b50152",
