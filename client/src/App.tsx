@@ -7,8 +7,7 @@ import { LoadingPage } from '@/components/ui/LoadingSpinner';
 
 // Pages
 import { Landing } from '@/pages/Landing';
-
-import { Listing } from '@/pages/Listing';
+import { About } from '@/pages/About';
 import { Auth } from '@/pages/auth/Auth';
 
 
@@ -110,6 +109,7 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Landing />} />
+          <Route path="/about" element={<About />} />
           <Route 
             path="/auth" 
             element={

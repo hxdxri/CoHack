@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, Leaf, User, ShoppingCart } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, X, Leaf, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useAuthStore } from '@/store/auth';
 
 interface ScrollNavbarProps {
   className?: string;
@@ -10,6 +11,8 @@ interface ScrollNavbarProps {
 export const ScrollNavbar: React.FC<ScrollNavbarProps> = ({ className = '' }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +31,43 @@ export const ScrollNavbar: React.FC<ScrollNavbarProps> = ({ className = '' }) =>
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    closeMobileMenu();
+  };
+
+  const handleFindFarmsClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const farmMapSection = document.querySelector('[data-section="farm-map"]');
+    if (farmMapSection) {
+      farmMapSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    closeMobileMenu();
+  };
+
+  const handleProductsClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isAuthenticated) {
+      // Redirect to appropriate dashboard based on user role
+      const user = useAuthStore.getState().user;
+      if (user?.role === 'farmer') {
+        navigate('/farmer/dashboard');
+      } else {
+        navigate('/customer/dashboard');
+      }
+    } else {
+      navigate('/auth');
+    }
+    closeMobileMenu();
+  };
+
+  const handleAboutClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/about');
+    closeMobileMenu();
   };
 
   return (
@@ -51,30 +91,30 @@ export const ScrollNavbar: React.FC<ScrollNavbarProps> = ({ className = '' }) =>
 
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center space-x-8">
-                <Link
-                  to="/"
+                <button
+                  onClick={handleHomeClick}
                   className="text-gray-700 hover:text-primary-500 transition-colors duration-200"
                 >
                   Home
-                </Link>
-                <Link
-                  to="/farmers"
+                </button>
+                <button
+                  onClick={handleFindFarmsClick}
                   className="text-gray-700 hover:text-primary-500 transition-colors duration-200"
                 >
                   Find Farms
-                </Link>
-                <Link
-                  to="/products"
+                </button>
+                <button
+                  onClick={handleProductsClick}
                   className="text-gray-700 hover:text-primary-500 transition-colors duration-200"
                 >
                   Products
-                </Link>
-                <Link
-                  to="/about"
+                </button>
+                <button
+                  onClick={handleAboutClick}
                   className="text-gray-700 hover:text-primary-500 transition-colors duration-200"
                 >
                   About
-                </Link>
+                </button>
               </div>
 
               {/* Desktop Auth Buttons */}
@@ -112,34 +152,30 @@ export const ScrollNavbar: React.FC<ScrollNavbarProps> = ({ className = '' }) =>
               <div className="space-y-4">
                 {/* Mobile Navigation Links */}
                 <div className="space-y-2">
-                  <Link
-                    to="/"
-                    className="block px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
-                    onClick={closeMobileMenu}
+                  <button
+                    onClick={handleHomeClick}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
                   >
                     Home
-                  </Link>
-                  <Link
-                    to="/farmers"
-                    className="block px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
-                    onClick={closeMobileMenu}
+                  </button>
+                  <button
+                    onClick={handleFindFarmsClick}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
                   >
                     Find Farms
-                  </Link>
-                  <Link
-                    to="/products"
-                    className="block px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
-                    onClick={closeMobileMenu}
+                  </button>
+                  <button
+                    onClick={handleProductsClick}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
                   >
                     Products
-                  </Link>
-                  <Link
-                    to="/about"
-                    className="block px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
-                    onClick={closeMobileMenu}
+                  </button>
+                  <button
+                    onClick={handleAboutClick}
+                    className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary-500 hover:bg-white rounded-lg transition-colors duration-200"
                   >
                     About
-                  </Link>
+                  </button>
                 </div>
 
                 {/* Mobile Auth Buttons */}

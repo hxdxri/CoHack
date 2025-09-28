@@ -256,7 +256,7 @@ export const Landing: React.FC = () => {
       />
 
       {/* Farm Map Section */}
-      <section className="py-16 bg-bone">
+      <section className="py-16 bg-bone" data-section="farm-map">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
