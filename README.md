@@ -13,7 +13,7 @@ HarvestLink is a React + TypeScript + Tailwind CSS + Node.js/Express application
 - **🛒 Customer Dashboard**: Browse products, view farmer profiles, and product details
 - **🛍️ Shopping Cart**: Add products to cart with quantity management and checkout flow
 - **📦 Order Management**: Complete order lifecycle from placement to fulfillment
-- **🔢 PIN System**: Secure pickup PINs for order verification (PIN: 5678)
+- **🔢 PIN System**: Secure pickup PINs for order verification
 - **💬 Chat System**: Direct messaging between farmers and customers
 - **⭐ Reviews**: Customer reviews and ratings for farmers
 - **📊 Order History**: Comprehensive order tracking and past order management
